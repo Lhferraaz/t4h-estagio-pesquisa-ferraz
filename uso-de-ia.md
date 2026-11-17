@@ -19,3 +19,9 @@ Registro de trabalho para apoiar a seção **9. Uso de IA** do artigo. O enuncia
 - **Pedido:** executar o ciclo inicial para obter as informações de base.
 - **Contribuição da IA:** identificou que os containers da tentativa anterior usavam o mesmo nome e as mesmas portas; parou esses containers preservando seu volume e subiu esta cópia com `COMPOSE_PROJECT_NAME=desafio-novo`. Gravou o contrato original, executou três medições com `scripts/medir.sh 00-linha-de-base`, calculou as medianas a partir dos arquivos gerados e abriu o PR #2, posteriormente integrado em `main`.
 - **Verificação feita:** cada `contexto.txt` registra os mesmos parâmetros, o commit do contrato e zero arquivos alterados sem commit; cada `contrato.txt` termina em “Contrato mantido”. Os arquivos de origem estão nas três pastas `resultados/*-00-linha-de-base/`. Nenhuma otimização foi aplicada e a causa dos tempos de resposta ainda não foi diagnosticada.
+
+## 17/11/2026 — Diagnóstico das consultas SQL
+
+- **Pedido:** examinar as consultas com `EXPLAIN` e verificar `pg_stat_statements` para localizar possíveis problemas.
+- **Contribuição da IA:** preparou consultas de diagnóstico somente leitura, executou `EXPLAIN (ANALYZE, BUFFERS)` fora da carga, leu os planos e redigiu uma análise preliminar em `diagnostico/leitura-inicial.md`. Consultou a documentação oficial do PostgreSQL 16 para interpretar os planos e os requisitos de `pg_stat_statements`.
+- **Verificação feita:** os SQLs e suas saídas integrais foram salvos em `diagnostico/`. O módulo `pg_stat_statements` estava disponível, mas inativo; não foi ativado, e nenhuma mudança de performance foi feita. Os tempos dos planos não foram tratados como latência da API.
