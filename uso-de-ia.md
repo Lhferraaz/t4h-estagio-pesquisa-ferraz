@@ -25,3 +25,15 @@ Registro de trabalho para apoiar a seção **9. Uso de IA** do artigo. O enuncia
 - **Pedido:** examinar as consultas com `EXPLAIN` e verificar `pg_stat_statements` para localizar possíveis problemas.
 - **Contribuição da IA:** preparou consultas de diagnóstico somente leitura, executou `EXPLAIN (ANALYZE, BUFFERS)` fora da carga, leu os planos e redigiu uma análise preliminar em `diagnostico/leitura-inicial.md`. Consultou a documentação oficial do PostgreSQL 16 para interpretar os planos e os requisitos de `pg_stat_statements`.
 - **Verificação feita:** os SQLs e suas saídas integrais foram salvos em `diagnostico/`. O módulo `pg_stat_statements` estava disponível, mas inativo; não foi ativado, e nenhuma mudança de performance foi feita. Os tempos dos planos não foram tratados como latência da API.
+
+## 17/11/2026 — Primeiro experimento de performance
+
+- **Decisão da pessoa:** testar a busca em lote dos itens dos pedidos antes de uma consulta única com joins, por considerar maior o risco de quebra de contrato na segunda opção e por não assumir que menos chamadas SQL garantem melhor desempenho.
+- **Contribuição da IA:** formulou a hipótese de trabalho a partir dessa decisão em `experimentos.md`, implementou a busca em lote em `api/src/rotas.js`, executou o verificador de contrato e três medições com o rótulo `01-itens-em-lote`, e comparou as medianas com a linha de base. Registrou a consulta única com joins em `proximos-testes.md` como alternativa futura.
+- **Verificação feita:** a hipótese foi commitada antes do código; a alteração da API foi commitada antes das medições; os três `contexto.txt` registram árvore limpa e parâmetros iguais aos da base; os três `contrato.txt` terminam em “Contrato mantido”. A interpretação e seus limites estão em `experimentos.md`, com links para os arquivos gerados em `resultados/`.
+
+## 17/11/2026 — Repetição da H1 com Chrome fechado
+
+- **Correção da pessoa:** o Google Chrome estava fechado na linha de base e aberto somente na primeira rodada de medição da busca em lote. A pessoa confirmou que o fechou para repetir o teste.
+- **Contribuição da IA:** executou mais três medições da mesma implementação, com o rótulo `01-itens-em-lote-chrome-fechado`, validou contexto e contrato e atualizou a comparação em `experimentos.md`. Manteve as medições anteriores intactas e identificadas como rodada com condição diferente.
+- **Verificação feita:** os três novos `contexto.txt` registram parâmetros iguais aos da base e árvore limpa; os três `contrato.txt` terminam em “Contrato mantido”. O script não registra aplicativos abertos no host, então a condição do Chrome é uma informação fornecida pela pessoa, não uma medição automática.

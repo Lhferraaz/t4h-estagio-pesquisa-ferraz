@@ -1,0 +1,17 @@
+Medição: 01-itens-em-lote-chrome-fechado
+Carga: 20 usuários virtuais por 60s
+
+Requisições:        292
+Requisições/s:      4.57
+Tempo de resposta:  mediana 1302.7 ms | p95 12015.7 ms | p99 26989.3 ms
+Erros:              0.00%
+
+Por rota:
+rota                  req       mediana       p95           p99           erros   
+cliente               72        297.6 ms      497.3 ms      529.8 ms      0.0%    
+cliente-por-email     47        1302.8 ms     1903.0 ms     2259.7 ms     0.0%    
+pedidos-do-cliente    60        8304.3 ms     11299.7 ms    11583.8 ms    0.0%    
+pedidos-por-status    37        7401.6 ms     27469.6 ms    31258.9 ms    0.0%    
+busca-produtos        51        799.9 ms      1096.6 ms     1202.4 ms     0.0%    
+vendas-por-dia        21        11320.7 ms    13519.4 ms    14001.3 ms    0.0%    
+top-produtos          4         19058.3 ms    25804.1 ms    26734.9 ms    0.0%    
