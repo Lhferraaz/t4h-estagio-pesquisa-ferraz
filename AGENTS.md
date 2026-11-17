@@ -68,3 +68,10 @@ Dê aos comandos de medição um timeout de pelo menos 3 minutos.
 | `GET /relatorios/top-produtos?limite=` | 2% |
 
 Os parâmetros e as respostas de cada rota estão no [README.md](README.md#rotas). Os pesos vêm de `carga/teste-carga.js`.
+
+## Colaboração e skill de medição
+
+- Antes de um comando que altere o ambiente ou gere resultados, explique o que ele faz e o que esperamos observar; depois, leia a saída com a pessoa.
+- Ajude a formular e questionar hipóteses. Registre a hipótese e a previsão antes da mudança e dos resultados; deixe explícito o que foi proposto pela pessoa e o que foi sugerido pela IA. Não atribua à pessoa nem à IA decisões que não tomou.
+- Use a skill `ciclo` quando a pessoa pedir a linha de base ou o ciclo de uma mudança. Ela está em `.agents/skills/ciclo/` para Codex e `.claude/skills/ciclo/` para Claude Code.
+- Ao registrar o uso de IA, descreva apenas interações verificáveis desta tentativa. Se o enunciado pedir um formato ou conteúdo específico, peça-o antes de preparar a entrega.
