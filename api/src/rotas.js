@@ -71,31 +71,42 @@ rotas.get('/clientes/:id/pedidos', assincrono(async (req, res) => {
     [id],
   );
 
-  const resposta = [];
-  for (const pedido of pedidos) {
-    const itens = await consultar('SELECT * FROM itens_pedido WHERE pedido_id = $1 ORDER BY id', [pedido.id]);
-
-    const itensFormatados = [];
-    let total = 0;
+  const itensPorPedido = new Map(pedidos.map((pedido) => [pedido.id, []]));
+  if (pedidos.length > 0) {
+    const itens = await consultar(
+      `SELECT i.pedido_id, i.produto_id, pr.nome AS produto_nome,
+              i.quantidade, i.preco_unitario_centavos
+         FROM itens_pedido i
+         JOIN produtos pr ON pr.id = i.produto_id
+        WHERE i.pedido_id = ANY($1::integer[])
+        ORDER BY i.pedido_id, i.id`,
+      [pedidos.map((pedido) => pedido.id)],
+    );
     for (const item of itens) {
-      const [produto] = await consultar('SELECT * FROM produtos WHERE id = $1', [item.produto_id]);
-      itensFormatados.push({
+      itensPorPedido.get(item.pedido_id).push(item);
+    }
+  }
+
+  const resposta = pedidos.map((pedido) => {
+    let total = 0;
+    const itensFormatados = itensPorPedido.get(pedido.id).map((item) => {
+      total += item.quantidade * item.preco_unitario_centavos;
+      return {
         produto_id: item.produto_id,
-        produto_nome: produto.nome,
+        produto_nome: item.produto_nome,
         quantidade: item.quantidade,
         preco_unitario_centavos: item.preco_unitario_centavos,
-      });
-      total += item.quantidade * item.preco_unitario_centavos;
-    }
+      };
+    });
 
-    resposta.push({
+    return {
       id: pedido.id,
       status: pedido.status,
       criado_em: pedido.criado_em,
       total_centavos: total,
       itens: itensFormatados,
-    });
-  }
+    };
+  });
 
   res.json(resposta);
 }));
