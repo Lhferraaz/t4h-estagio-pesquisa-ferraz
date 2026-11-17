@@ -37,3 +37,9 @@ Registro de trabalho para apoiar a seção **9. Uso de IA** do artigo. O enuncia
 - **Correção da pessoa:** o Google Chrome estava fechado na linha de base e aberto somente na primeira rodada de medição da busca em lote. A pessoa confirmou que o fechou para repetir o teste.
 - **Contribuição da IA:** executou mais três medições da mesma implementação, com o rótulo `01-itens-em-lote-chrome-fechado`, validou contexto e contrato e atualizou a comparação em `experimentos.md`. Manteve as medições anteriores intactas e identificadas como rodada com condição diferente.
 - **Verificação feita:** os três novos `contexto.txt` registram parâmetros iguais aos da base e árvore limpa; os três `contrato.txt` terminam em “Contrato mantido”. O script não registra aplicativos abertos no host, então a condição do Chrome é uma informação fornecida pela pessoa, não uma medição automática.
+
+## 17/11/2026 — Escolha do pool de conexões
+
+- **Uso relatado pela pessoa:** consultou o ChatGPT em um chat separado para estudar `pg.Pool` e PgBouncer com explicações visuais, incluindo SVGs.
+- **Contribuição da IA:** o Codex explicou onde cada opção reutiliza conexões e comparou os custos para o Compose do desafio. Sugeriu testar primeiro `pg.Pool` e discutiu como o tamanho do pool afeta a fila de consultas.
+- **Decisão da pessoa:** escolher `pg.Pool` com até 10 conexões para a única instância Node.js. Considerou o PgBouncer mais adequado se múltiplas instâncias com pools próprios precisassem compartilhar conexões com o banco.
