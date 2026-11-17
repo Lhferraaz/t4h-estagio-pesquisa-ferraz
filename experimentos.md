@@ -37,3 +37,29 @@ A primeira rodada do lote permanece preservada em [A1](resultados/20261117-02573
 - **Previsão:** com 10 conexões e 20 usuários virtuais, consultas podem esperar no pool. A redução da concorrência pode aliviar a disputa por CPU no PostgreSQL ou alongar a espera de consultas rápidas atrás de consultas lentas. O teste mede o efeito conjunto do reuso e do limite de 10. O consumo de CPU e memória será observado nos dois serviços.
 - **Como julgar:** manter as respostas do contrato e comparar a mediana de três execuções com 20 usuários virtuais, 60 s, aquecimento de 15 s e semente 42. Usar a rodada de itens em lote com Chrome fechado como referência imediata e a linha de base original como referência do ganho acumulado.
 - **Leitura:** [Pooling no node-postgres](https://node-postgres.com/features/pooling), [tamanho do pool](https://node-postgres.com/guides/pool-sizing) e [modos do PgBouncer](https://www.pgbouncer.org/features.html).
+
+### Resultado da H2
+
+Mediana de três rodadas por versão. Para cada recurso, a tabela usa a mediana das médias de cada rodada.
+
+| Métrica | Base original | Itens em lote | Lote + pool de 10 |
+| --- | ---: | ---: | ---: |
+| Requisições/s | 2,87 | 4,57 | 5,14 |
+| p50 geral | 1.299,9 ms | 1.302,7 ms | 2.194,6 ms |
+| p95 geral | 21.354,1 ms | 12.015,7 ms | 8.788,3 ms |
+| p99 geral | 25.935,8 ms | 26.989,3 ms | 10.878,9 ms |
+| Erros HTTP | 0,00% | 0,00% | 0,00% |
+| CPU média do banco | 98,5% | 99,8% | 99,6% |
+| Memória média do banco | 405,7 MiB | 412,4 MiB | 379,4 MiB |
+| CPU média da API | 5,9% | 6,5% | 6,4% |
+| Memória média da API | 32,8 MiB | 35,1 MiB | 86,3 MiB |
+
+Arquivos gerados pelo script. Base original [B1](resultados/20261117-020419-00-linha-de-base/), [B2](resultados/20261117-020610-00-linha-de-base/), [B3](resultados/20261117-020801-00-linha-de-base/). Lote [L1](resultados/20261117-030752-01-itens-em-lote-chrome-fechado/), [L2](resultados/20261117-030935-01-itens-em-lote-chrome-fechado/), [L3](resultados/20261117-031120-01-itens-em-lote-chrome-fechado/). Lote com pool [P1](resultados/20261117-204120-02-pool-10-chrome-fechado/), [P2](resultados/20261117-204251-02-pool-10-chrome-fechado/), [P3](resultados/20261117-204421-02-pool-10-chrome-fechado/). Os números vêm de `resumo.txt` e `recursos.txt`.
+
+As três rodadas do pool tiveram mais requisições por segundo (5,10 a 5,25 contra 4,52 a 4,80) e p95 geral menor (8.621,7 a 8.892,6 ms contra 10.903,8 a 12.149,6 ms). O p50 geral subiu em todas as rodadas (2.192,7 a 2.297,0 ms contra 1.301,5 a 1.580,3 ms), e a memória média da API aumentou. O banco seguiu perto do limite de CPU.
+
+O efeito variou por rota. A mediana dos p95 de pedidos por status caiu de 20.910,1 para 7.494,0 ms. A de cliente por ID subiu de 495,0 para 2.194,3 ms. A espera por uma conexão pode contribuir para essa piora. Medimos a latência HTTP, que inclui tanto a espera como a execução do SQL. Os números capturam o efeito combinado da reutilização e do limite de 10 conexões.
+
+Os arquivos `contexto.txt` das três rodadas do pool registram o commit `562badb`, a árvore limpa e os mesmos parâmetros e limites das referências. As 42 respostas passaram no contrato antes da carga e depois de cada execução. O lote de referência foi medido mais cedo no mesmo dia. O Compose foi iniciado novamente para a H2 com o volume existente e cada rodada teve o aquecimento padrão.
+
+A [primeira rodada do pool](resultados/20261117-203902-02-pool-10/) foi preservada como exploratória. O Chrome apareceu entre a primeira e a segunda rodada planejadas, e a condição durante toda a primeira rodada ficou incerta. Nas três rodadas da comparação, uma verificação externa ao `medir.sh` procurou processos ativos do navegador antes, em intervalos de cinco segundos durante a execução e ao final. As verificações não detectaram Chrome ou Chromium.

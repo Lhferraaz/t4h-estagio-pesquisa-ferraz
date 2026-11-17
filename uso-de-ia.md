@@ -43,3 +43,5 @@ Registro de trabalho para apoiar a seção **9. Uso de IA** do artigo. O enuncia
 - **Uso relatado pela pessoa:** consultou o ChatGPT em um chat separado para estudar `pg.Pool` e PgBouncer com explicações visuais, incluindo SVGs.
 - **Contribuição da IA:** o Codex explicou onde cada opção reutiliza conexões e comparou os custos para o Compose do desafio. Sugeriu testar primeiro `pg.Pool` e discutiu como o tamanho do pool afeta a fila de consultas.
 - **Decisão da pessoa:** escolher `pg.Pool` com até 10 conexões para a única instância Node.js. Considerou o PgBouncer mais adequado se múltiplas instâncias com pools próprios precisassem compartilhar conexões com o banco.
+
+- **Execução e verificação:** o Codex implementou um único `pg.Pool` com `max: 10`, verificou o contrato e executou as medições. A primeira rodada ficou registrada como exploratória depois de um processo do Chrome aparecer entre rodadas. A comparação em `experimentos.md` usa três rodadas nas quais as verificações não detectaram o navegador. Os 42 casos do contrato passaram antes da carga e depois de cada rodada.
