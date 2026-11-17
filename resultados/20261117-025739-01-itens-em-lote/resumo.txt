@@ -1,0 +1,17 @@
+Medição: 01-itens-em-lote
+Carga: 20 usuários virtuais por 60s
+
+Requisições:        287
+Requisições/s:      4.38
+Tempo de resposta:  mediana 1300.1 ms | p95 12394.1 ms | p99 30832.8 ms
+Erros:              0.00%
+
+Por rota:
+rota                  req       mediana       p95           p99           erros   
+cliente               72        297.9 ms      541.4 ms      595.1 ms      0.0%    
+cliente-por-email     43        1303.2 ms     1986.5 ms     2503.1 ms     0.0%    
+pedidos-do-cliente    59        8800.3 ms     11501.6 ms    12205.9 ms    0.0%    
+pedidos-por-status    38        7655.3 ms     21546.9 ms    31271.6 ms    0.0%    
+busca-produtos        52        698.6 ms      1001.1 ms     1051.0 ms     0.0%    
+vendas-por-dia        19        7213.2 ms     13925.7 ms    13998.1 ms    0.0%    
+top-produtos          4         32720.2 ms    38719.7 ms    39187.3 ms    0.0%    
