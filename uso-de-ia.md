@@ -1,0 +1,21 @@
+# Registro de uso de IA
+
+Registro de trabalho para apoiar a seção **9. Uso de IA** do artigo. O enunciado pede que essa seção diga, em 2 a 3 linhas, onde a IA foi usada e como suas contribuições foram verificadas. Este arquivo registra as interações enquanto acontecem; não substitui a seção do artigo.
+
+## 17/11/2026 — Configuração do trabalho
+
+- **Pedido:** configurar instruções para os agentes e uma skill para o ciclo de medição; trabalhar em uma branch por mudança, com pull request e merge em `main`.
+- **Contribuição da IA:** leu o repositório novo e redigiu a seção de colaboração do `AGENTS.md` e a skill `ciclo` para Codex e Claude Code. O setup foi registrado no commit `0854c59`, enviado após pedido da pessoa.
+- **Verificação feita:** as duas skills passaram na validação de formato; o diff foi conferido e o repositório ficou limpo após o push. Nenhuma mudança de performance foi feita nessa etapa.
+
+## 17/11/2026 — Leitura inicial do código
+
+- **Pedido:** explicar o funcionamento da aplicação e começar este registro.
+- **Contribuição da IA:** descreveu o caminho da requisição pelo Express, pelas rotas e pela função de consulta ao PostgreSQL. Apontou aspectos do código para investigar, como a criação de uma conexão por consulta em `api/src/db.js`, as consultas dentro de loops em `api/src/rotas.js`, a agregação de vendas no JavaScript e o registro do corpo das respostas em `api/src/server.js`.
+- **Verificação feita:** a descrição foi conferida diretamente nos arquivos citados. Essas observações são leitura do código, não diagnóstico medido. O contrato ainda não foi gravado, a linha de base ainda não foi medida e nenhuma hipótese de melhoria foi testada.
+
+## 17/11/2026 — Contrato e linha de base
+
+- **Pedido:** executar o ciclo inicial para obter as informações de base.
+- **Contribuição da IA:** identificou que os containers da tentativa anterior usavam o mesmo nome e as mesmas portas; parou esses containers preservando seu volume e subiu esta cópia com `COMPOSE_PROJECT_NAME=desafio-novo`. Gravou o contrato original, executou três medições com `scripts/medir.sh 00-linha-de-base`, calculou as medianas a partir dos arquivos gerados e abriu o PR #2, posteriormente integrado em `main`.
+- **Verificação feita:** cada `contexto.txt` registra os mesmos parâmetros, o commit do contrato e zero arquivos alterados sem commit; cada `contrato.txt` termina em “Contrato mantido”. Os arquivos de origem estão nas três pastas `resultados/*-00-linha-de-base/`. Nenhuma otimização foi aplicada e a causa dos tempos de resposta ainda não foi diagnosticada.
