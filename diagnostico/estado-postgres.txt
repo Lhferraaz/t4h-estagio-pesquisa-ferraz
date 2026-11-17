@@ -1,0 +1,29 @@
+Configuração de observabilidade
+ shared_preload_libraries 
+--------------------------
+ 
+(1 row)
+
+ compute_query_id 
+------------------
+ auto
+(1 row)
+
+        name        | default_version | installed_version 
+--------------------+-----------------+-------------------
+ pg_stat_statements | 1.10            | 
+(1 row)
+
+ extname | extversion 
+---------+------------
+(0 rows)
+
+Estado das tabelas
+   relname    | n_live_tup | seq_scan | idx_scan 
+--------------+------------+----------+----------
+ clientes     |     100000 |      137 |   500368
+ itens_pedido |    1500000 |     1920 |        0
+ pedidos      |     500000 |      990 |  1500198
+ produtos     |      20000 |      230 |  1502524
+(4 rows)
+
