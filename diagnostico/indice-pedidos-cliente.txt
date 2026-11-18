@@ -1,0 +1,26 @@
+H3 — Plano de pedidos do cliente 7 após criar o índice
+SET TIME ZONE 'UTC';
+SET
+EXPLAIN (ANALYZE, BUFFERS)
+SELECT * FROM pedidos
+WHERE cliente_id = 7
+ORDER BY criado_em DESC, id DESC;
+QUERY PLAN
+Sort  (cost=24.57..24.58 rows=5 width=299) (actual time=0.156..0.157 rows=5 loops=1)
+  Sort Key: criado_em DESC, id DESC
+  Sort Method: quicksort  Memory: 26kB
+  Buffers: shared hit=12 read=2
+  ->  Index Scan using pedidos_cliente_id_idx on pedidos  (cost=0.42..24.51 rows=5 width=299) (actual time=0.070..0.117 rows=5 loops=1)
+        Index Cond: (cliente_id = 7)
+        Buffers: shared hit=6 read=2
+Planning:
+  Buffers: shared hit=97
+Planning Time: 0.394 ms
+Execution Time: 0.188 ms
+(11 rows)
+Tamanho do índice
+SELECT pg_relation_size('public.pedidos_cliente_id_idx') AS bytes,
+       pg_size_pretty(pg_relation_size('public.pedidos_cliente_id_idx')) AS tamanho;
+bytes|tamanho
+5857280|5720 kB
+(1 row)

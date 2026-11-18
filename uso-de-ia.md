@@ -42,3 +42,5 @@ Registro de trabalho para apoiar a seção **9. Uso de IA** do artigo. O enuncia
 
 - **Contribuição da IA.** O Codex leu o plano da consulta de pedidos por cliente e comparou índices simples, compostos e de expressão. Sugeriu começar pelo índice simples em `pedidos(cliente_id)` para medir o efeito sobre uma consulta que já tinha um plano salvo.
 - **Decisão e previsões da pessoa.** Escolheu o índice simples em `pedidos(cliente_id)`. Levantou a hipótese de ganho de vazão com um índice em `lower(email)` e de que a CPU do banco pode continuar perto de 99% com o teste de 20 usuários, porque cada resposta libera o usuário virtual para enviar outra requisição.
+
+- **Execução e verificação.** O Codex escreveu a hipótese antes do código, adicionou um único índice em um arquivo SQL novo, subiu um banco isolado e verificou as 42 respostas. Executou três medições, calculou as medianas com os arquivos gerados e salvou o plano e o tamanho do índice em `diagnostico/indice-pedidos-cliente.txt`.
