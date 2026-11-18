@@ -314,7 +314,7 @@ Os parâmetros da carga podem ser alterados por variáveis de ambiente. Use os m
 | `VUS` | `20` | Usuários virtuais simultâneos |
 | `DURACAO` | `60s` | Duração da medição |
 | `AQUECIMENTO` | `15s` | Duração do aquecimento |
-| `SEMENTE` | `42` | Semente do sorteio das URLs. A mesma semente repete as mesmas requisições |
+| `SEMENTE` | `42` | Semente do sorteio das URLs. A mesma semente repete a sequência sorteada por usuário virtual. O total de requisições depende de quantas iterações são concluídas |
 | `PORTA_API` | `3000` | Porta da API na sua máquina, usada só para conferir se ela está no ar |
 
 Exemplo: `VUS=50 DURACAO=120s scripts/medir.sh 05-carga-maior`
@@ -386,6 +386,8 @@ Tudo o que você fizer direto no `psql` se perde quando o banco é apagado. Para
 O [AGENTS.md](AGENTS.md) resume, para agentes como Claude Code, Codex ou Cursor, como rodar e medir a aplicação e o que não pode ser mudado. Ele não traz o enunciado: passe o enunciado para o agente junto com o seu pedido.
 
 Abra o agente dentro da sua cópia desta pasta. Na raiz do t4h-desafios, o `CLAUDE.md` e a pasta `.claude/` são de quem mantém o repositório e não valem para o desafio.
+
+Para retomar o trabalho, leia as [decisões do projeto](docs/decisoes.md). O [ciclo de medição](docs/ciclo-de-medicao.md) descreve como escolher a referência, aplicar uma mudança e analisar os resultados. As hipóteses e medições estão em [experimentos](experimentos.md), e as ideias ainda em aberto, em [próximos testes](proximos-testes.md).
 
 ## Problemas comuns
 
