@@ -70,3 +70,8 @@ Registro de trabalho para apoiar a seção **9. Uso de IA** do artigo. O enuncia
 - **Pedido da pessoa.** Ativar a coleta de consultas na versão atual para identificar os próximos pontos de investigação. A pessoa escolheu rodar com o Chrome fechado.
 - **Contribuição da IA.** Ativou a extensão em um banco isolado, verificou o contrato, zerou os contadores após o aquecimento e coletou o ranking durante a carga desta API. Salvou a saída e os planos das consultas prioritárias e propôs começar pela página de pedidos por status.
 - **Verificação.** As 42 respostas do contrato passaram. O ranking, os planos e as instruções de reprodução estão em `diagnostico/pg-stat-statements/`. As hipóteses de otimização ficaram em `proximos-testes.md`.
+
+## 18/11/2026 — Diagnóstico de pedidos por status
+
+- **Pedido da pessoa.** Priorizar a página de pedidos por status, diagnosticar as causas e comparar alternativas com fontes que incluíssem casos e artigos de empresas.
+- **Contribuição da IA.** Separou a página da contagem no ranking sob carga, executou 21 planos em uma transação somente leitura e conferiu uma variante de seleção explícita. Leu os relatos de Shopify, GitLab e Citus Data e registrou quais técnicas preservam o contrato. Salvou as evidências e as alternativas em `diagnostico/pedidos-por-status/`.

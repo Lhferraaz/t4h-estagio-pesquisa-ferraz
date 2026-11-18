@@ -26,4 +26,4 @@
 - **Depois da página.** Medir o trabalho restante do `count(*)` exato. A contagem e a paginação são duas consultas da mesma rota.
 - **Candidatos entre os relatórios.** Em vendas por dia, testar acesso indexado pelo período e agregação no SQL em experimentos independentes. Em top produtos, investigar a agregação antes do `LIMIT` se a prioridade for reduzir os piores tempos por chamada.
 
-A ordem acima é uma proposta com base em uma rodada de diagnóstico. [Ranking, planos e motivos](diagnostico/pg-stat-statements/README.md#o-que-apareceu-sob-carga).
+A pessoa escolheu investigar a página de pedidos por status primeiro. O [diagnóstico detalhado](diagnostico/pedidos-por-status/README.md) compara profundidades, contagem e seleção de colunas. Os experimentos com índice e projeção devem ser medidos separadamente. [Ranking sob carga](diagnostico/pg-stat-statements/README.md#o-que-apareceu-sob-carga).
