@@ -52,3 +52,8 @@ Registro de trabalho para apoiar a seção **9. Uso de IA** do artigo. O enuncia
 - **Decisão e previsões da pessoa.** Escolheu o índice simples em `pedidos(cliente_id)`. Levantou a hipótese de ganho de vazão com um índice em `lower(email)` e de que a CPU do banco pode continuar perto de 99% com o teste de 20 usuários, porque cada resposta libera o usuário virtual para enviar outra requisição.
 
 - **Execução e verificação.** O Codex escreveu a hipótese antes do código, adicionou um único índice em um arquivo SQL novo, subiu um banco isolado e verificou as 42 respostas. Executou três medições, calculou as medianas com os arquivos gerados e salvou o plano e o tamanho do índice em `diagnostico/indice-pedidos-cliente.txt`.
+
+## 17/11/2026 — Teste do pool com o índice
+
+- **Pedido da pessoa.** Comparar a combinação de lote, índice e pool de 10 conexões e conferir os números da linha de base. Depois que fechou o Chrome, pediu para repetir as medições da combinação e desconsiderar as tentativas anteriores.
+- **Contribuição da IA.** Conferiu os `resumo.txt` da base e das variantes intermediárias. Atualizou a branch do pool com a `main`, preservou os registros dos dois experimentos e manteve o banco do teste do índice. Validou o contrato, repetiu a carga três vezes com o Chrome fechado e registrou as medianas em `experimentos/pool-com-indice.md`.

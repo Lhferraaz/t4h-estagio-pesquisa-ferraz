@@ -97,3 +97,7 @@ A consulta de pedidos do cliente 7 retornou as mesmas cinco linhas. Na consulta 
 O índice foi criado na inicialização de um banco isolado, com os dados gerados pelos scripts do desafio. A referência do lote foi medida mais cedo. Os `contexto.txt` do índice registram `a95a33f`, árvore limpa, limites iguais aos da referência e os mesmos parâmetros de carga. Nas três rodadas, a verificação externa por amostragem não detectou Chrome nem Chromium. As 42 respostas do contrato passaram antes da carga e depois de cada rodada.
 
 A hipótese de ganho com `clientes(lower(email))` fica registrada para um experimento próprio.
+
+## Pool combinado com o índice
+
+A combinação foi medida separadamente, com o índice da H3 e o mesmo pool de 10 conexões da H2. [Hipótese, comparação com a base original e três novas rodadas](experimentos/pool-com-indice.md).
