@@ -1,5 +1,11 @@
 # Próximos testes
 
+## Paginação por cursor como experimento futuro
+
+- **Proposta.** Comparar a paginação por cursor (`keyset pagination`) com o `OFFSET` em uma página profunda. A comparação SQL pode usar a data e o ID do último pedido da página anterior como ponto de partida já conhecido.
+- **Limite.** Na API atual, o cliente pode pedir diretamente qualquer número de página. Adotar cursor mudaria essa forma de uso. O experimento futuro deve avaliar a busca separadamente e manter o contrato atual.
+- **Leitura.** [Caso de cursores da Shopify](https://shopify.engineering/pagination-relative-cursors).
+
 ## Pool com quatro conexões
 
 - **Próximo experimento.** A pessoa propôs reduzir o limite do `pg.Pool` de 10 para 4 conexões. Usar como referência a versão escolhida com 10 conexões e o mesmo conjunto de índices. O [teste anterior com 10](experimentos/pool-com-indice.md#resultado-da-combinação) serve de referência se a configuração do banco ainda for a mesma.
