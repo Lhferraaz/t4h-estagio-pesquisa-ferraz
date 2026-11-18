@@ -1,5 +1,12 @@
 # Próximos testes
 
+## Pool com quatro conexões
+
+- **Próximo experimento.** A pessoa propôs reduzir o limite do `pg.Pool` de 10 para 4 conexões. Usar como referência [lote + índice + pool de 10](experimentos/pool-com-indice.md#resultado-da-combinação).
+- **Hipótese.** Com menos consultas simultâneas, pode haver menos disputa pela CPU do banco. Com quatro conexões, mais consultas também podem esperar no pool. A direção do efeito sobre vazão e latência será avaliada na carga.
+- **Como testar.** Alterar apenas `max` para `4` na versão de referência, verificar o contrato e medir três rodadas com o Chrome fechado, 20 usuários virtuais, 60 s de carga, 15 s de aquecimento e semente 42.
+- **Como comparar.** Conferir as medianas de req/s, p50 e p95 gerais, CPU e memória. Olhar também o p95 de cliente por ID, que piorou na versão com pool de 10.
+
 ## Consulta única com joins para os pedidos de um cliente
 
 - **Status:** pesquisada, teste futuro. A pessoa escolheu testar primeiro a busca em lote e mencionou esta alternativa como possível experimento posterior.

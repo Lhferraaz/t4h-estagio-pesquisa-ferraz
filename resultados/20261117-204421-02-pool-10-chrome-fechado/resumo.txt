@@ -1,0 +1,17 @@
+Medição: 02-pool-10-chrome-fechado
+Carga: 20 usuários virtuais por 60s
+
+Requisições:        331
+Requisições/s:      5.10
+Tempo de resposta:  mediana 2192.7 ms | p95 8892.6 ms | p99 10878.9 ms
+Erros:              0.00%
+
+Por rota:
+rota                  req       mediana       p95           p99           erros   
+cliente               81        1203.9 ms     2194.3 ms     2420.9 ms     0.0%    
+cliente-por-email     52        1852.3 ms     2837.2 ms     3100.1 ms     0.0%    
+pedidos-do-cliente    67        7391.9 ms     9337.8 ms     10099.8 ms    0.0%    
+pedidos-por-status    44        5493.2 ms     8622.2 ms     16261.1 ms    0.0%    
+busca-produtos        58        1505.9 ms     2199.7 ms     2449.9 ms     0.0%    
+vendas-por-dia        24        5973.0 ms     9506.1 ms     9687.0 ms     0.0%    
+top-produtos          5         10605.1 ms    13802.5 ms    14363.8 ms    0.0%    
