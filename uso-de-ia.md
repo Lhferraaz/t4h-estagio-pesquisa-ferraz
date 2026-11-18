@@ -64,3 +64,10 @@ Registro de trabalho para apoiar a seção **9. Uso de IA** do artigo. O enuncia
 - **Contribuição da IA.** Executou o plano da consulta em lote em uma transação somente leitura, confirmou a varredura em `itens_pedido` e salvou a saída. Comparou o índice simples com o composto e registrou a hipótese e o critério de medição antes da alteração.
 
 - **Execução e verificação.** O Codex adicionou o índice em um arquivo SQL novo, manteve as configurações da API e do pool e validou as 42 respostas. Fez três rodadas, comparou as medianas e salvou o plano com índice e o espaço ocupado. As duas previsões ficaram registradas antes do commit do índice.
+
+## 18/11/2026 — Escolha do índice para pedidos por status
+
+- **Decisão da pessoa.** Escolheu testar o índice composto em `pedidos(status, criado_em DESC, id DESC)`. Considerou que a troca para cursor mudaria a maneira como o cliente usa a API e que o ganho não justifica esse custo agora. Pediu manter a opção como experimento futuro.
+- **Contribuição da IA.** Explicou a diferença entre filtrar e ordenar, relacionou os casos do GitLab, Shopify e Citus Data ao código local e registrou a hipótese, a referência e a medição antes da alteração.
+
+- **Execução e verificação.** O Codex implementou apenas o índice, confirmou o contrato, mediu três vezes com a carga de referência e repetiu os 21 planos. Registrou os ganhos, os casos em que a ordenação permaneceu, o tamanho do índice e os picos encontrados em `recursos.csv`.

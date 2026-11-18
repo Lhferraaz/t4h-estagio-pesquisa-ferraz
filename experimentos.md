@@ -133,3 +133,39 @@ Todas as rodadas com o índice de itens tiveram maior vazão (8,56 a 9,05 contra
 A consulta em lote do cliente 7 encontrou os mesmos dez itens usando os mesmos cinco IDs. O plano trocou `Parallel Seq Scan` por `Index Scan` com `pedido_id = ANY(...)` e usou ordenação incremental. No nó de acesso a `itens_pedido`, o plano sem índice registrou `shared hit=2539 read=7016`. Com o índice, o nó registrou `shared hit=16 read=7`. O índice ocupou 22.003.712 bytes (`21 MB` na saída do PostgreSQL). Os planos foram coletados fora da carga. O teste HTTP usa rotas de leitura, e o custo de manter o índice em escritas fica em aberto. [Plano sem índice](diagnostico/lote-itens-sem-indice.txt#L20) · [Plano e tamanho com índice](diagnostico/lote-itens-com-indice.txt#L12)
 
 O banco com o índice foi criado em um volume isolado, usando os scripts de dados do desafio. A referência foi medida anteriormente. As três rodadas da H4 registraram `c88e3f1`, árvore limpa, os mesmos parâmetros e limites da referência. Nas verificações por amostragem não apareceu Chrome nem Chromium. As 42 respostas do contrato passaram antes e depois da carga em todas as rodadas.
+
+## H5 — Índice composto para pedidos por status
+
+- **Decisão da pessoa.** Testar primeiro um índice B-tree em `pedidos(status, criado_em DESC, id DESC)`. A pessoa escolheu preservar a paginação por número e avaliou que mudar a forma como o cliente usa a API, como no caso da Shopify, não compensa agora. A paginação por cursor ficou como experimento futuro.
+- **Evidência antes da mudança.** A página liderou o tempo SQL acumulado. Os planos do SQL atual mostraram varredura em `pedidos` e ordenação em disco nas páginas profundas dos status mais frequentes. [Diagnóstico detalhado](https://github.com/Lhferraaz/t4h-estagio-pesquisa-ferraz/blob/f017e80e98f19dc4e741f41ed47fe7eb8f9a73a5/diagnostico/pedidos-por-status/README.md) · [Caso do GitLab](https://docs.gitlab.com/development/database/offset_pagination_optimization/) · [Caso da Shopify](https://shopify.engineering/pagination-relative-cursors).
+- **Hipótese e previsão.** O índice pode entregar os registros do status na ordem da consulta, reduzindo ou eliminando a ordenação em disco. Esperamos menor p95 para a rota e possível aumento de req/s e redução de p95 geral. O `OFFSET` ainda precisa avançar pelas entradas anteriores, e a contagem exata pode mudar de plano conforme o status e a visibilidade das linhas.
+- **Como medir.** Alterar apenas o índice. Comparar os planos da página e da contagem, medir o espaço ocupado, verificar o contrato e executar três rodadas com 20 usuários virtuais, 60 s, aquecimento de 15 s e semente 42. Usar a [H4](#resultado-da-h4) como referência imediata e a linha de base original para o ganho acumulado.
+
+### Resultado da H5
+
+Mediana de três rodadas por versão. CPU e memória médias são as medianas das médias por rodada. O pico na tabela é a maior amostra de memória das três rodadas.
+
+| Métrica | Base original | H4, antes do índice de status | H5, com o índice de status |
+| --- | ---: | ---: | ---: |
+| Requisições/s | 2,87 | 8,73 | 14,75 |
+| p50 geral | 1.299,9 ms | 1.305,7 ms | 813,2 ms |
+| p95 geral | 21.354,1 ms | 5.684,8 ms | 3.998,3 ms |
+| p99 geral | 25.935,8 ms | 13.448,3 ms | 9.480,2 ms |
+| p95 de pedidos por status | 19.588,4 ms | 8.184,2 ms | 4.856,0 ms |
+| Erros HTTP | 0,00% | 0,00% | 0,00% |
+| CPU média do banco | 98,5% | 99,6% | 100,1% |
+| Memória média do banco | 405,7 MiB | 410,6 MiB | 355,5 MiB |
+| CPU média da API | 5,9% | 10,2% | 15,2% |
+| Memória média da API | 32,8 MiB | 43,5 MiB | 99,8 MiB |
+| Maior amostra de memória do banco | 497,8 MiB | 510,8 MiB | 511,4 MiB |
+| Maior amostra de memória da API | 39,86 MiB | 60,99 MiB | 118,1 MiB |
+
+Arquivos de origem. Base [B1](resultados/20261117-020419-00-linha-de-base/), [B2](resultados/20261117-020610-00-linha-de-base/), [B3](resultados/20261117-020801-00-linha-de-base/). H4 [A1](resultados/20261117-214631-05-indice-itens-pedido/), [A2](resultados/20261117-214801-05-indice-itens-pedido/), [A3](resultados/20261117-214932-05-indice-itens-pedido/). H5 [D1](resultados/20261118-023254-06-indice-pedidos-status/), [D2](resultados/20261118-023420-06-indice-pedidos-status/), [D3](resultados/20261118-023547-06-indice-pedidos-status/). Vazão e latência vêm de `resumo.txt`. CPU e memória médias vêm de `recursos.txt`. Os picos foram conferidos em `recursos.csv` porque alguns máximos do resumo da H5 ficaram abaixo da média registrada. Os arquivos gerados foram preservados.
+
+As três rodadas da H5 tiveram mais vazão (14,66 a 14,92 contra 8,56 a 9,05 req/s), menor p95 geral (3.756,6 a 4.010,8 contra 5.503,6 a 6.311,8 ms) e menor p95 da rota de pedidos por status (4.854,3 a 4.949,2 contra 7.842,6 a 10.833,1 ms). O banco seguiu próximo do limite de CPU. O maior uso de memória da API ficou em 118,1 MiB e o do banco ficou em 511,4 MiB, perto do limite de 512 MiB.
+
+Os mesmos 21 casos do diagnóstico foram executados fora da carga. Nos quatro status, o plano da primeira página passou a usar `Index Scan` sem `Sort`. Na página 1.000 de `pago`, os blocos temporários gravados passaram de 11.508 para 0. A contagem passou a usar `Index Only Scan` nos quatro status e ainda verifica a visibilidade das linhas. O índice ocupa 22.118.400 bytes (`21 MB` na saída do PostgreSQL). [Planos antes](https://github.com/Lhferraaz/t4h-estagio-pesquisa-ferraz/blob/f017e80e98f19dc4e741f41ed47fe7eb8f9a73a5/diagnostico/pedidos-por-status/planos.txt) · [Página de pago com índice](diagnostico/indice-pedidos-status/planos.txt#L550) · [Contagem com índice](diagnostico/indice-pedidos-status/planos.txt#L31)
+
+Houve exceções. Na página 1.000 de `pendente`, o PostgreSQL usou bitmap para localizar os pedidos e ordenou em disco. Para `pago` nas páginas 15.000 e 15.001, o plano escolheu varrer a tabela e ordenar. O índice oferece um caminho mais barato em muitos casos, e o PostgreSQL ainda decide conforme o status e a profundidade. [Plano de pendente](diagnostico/indice-pedidos-status/planos.txt#L1225) · [Plano da página 15.000](diagnostico/indice-pedidos-status/planos.txt#L1398)
+
+A H5 usou um volume isolado criado com os dados do desafio. As três rodadas registram `031b771`, árvore limpa, os mesmos limites e parâmetros da H4. As verificações por amostragem não detectaram Chrome. As 42 respostas do contrato passaram antes e depois de cada rodada. [SQL usado nos planos](https://github.com/Lhferraaz/t4h-estagio-pesquisa-ferraz/blob/f017e80e98f19dc4e741f41ed47fe7eb8f9a73a5/diagnostico/pedidos-por-status/planos.sql)
