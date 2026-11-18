@@ -19,3 +19,11 @@
 
 - **Proposta.** A pessoa levantou a hipótese de que um índice B-tree em `clientes(lower(email))` aumentaria a vazão. A consulta já compara `lower(email)` e o plano inicial fez uma varredura na tabela. [Diagnóstico](diagnostico/leitura-inicial.md#o-que-os-planos-mostram)
 - **Como testar.** Comparar o plano e a carga da versão atual com a mesma versão acrescida somente do índice. Conferir o contrato, incluindo os casos que variam maiúsculas e minúsculas. Comparar a vazão geral, o p95 da rota e o custo de armazenar o índice.
+
+## Pedidos por status e relatórios
+
+- **Primeiro candidato pelo tempo SQL.** Testar um índice B-tree em `pedidos(status, criado_em DESC, id DESC)`. A página liderou em tempo acumulado e ordenou em arquivo temporário no plano examinado. Usar a `main` medida como referência. Conferir o plano da página, o da contagem e o contrato antes da carga.
+- **Depois da página.** Medir o trabalho restante do `count(*)` exato. A contagem e a paginação são duas consultas da mesma rota.
+- **Candidatos entre os relatórios.** Em vendas por dia, testar acesso indexado pelo período e agregação no SQL em experimentos independentes. Em top produtos, investigar a agregação antes do `LIMIT` se a prioridade for reduzir os piores tempos por chamada.
+
+A ordem acima é uma proposta com base em uma rodada de diagnóstico. [Ranking, planos e motivos](diagnostico/pg-stat-statements/README.md#o-que-apareceu-sob-carga).

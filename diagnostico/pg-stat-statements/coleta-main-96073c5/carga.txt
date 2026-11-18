@@ -1,0 +1,17 @@
+Medição: diagnostico-pg-stat-statements
+Carga: 20 usuários virtuais por 60s
+
+Requisições:        556
+Requisições/s:      8.73
+Tempo de resposta:  mediana 1398.6 ms | p95 6290.4 ms | p99 13926.5 ms
+Erros:              0.00%
+
+Por rota:
+rota                  req       mediana       p95           p99           erros   
+cliente               151       614.5 ms      1647.2 ms     2095.5 ms     0.0%    
+cliente-por-email     80        1305.0 ms     2782.7 ms     2986.7 ms     0.0%    
+pedidos-do-cliente    116       2097.0 ms     3697.5 ms     4263.5 ms     0.0%    
+pedidos-por-status    79        4520.5 ms     10768.1 ms    17390.9 ms    0.0%    
+busca-produtos        85        906.0 ms      1814.7 ms     2427.6 ms     0.0%    
+vendas-por-dia        38        3258.7 ms     6937.1 ms     9243.4 ms     0.0%    
+top-produtos          7         14695.3 ms    26691.8 ms    28058.7 ms    0.0%    
