@@ -57,3 +57,8 @@ Registro de trabalho para apoiar a seção **9. Uso de IA** do artigo. O enuncia
 
 - **Pedido da pessoa.** Comparar a combinação de lote, índice e pool de 10 conexões e conferir os números da linha de base. Depois que fechou o Chrome, pediu para repetir as medições da combinação e desconsiderar as tentativas anteriores.
 - **Contribuição da IA.** Conferiu os `resumo.txt` da base e das variantes intermediárias. Atualizou a branch do pool com a `main`, preservou os registros dos dois experimentos e manteve o banco do teste do índice. Validou o contrato, repetiu a carga três vezes com o Chrome fechado e registrou as medianas em `experimentos/pool-com-indice.md`.
+
+## 17/11/2026 — Índice dos itens por pedido
+
+- **Decisão e previsão da pessoa.** Propôs um índice simples em `itens_pedido(pedido_id)` para localizar itens pelo pedido. Previu mais requisições por segundo e p95 geral menor, dado o custo da busca existente.
+- **Contribuição da IA.** Executou o plano da consulta em lote em uma transação somente leitura, confirmou a varredura em `itens_pedido` e salvou a saída. Comparou o índice simples com o composto e registrou a hipótese e o critério de medição antes da alteração.

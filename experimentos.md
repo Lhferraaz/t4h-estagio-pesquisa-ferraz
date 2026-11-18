@@ -101,3 +101,10 @@ A hipótese de ganho com `clientes(lower(email))` fica registrada para um experi
 ## Pool combinado com o índice
 
 A combinação foi medida separadamente, com o índice da H3 e o mesmo pool de 10 conexões da H2. [Hipótese, comparação com a base original e três novas rodadas](experimentos/pool-com-indice.md).
+
+## H4 — Índice dos itens por pedido
+
+- **Decisão e previsão da pessoa.** Criar um índice simples em `itens_pedido(pedido_id)` para localizar os itens pelo pedido. A pessoa espera aumento de requisições por segundo e queda na mediana dos p95 gerais, pois a busca atual examina muitos itens para devolver poucos.
+- **Evidência antes da mudança.** A consulta em lote do cliente 7 recebeu cinco IDs e devolveu dez itens. O PostgreSQL fez `Parallel Seq Scan` em `itens_pedido`. Naquela execução, o único índice de `itens_pedido` era o da chave primária em `id`. [Plano antes do índice](diagnostico/lote-itens-sem-indice.txt#L20)
+- **Hipótese de trabalho.** Um índice B-tree em `pedido_id` deve dar ao planejador um caminho de acesso mais seletivo para `pedido_id = ANY(...)`, reduzindo os blocos acessados. Esperamos menor p95 na rota de pedidos do cliente, que tem peso de 20% na carga. O impacto no p95 geral depende do peso das outras consultas lentas. Sob carga contínua, o banco pode continuar perto do limite de CPU mesmo com mais vazão.
+- **Como medir.** Comparar o plano do cliente 7 e registrar os blocos acessados e o espaço do novo índice. Validar o contrato e executar três rodadas com 20 usuários virtuais, 60 s, aquecimento de 15 s e semente 42. Comparar as medianas de vazão, p50 e p95 gerais, p95 da rota, CPU e memória com a [versão com lote, índice de pedidos e pool de 10](experimentos/pool-com-indice.md#resultado-da-combinação). Consultar também a linha de base original.
