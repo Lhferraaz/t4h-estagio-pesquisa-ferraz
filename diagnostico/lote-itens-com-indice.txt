@@ -1,0 +1,46 @@
+Consulta atual de itens em lote para o cliente 7 após criar o índice
+BEGIN READ ONLY;
+BEGIN
+SET LOCAL TIME ZONE 'UTC';
+SET
+SELECT ARRAY(
+    SELECT id
+    FROM pedidos
+    WHERE cliente_id = 7
+    ORDER BY criado_em DESC, id DESC
+) AS ids 
+IDs recebidos pela consulta: {329786,429786,29786,129786,229786}
+EXPLAIN (ANALYZE, BUFFERS)
+SELECT i.pedido_id, i.produto_id, pr.nome AS produto_nome,
+       i.quantidade, i.preco_unitario_centavos
+FROM itens_pedido i
+JOIN produtos pr ON pr.id = i.produto_id
+WHERE i.pedido_id = ANY('{329786,429786,29786,129786,229786}'::integer[])
+ORDER BY i.pedido_id, i.id;
+QUERY PLAN
+Incremental Sort  (cost=10.02..168.77 rows=18 width=47) (actual time=0.290..0.291 rows=10 loops=1)
+  Sort Key: i.pedido_id, i.id
+  Presorted Key: i.pedido_id
+  Full-sort Groups: 1  Sort Method: quicksort  Average Memory: 25kB  Peak Memory: 25kB
+  Buffers: shared hit=46 read=7
+  ->  Nested Loop  (cost=0.71..167.96 rows=18 width=47) (actual time=0.200..0.278 rows=10 loops=1)
+        Buffers: shared hit=46 read=7
+        ->  Index Scan using itens_pedido_pedido_id_idx on itens_pedido i  (cost=0.43..26.47 rows=18 width=20) (actual time=0.183..0.251 rows=10 loops=1)
+              Index Cond: (pedido_id = ANY ('{329786,429786,29786,129786,229786}'::integer[]))
+              Buffers: shared hit=16 read=7
+        ->  Index Scan using produtos_pkey on produtos pr  (cost=0.29..7.86 rows=1 width=31) (actual time=0.002..0.002 rows=1 loops=10)
+              Index Cond: (id = i.produto_id)
+              Buffers: shared hit=30
+Planning:
+  Buffers: shared hit=109 read=5
+Planning Time: 0.641 ms
+Execution Time: 0.306 ms
+(17 rows)
+Tamanho do índice
+SELECT pg_relation_size('public.itens_pedido_pedido_id_idx') AS bytes,
+       pg_size_pretty(pg_relation_size('public.itens_pedido_pedido_id_idx')) AS tamanho;
+bytes|tamanho
+22003712|21 MB
+(1 row)
+ROLLBACK;
+ROLLBACK

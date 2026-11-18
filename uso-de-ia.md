@@ -62,3 +62,5 @@ Registro de trabalho para apoiar a seção **9. Uso de IA** do artigo. O enuncia
 
 - **Decisão e previsão da pessoa.** Propôs um índice simples em `itens_pedido(pedido_id)` para localizar itens pelo pedido. Previu mais requisições por segundo e p95 geral menor, dado o custo da busca existente.
 - **Contribuição da IA.** Executou o plano da consulta em lote em uma transação somente leitura, confirmou a varredura em `itens_pedido` e salvou a saída. Comparou o índice simples com o composto e registrou a hipótese e o critério de medição antes da alteração.
+
+- **Execução e verificação.** O Codex adicionou o índice em um arquivo SQL novo, manteve as configurações da API e do pool e validou as 42 respostas. Fez três rodadas, comparou as medianas e salvou o plano com índice e o espaço ocupado. As duas previsões ficaram registradas antes do commit do índice.
