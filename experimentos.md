@@ -101,3 +101,35 @@ A hipótese de ganho com `clientes(lower(email))` fica registrada para um experi
 ## Pool combinado com o índice
 
 A combinação foi medida separadamente, com o índice da H3 e o mesmo pool de 10 conexões da H2. [Hipótese, comparação com a base original e três novas rodadas](experimentos/pool-com-indice.md).
+
+## H4 — Índice dos itens por pedido
+
+- **Decisão e previsão da pessoa.** Criar um índice simples em `itens_pedido(pedido_id)` para localizar os itens pelo pedido. A pessoa espera aumento de requisições por segundo e queda na mediana dos p95 gerais, pois a busca atual examina muitos itens para devolver poucos.
+- **Evidência antes da mudança.** A consulta em lote do cliente 7 recebeu cinco IDs e devolveu dez itens. O PostgreSQL fez `Parallel Seq Scan` em `itens_pedido`. Naquela execução, o único índice de `itens_pedido` era o da chave primária em `id`. [Plano antes do índice](diagnostico/lote-itens-sem-indice.txt#L20)
+- **Hipótese de trabalho.** Um índice B-tree em `pedido_id` deve dar ao planejador um caminho de acesso mais seletivo para `pedido_id = ANY(...)`, reduzindo os blocos acessados. Esperamos menor p95 na rota de pedidos do cliente, que tem peso de 20% na carga. O impacto no p95 geral depende do peso das outras consultas lentas. Sob carga contínua, o banco pode continuar perto do limite de CPU mesmo com mais vazão.
+- **Como medir.** Comparar o plano do cliente 7 e registrar os blocos acessados e o espaço do novo índice. Validar o contrato e executar três rodadas com 20 usuários virtuais, 60 s, aquecimento de 15 s e semente 42. Comparar as medianas de vazão, p50 e p95 gerais, p95 da rota, CPU e memória com a [versão com lote, índice de pedidos e pool de 10](experimentos/pool-com-indice.md#resultado-da-combinação). Consultar também a linha de base original.
+
+### Resultado da H4
+
+Mediana de três rodadas por versão. Para CPU e memória, a tabela usa a mediana das médias por rodada.
+
+| Métrica | Base original | Lote + índice de pedidos + pool de 10 | Versão anterior + índice de itens |
+| --- | ---: | ---: | ---: |
+| Requisições/s | 2,87 | 6,11 | 8,73 |
+| p50 geral | 1.299,9 ms | 1.906,7 ms | 1.305,7 ms |
+| p95 geral | 21.354,1 ms | 7.596,3 ms | 5.684,8 ms |
+| p99 geral | 25.935,8 ms | 11.580,0 ms | 13.448,3 ms |
+| p95 de pedidos do cliente | 24.349,4 ms | 7.629,6 ms | 3.958,7 ms |
+| Erros HTTP | 0,00% | 0,00% | 0,00% |
+| CPU média do banco | 98,5% | 100,2% | 99,6% |
+| Memória média do banco | 405,7 MiB | 363,6 MiB | 410,6 MiB |
+| CPU média da API | 5,9% | 7,4% | 10,2% |
+| Memória média da API | 32,8 MiB | 33,2 MiB | 43,5 MiB |
+
+Arquivos de origem. Base original [B1](resultados/20261117-020419-00-linha-de-base/), [B2](resultados/20261117-020610-00-linha-de-base/), [B3](resultados/20261117-020801-00-linha-de-base/). Referência direta [R1](resultados/20261117-212530-04-pool-10-com-indice/), [R2](resultados/20261117-212701-04-pool-10-com-indice/), [R3](resultados/20261117-212832-04-pool-10-com-indice/). Índice de itens [I1](resultados/20261117-214631-05-indice-itens-pedido/), [I2](resultados/20261117-214801-05-indice-itens-pedido/), [I3](resultados/20261117-214932-05-indice-itens-pedido/). Os números vêm de `resumo.txt` e `recursos.txt`.
+
+Todas as rodadas com o índice de itens tiveram maior vazão (8,56 a 9,05 contra 5,94 a 6,16 req/s) e menor p95 geral (5.503,6 a 6.311,8 ms contra 7.309,6 a 7.701,4 ms). O p95 de pedidos do cliente também caiu nas três rodadas (3.699,2 a 3.982,0 ms contra 7.094,9 a 8.359,3 ms). A mediana do p99 geral subiu e as faixas se sobrepõem. A CPU do PostgreSQL continuou perto do limite durante a carga e a memória média dos dois serviços subiu.
+
+A consulta em lote do cliente 7 encontrou os mesmos dez itens usando os mesmos cinco IDs. O plano trocou `Parallel Seq Scan` por `Index Scan` com `pedido_id = ANY(...)` e usou ordenação incremental. No nó de acesso a `itens_pedido`, o plano sem índice registrou `shared hit=2539 read=7016`. Com o índice, o nó registrou `shared hit=16 read=7`. O índice ocupou 22.003.712 bytes (`21 MB` na saída do PostgreSQL). Os planos foram coletados fora da carga. O teste HTTP usa rotas de leitura, e o custo de manter o índice em escritas fica em aberto. [Plano sem índice](diagnostico/lote-itens-sem-indice.txt#L20) · [Plano e tamanho com índice](diagnostico/lote-itens-com-indice.txt#L12)
+
+O banco com o índice foi criado em um volume isolado, usando os scripts de dados do desafio. A referência foi medida anteriormente. As três rodadas da H4 registraram `c88e3f1`, árvore limpa, os mesmos parâmetros e limites da referência. Nas verificações por amostragem não apareceu Chrome nem Chromium. As 42 respostas do contrato passaram antes e depois da carga em todas as rodadas.

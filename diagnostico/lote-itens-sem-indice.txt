@@ -1,0 +1,54 @@
+Consulta atual de itens em lote para o cliente 7
+BEGIN READ ONLY;
+BEGIN
+SET LOCAL TIME ZONE 'UTC';
+SET
+Índices existentes em itens_pedido
+SELECT indexdef
+FROM pg_indexes
+WHERE schemaname = 'public' AND tablename = 'itens_pedido'
+ORDER BY indexname;
+indexdef
+CREATE UNIQUE INDEX itens_pedido_pkey ON public.itens_pedido USING btree (id)
+(1 row)
+SELECT ARRAY(
+    SELECT id
+    FROM pedidos
+    WHERE cliente_id = 7
+    ORDER BY criado_em DESC, id DESC
+) AS ids 
+IDs recebidos pela consulta: {329786,429786,29786,129786,229786}
+EXPLAIN (ANALYZE, BUFFERS)
+SELECT i.pedido_id, i.produto_id, pr.nome AS produto_nome,
+       i.quantidade, i.preco_unitario_centavos
+FROM itens_pedido i
+JOIN produtos pr ON pr.id = i.produto_id
+WHERE i.pedido_id = ANY('{329786,429786,29786,129786,229786}'::integer[])
+ORDER BY i.pedido_id, i.id;
+QUERY PLAN
+Gather Merge  (cost=20774.28..20776.15 rows=16 width=47) (actual time=37.880..41.393 rows=10 loops=1)
+  Workers Planned: 2
+  Workers Launched: 2
+  Buffers: shared hit=2584 read=7016
+  ->  Sort  (cost=19774.26..19774.28 rows=8 width=47) (actual time=35.676..35.677 rows=3 loops=3)
+        Sort Key: i.pedido_id, i.id
+        Sort Method: quicksort  Memory: 25kB
+        Buffers: shared hit=2584 read=7016
+        Worker 0:  Sort Method: quicksort  Memory: 25kB
+        Worker 1:  Sort Method: quicksort  Memory: 25kB
+        ->  Nested Loop  (cost=0.29..19774.14 rows=8 width=47) (actual time=17.278..35.645 rows=3 loops=3)
+              Buffers: shared hit=2570 read=7016
+              ->  Parallel Seq Scan on itens_pedido i  (cost=0.00..19711.25 rows=8 width=20) (actual time=17.259..35.612 rows=3 loops=3)
+                    Filter: (pedido_id = ANY ('{329786,429786,29786,129786,229786}'::integer[]))
+                    Rows Removed by Filter: 499997
+                    Buffers: shared hit=2539 read=7016
+              ->  Index Scan using produtos_pkey on produtos pr  (cost=0.29..7.86 rows=1 width=31) (actual time=0.008..0.008 rows=1 loops=10)
+                    Index Cond: (id = i.produto_id)
+                    Buffers: shared hit=31
+Planning:
+  Buffers: shared hit=88 read=4
+Planning Time: 1.272 ms
+Execution Time: 41.409 ms
+(23 rows)
+ROLLBACK;
+ROLLBACK
