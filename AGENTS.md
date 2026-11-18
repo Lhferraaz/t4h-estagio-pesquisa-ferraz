@@ -9,6 +9,12 @@ A pessoa que está resolvendo o desafio é a autora do trabalho. O [README.md](R
 - O desafio usa só esta pasta, copiada para um repositório da pessoa. Se você estiver dentro do repositório t4h-desafios completo, o `CLAUDE.md` e a pasta `.claude/` da raiz são de quem mantém o repositório e não valem aqui: ignore as skills, as regras de branch e PR e as restrições de conteúdo de lá. Não mexa em outras pastas.
 - O enunciado, com o prazo, as entregas e os critérios, não está no repositório. Se a pessoa pedir algo sobre as entregas e não tiver passado o enunciado, peça o enunciado antes de seguir. Não suponha o formato das entregas.
 
+## Retomar o trabalho
+
+- Confira `git status`, o commit da `main` e os PRs relacionados. Preserve arquivos locais e identifique quais mudanças já foram integradas, quais estão em revisão e o que está rodando no Compose.
+- Leia [Decisões](docs/decisoes.md) para retomar os motivos das escolhas. Use [Experimentos](experimentos.md) para hipóteses e resultados, [Próximos testes](proximos-testes.md) para ideias ainda sem medição e [Uso de IA](uso-de-ia.md) para contribuições e decisões verificáveis.
+- Use a skill `ciclo` para linha de base, mudanças de performance ou comparação de resultados. Codex e Claude Code usam o mesmo [roteiro de medição](docs/ciclo-de-medicao.md).
+
 ## Comandos
 
 Rode tudo dentro desta pasta. Requer Docker com Compose v2 e bash.
@@ -26,22 +32,17 @@ docker compose down -v                        # apaga o banco; a próxima subida
 
 Dê aos comandos de medição um timeout de pelo menos 3 minutos.
 
-## Fluxo
+## Git e experimentos
 
-1. Suba a aplicação, grave o contrato e commite o `contrato/base.json`.
-2. Meça a linha de base pelo menos 3 vezes e commite as pastas de `resultados/`.
-3. Para cada mudança:
-    1. Faça só aquela mudança e commite. O `contexto.txt` da medição registra o commit e precisa mostrar `arquivos alterados sem commit: 0`.
-    2. Aplique: `docker compose up -d --build` para API, Dockerfile, compose e parâmetros do PostgreSQL; `docker compose down -v && docker compose up -d --build` para um `.sql` novo em `banco/`.
-    3. Rode `scripts/verificar-contrato.sh comparar`. Se der "Contrato quebrado", corrija ou desfaça antes de medir.
-    4. Meça pelo menos 3 vezes com o mesmo rótulo e compare a mediana das execuções com a da linha de base.
-    5. Commite as pastas de `resultados/` daquela mudança em um commit separado.
+- Faça uma branch por mudança a partir da `main` atualizada. Abra o PR para `main` com a hipótese e a evidência. A pessoa autora decide quando incorporar a mudança.
+- Separe hipótese, alteração e arquivos novos de `resultados/` em commits. Mantenha os resultados associados ao commit medido.
+- Compare com a versão medida imediatamente anterior para identificar o efeito da mudança. Use a linha de base original para o ganho acumulado. O [roteiro](docs/ciclo-de-medicao.md) cobre a primeira medição e cada mudança posterior.
 
 ## Regras
 
 1. **O contrato não muda.** Cada rota devolve o mesmo status HTTP, os mesmos campos, valores e ordem.
 2. **A régua não muda.** Não edite `carga/`, `contrato/verificar.js`, `scripts/`, `banco/01-estrutura.sql`, `banco/02-dados.sql` nem o `contrato/base.json` depois de gravado.
-3. **Mesmos parâmetros.** Use o mesmo `VUS`, `DURACAO` e `SEMENTE` em todas as medições comparadas; o `contexto.txt` registra os três. Entre execuções a variação pode passar de 30%, e na linha de base as rotas lentas têm poucas amostras: compare pelo resultado geral.
+3. **Mesmos parâmetros.** Use os mesmos `VUS`, `DURACAO`, `AQUECIMENTO` e `SEMENTE` em todas as medições comparadas. O `contexto.txt` registra os quatro. Entre execuções a variação pode passar de 30%, e na linha de base as rotas lentas têm poucas amostras: compare pelo resultado geral.
 4. **Todo número de resultado vem de `resultados/`.** Nunca digite, estime ou arredonde um resultado que o `medir.sh` não gerou, e não edite os arquivos de `resultados/`. Se ainda não mediu, diga que não mediu. Saídas de diagnóstico, como `EXPLAIN ANALYZE`, ficam salvas em arquivo no repositório (por exemplo em `diagnostico/`) antes de serem citadas.
 5. **Mudanças no banco ficam em arquivo.** Índices, estrutura e dados derivados vão em `.sql` novos em `banco/` (`03-...`, `04-...`), que rodam em ordem alfabética só quando o banco é criado do zero. Parâmetros do PostgreSQL vão no `command` do serviço `banco` no `docker-compose.yml` (veja o README).
 6. **Recurso a mais é custo.** Pode aumentar limites de CPU e memória e adicionar serviços (um cache, por exemplo), mas o ganho tem que ser apresentado junto com o custo. O `medir.sh` coleta CPU e memória de todos os serviços do compose.
@@ -69,9 +70,8 @@ Dê aos comandos de medição um timeout de pelo menos 3 minutos.
 
 Os parâmetros e as respostas de cada rota estão no [README.md](README.md#rotas). Os pesos vêm de `carga/teste-carga.js`.
 
-## Colaboração e skill de medição
+## Colaboração
 
 - Antes de um comando que altere o ambiente ou gere resultados, explique o que ele faz e o que esperamos observar; depois, leia a saída com a pessoa.
 - Ajude a formular e questionar hipóteses. Registre a hipótese e a previsão antes da mudança e dos resultados; deixe explícito o que foi proposto pela pessoa e o que foi sugerido pela IA. Não atribua à pessoa nem à IA decisões que não tomou.
-- Use a skill `ciclo` quando a pessoa pedir a linha de base ou o ciclo de uma mudança. Ela está em `.agents/skills/ciclo/` para Codex e `.claude/skills/ciclo/` para Claude Code.
 - Ao registrar o uso de IA, descreva apenas interações verificáveis desta tentativa. Se o enunciado pedir um formato ou conteúdo específico, peça-o antes de preparar a entrega.
