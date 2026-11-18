@@ -17,10 +17,9 @@ Este registro explica por que o projeto segue as escolhas abaixo. Os números e 
 | Buscar os itens dos pedidos em lote. | Reduziu as chamadas SQL da rota. A busca em uma consulta com todos os joins ficou como alternativa futura pelo risco de mudar o contrato. | [H1](../experimentos.md#resultado-da-h1) · [PR #4](https://github.com/Lhferraaz/t4h-estagio-pesquisa-ferraz/pull/4) |
 | Criar um índice B-tree simples em `pedidos(cliente_id)`. | O plano passou a usar o índice para buscar os pedidos do cliente. A vazão e o p95 da rota melhoraram nas três rodadas. | [H3](../experimentos.md#resultado-da-h3) · [PR #6](https://github.com/Lhferraaz/t4h-estagio-pesquisa-ferraz/pull/6) |
 | Manter um `pg.Pool` com até 10 conexões por enquanto. | A API tem uma instância de Node.js. Com o índice de pedidos, o pool aumentou a vazão e reduziu o p95 geral, com piora do p50. A pessoa autora decidiu manter essa configuração e testar outros tamanhos depois. | [Teste com o índice](../experimentos/pool-com-indice.md#resultado-da-combinação) · [PR #5](https://github.com/Lhferraaz/t4h-estagio-pesquisa-ferraz/pull/5) |
+| Criar um índice B-tree simples em `itens_pedido(pedido_id)`. | O índice aumentou a vazão e reduziu o p95 geral e o da rota de pedidos do cliente. A mediana do p99 geral e o uso médio de memória subiram no teste. | [H4 e PR #7](https://github.com/Lhferraaz/t4h-estagio-pesquisa-ferraz/pull/7) |
 
-## Em revisão
-
-Na revisão de 17/11/2026, o índice simples em `itens_pedido(pedido_id)` estava medido no PR #7. A revisão deve considerar o ganho de vazão e p95, o aumento da mediana do p99 e o custo de memória e armazenamento. O PR indica se a mudança já entrou na `main`. [PR #7 e resultados](https://github.com/Lhferraaz/t4h-estagio-pesquisa-ferraz/pull/7)
+## Próximos testes
 
 O pool de quatro conexões, o índice em `lower(email)` e a consulta única com joins estão em [próximos testes](../proximos-testes.md).
 
