@@ -21,6 +21,7 @@ consultas AS (
                WHEN sql LIKE 'SELECT * FROM produtos WHERE nome ILIKE %' THEN 'busca de produtos'
                WHEN sql LIKE 'SELECT p.id AS pedido_id, p.criado_em%' THEN 'vendas por dia'
                WHEN sql LIKE 'SELECT pr.id, pr.nome, pr.categoria, sum(i.quantidade)%' THEN 'top produtos'
+               WHEN sql LIKE 'SELECT pr.id, pr.nome, pr.categoria, ranking.unidades,%' THEN 'top produtos'
                ELSE 'sem classificação'
            END AS consulta
     FROM normalizadas
