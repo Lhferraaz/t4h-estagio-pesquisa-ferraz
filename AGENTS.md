@@ -46,7 +46,7 @@ Dê aos comandos de medição um timeout de pelo menos 3 minutos.
 4. **Todo número de resultado vem de `resultados/`.** Nunca digite, estime ou arredonde um resultado que o `medir.sh` não gerou, e não edite os arquivos de `resultados/`. Se ainda não mediu, diga que não mediu. Saídas de diagnóstico, como `EXPLAIN ANALYZE`, ficam salvas em arquivo no repositório (por exemplo em `diagnostico/`) antes de serem citadas.
 5. **Mudanças no banco ficam em arquivo.** Índices, estrutura e dados derivados vão em `.sql` novos em `banco/` (`03-...`, `04-...`), que rodam em ordem alfabética só quando o banco é criado do zero. Parâmetros do PostgreSQL vão no `command` do serviço `banco` no `docker-compose.yml` (veja o README).
 6. **Recurso a mais é custo.** Pode aumentar limites de CPU e memória e adicionar serviços (um cache, por exemplo), mas o ganho tem que ser apresentado junto com o custo. O `medir.sh` coleta CPU e memória de todos os serviços do compose.
-7. **Fonte real ou nenhuma.** Ao citar documentação, artigo ou caso de mercado, use só fontes que você abriu e que existem, com link. Não invente referência.
+7. **Fonte real ou nenhuma.** Ao citar documentação, artigo ou caso de mercado, use só fontes que você abriu e que existem, com link. Não invente referência. Siga o [padrão de registro e citação](docs/fontes.md#como-registrar-e-citar) ao consultar ou acrescentar fontes.
 
 ## O que pode mudar
 

@@ -6,6 +6,8 @@ Registro de trabalho para apoiar a seção **9. Uso de IA** do artigo. O enuncia
 
 - **Decisão da pessoa.** Decidiu estudar as fontes antes da redação do artigo para fundamentar a interpretação dos experimentos. Selecionou a Lei de Little para a discussão de carga, vazão e latência média e o artigo de Patricia Selinger e colegas para a leitura dos planos com índice.
 - **Contribuição da IA.** Conferiu as publicações e registrou onde elas se aplicam aos experimentos. [Carga e pool](experimentos.md#h2--reutilizar-conexões-com-pgpool) · [Índice de pedidos por status](experimentos.md#h5--índice-composto-para-pedidos-por-status)
+- **Pedido e verificação da pessoa.** A pessoa pediu a padronização das citações para o artigo e informou que verificou as três fontes acadêmicas antes da inclusão. Elas são Dean e Barroso, Selinger e colegas, e Little.
+- **Contribuição da IA.** Inventariou os links dos registros de pesquisa, conferiu o acesso e reuniu as afirmações sustentadas, as limitações e os pontos de uso no [registro central de fontes](docs/fontes.md).
 
 ## 17/11/2026 — Configuração do trabalho
 
