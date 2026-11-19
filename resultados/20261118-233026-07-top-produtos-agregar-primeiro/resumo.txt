@@ -1,0 +1,17 @@
+Medição: 07-top-produtos-agregar-primeiro
+Carga: 20 usuários virtuais por 60s
+
+Requisições:        1101
+Requisições/s:      17.30
+Tempo de resposta:  mediana 803.5 ms | p95 2914.8 ms | p99 6994.3 ms
+Erros:              0.00%
+
+Por rota:
+rota                  req       mediana       p95           p99           erros   
+cliente               288       349.1 ms      802.3 ms      1228.0 ms     0.0%    
+cliente-por-email     166       904.4 ms      1394.6 ms     1745.7 ms     0.0%    
+pedidos-do-cliente    236       1098.5 ms     2098.0 ms     2758.4 ms     0.0%    
+pedidos-por-status    155       1113.4 ms     2904.5 ms     3841.8 ms     0.0%    
+busca-produtos        164       596.8 ms      984.7 ms      1210.2 ms     0.0%    
+vendas-por-dia        75        2514.5 ms     4998.9 ms     6421.9 ms     0.0%    
+top-produtos          17        7396.7 ms     14215.6 ms    14605.8 ms    0.0%    
