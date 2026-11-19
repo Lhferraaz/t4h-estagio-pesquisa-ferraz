@@ -25,3 +25,8 @@
 
 - **Proposta.** A pessoa levantou a hipótese de que um índice B-tree em `clientes(lower(email))` aumentaria a vazão. A consulta já compara `lower(email)` e o plano inicial fez uma varredura na tabela. [Diagnóstico](diagnostico/leitura-inicial.md#o-que-os-planos-mostram)
 - **Como testar.** Comparar o plano e a carga da versão atual com a mesma versão acrescida somente do índice. Conferir o contrato, incluindo os casos que variam maiúsculas e minúsculas. Comparar a vazão geral, o p95 da rota e o custo de armazenar o índice.
+
+## Totais calculados previamente para top produtos
+
+- **View materializada.** Uma leitura dos totais prontos pode reduzir o trabalho a cada chamada. Ficou em aberto porque o ranking pode ficar defasado entre atualizações. Para testar, definir a defasagem permitida e medir tempo e custo do refresh, espaço e latência de leitura. [PostgreSQL 16](https://www.postgresql.org/docs/16/rules-materializedviews.html)
+- **Tabela de totais transacionais.** Pode servir o ranking pronto e refletir as vendas confirmadas. Para testar, é preciso ter um caminho de escrita e atualizar os totais na mesma transação, incluindo alterações e cancelamentos. Medir também o custo das escritas. [Alternativas no diagnóstico](diagnostico/top-produtos/README.md#alternativas)
