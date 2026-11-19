@@ -1,0 +1,5 @@
+container                            amostras  cpu_media    cpu_max    mem_media      mem_max
+desafio-indice-email-api-1                 31       2.9%       5.8%     78.7 MiB     79.8 MiB
+desafio-indice-email-banco-1               31     100.3%     100.0%    298.8 MiB    369.5 MiB
+
+cpu_percentual: 100% = 1 CPU inteira.

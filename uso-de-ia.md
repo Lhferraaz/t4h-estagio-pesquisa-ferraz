@@ -114,3 +114,16 @@ Registro de trabalho para apoiar a seção **9. Uso de IA** do artigo. O enuncia
 - **Contribuição da IA.** Conferiu o peso da rota, contou suas chamadas nas três rodadas da H6 e relacionou a previsão ao trabalho de busca e à espera no banco. Registrou a hipótese antes de adicionar o índice.
 - **Execução e verificação.** O Codex criou apenas o índice, conferiu o plano e o espaço ocupado, validou as 42 respostas e mediu três rodadas. A pessoa fechou o Chrome. A busca e o p50 geral melhoraram e o p95 geral subiu. [Resultado da H7](experimentos.md#resultado-da-h7)
 - **Integração.** A pessoa autorizou o merge dos PRs abertos e pediu uma avaliação dos próximos experimentos, incluindo o ambiente dos containers. O Codex conferiu o PR #13 e registrou a piora de p95 junto dos ganhos observados.
+
+## 19/11/2026 — Coleta de latência na H7
+
+- **Pedido da pessoa.** Rodar a coleta da cauda de latência na versão atual para descobrir quais rotas aparecem acima do p95 geral.
+- **Contribuição da IA.** Reaproveitou o ambiente isolado de `pg_stat_statements`, ajustou o rótulo da consulta de top produtos para sua versão atual e coletou latências individuais com a régua original. Capturou também os contadores de restrição de CPU do banco e da API.
+- **Verificação.** Confirmou o contrato antes e depois, bateu os totais e o p95 do k6 com as amostras e salvou a divisão da cauda por rota. A rodada diagnóstica caracterizou a H7 e deixou a comparação causal com a H6 em aberto. [Coleta e evidências](diagnostico/p95-h7/README.md)
+
+## H8 — Agregação de vendas por dia
+
+- **Decisão da pessoa.** Propôs retirar o campo `observacoes` que o Node descarta e escolheu levar os totais diários ao SQL. Preferiu medir a agregação antes de criar um índice de data.
+- **Contribuição da IA.** Comparou os planos de sete e 31 dias em um banco isolado, mediu os bytes das observações e explicou como preservar a diferença entre contagem de pedidos e soma de unidades. Registrou a hipótese antes da alteração.
+- **Execução e verificação.** O Codex mudou a agregação da rota para SQL, reaproveitou o volume da H7 e verificou o contrato antes e após três rodadas. Comparou também a resposta de 31 dias com os totais calculados a partir dos itens e conferiu um período sem vendas. Registrou os ganhos e a piora do p99 geral e do p95 de pedidos por status. [Resultado da H8](experimentos.md#resultado-da-h8)
+- **Integração.** A pessoa autorizou incorporar a H8 após a comparação com a H7. O Codex registrou a decisão e as contrapartidas das medições no PR.

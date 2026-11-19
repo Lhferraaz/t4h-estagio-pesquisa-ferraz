@@ -1,5 +1,7 @@
 # Experimentos
 
+Na preparação do artigo, selecionamos leituras científicas para aprofundar a interpretação dos experimentos. A Lei de Little ajuda a ler carga, vazão e latência média. O artigo de Selinger e colegas ajuda a explicar a escolha de caminhos de acesso e o papel da ordenação nos planos de consulta. Os valores observados vêm das rodadas registradas abaixo.
+
 ## Alternativas consideradas e descartadas
 
 | Onde | Alternativa | Motivo do descarte |
@@ -48,6 +50,8 @@ A primeira rodada do lote permanece preservada em [A1](resultados/20261117-02573
 - **Previsão:** com 10 conexões e 20 usuários virtuais, consultas podem esperar no pool. A redução da concorrência pode aliviar a disputa por CPU no PostgreSQL ou alongar a espera de consultas rápidas atrás de consultas lentas. O teste mede o efeito conjunto do reuso e do limite de 10. O consumo de CPU e memória será observado nos dois serviços.
 - **Como julgar:** manter as respostas do contrato e comparar a mediana de três execuções com 20 usuários virtuais, 60 s, aquecimento de 15 s e semente 42. Usar a rodada de itens em lote com Chrome fechado como referência imediata e a linha de base original como referência do ganho acumulado.
 - **Leitura:** [Pooling no node-postgres](https://node-postgres.com/features/pooling), [tamanho do pool](https://node-postgres.com/guides/pool-sizing) e [modos do PgBouncer](https://www.pgbouncer.org/features.html).
+
+**Leitura da carga.** A Lei de Little relaciona a quantidade média de requisições em andamento à vazão e ao tempo médio de resposta. No cenário fechado do k6, cada usuário virtual envia a próxima requisição quando a atual termina. Com os mesmos usuários virtuais, ciclos mais curtos podem aumentar a vazão. Os percentis vêm das medições. [John D. C. Little, *Little's Law as Viewed on Its 50th Anniversary*, Operations Research, 2011](https://pubsonline.informs.org/doi/abs/10.1287/opre.1110.0940?journalCode=opre)
 
 ### Resultado da H2
 
@@ -152,6 +156,8 @@ O banco com o índice foi criado em um volume isolado, usando os scripts de dado
 - **Hipótese e previsão.** O índice pode entregar os registros do status na ordem da consulta, reduzindo ou eliminando a ordenação em disco. Esperamos menor p95 para a rota e possível aumento de req/s e redução de p95 geral. O `OFFSET` ainda precisa avançar pelas entradas anteriores, e a contagem exata pode mudar de plano conforme o status e a visibilidade das linhas.
 - **Como medir.** Alterar apenas o índice. Comparar os planos da página e da contagem, medir o espaço ocupado, verificar o contrato e executar três rodadas com 20 usuários virtuais, 60 s, aquecimento de 15 s e semente 42. Usar a [H4](#resultado-da-h4) como referência imediata e a linha de base original para o ganho acumulado.
 
+**Base para entender o plano.** Selinger e colegas descrevem como um otimizador baseado em custo compara caminhos de acesso e considera a ordem produzida por cada um. Na H5, essa distinção orienta a leitura dos planos com varredura seguida de ordenação e com acesso pelo índice composto. [Patricia Selinger et al., *Access Path Selection in a Relational Database Management System*, ACM SIGMOD, 1979](https://web.eecs.umich.edu/~michjc/eecs584/Papers/selinger_1979.pdf)
+
 ### Resultado da H5
 
 Mediana de três rodadas por versão. CPU e memória médias são as medianas das médias por rodada. O pico na tabela é a maior amostra de memória das três rodadas.
@@ -251,3 +257,43 @@ O plano usou o índice tanto para o e-mail cadastrado quanto para o ausente. No 
 As três rodadas registraram `58d5f0c`, árvore limpa, os mesmos parâmetros da H6 e os mesmos limites de CPU e memória. A H7 usou um volume novo com os mesmos scripts de dados e com o novo índice. A amostragem não detectou Chrome ou Chromium. As 42 respostas do contrato foram iguais antes da carga e após cada rodada.
 
 **Decisão após medir.** A pessoa autorizou integrar os PRs abertos. A H7 foi mantida com o ganho de vazão e de p50 e a piora de p95 registrados. [Decisões](docs/decisoes.md#mudanças-integradas)
+
+## H8 — Agrupar vendas por dia no PostgreSQL
+
+- **Decisão da pessoa.** Retirar a coluna `observacoes` da consulta porque a API descarta seu conteúdo. A pessoa escolheu calcular os totais em SQL e deixar o índice de data para um teste separado. A escolha reduz o volume enviado ao Node e evita introduzir uma estrutura de armazenamento e manutenção para este experimento.
+- **Evidência.** Na semana do diagnóstico, a consulta de detalhes devolveu 12.945 linhas, com 3.551.664 bytes só no campo de observações. A versão agrupada devolveu sete linhas. O índice de data ajudou o banco a localizar os pedidos do período em um plano isolado. [Comparação dos planos](https://github.com/Lhferraaz/t4h-estagio-pesquisa-ferraz/blob/76bf5bb770923f8039b29dbf3d8af158b8517fe5/diagnostico/vendas-por-dia/README.md)
+- **Hipótese.** Agrupar por dia no PostgreSQL deve reduzir o p95 de vendas por dia e o trabalho de leitura e agregação no Node. Esperamos melhora na vazão e no p95 geral se a redução de tráfego compensar o trabalho de contar pedidos distintos e somar no banco. O efeito sob concorrência e na memória dos dois serviços será medido. [Agregações no PostgreSQL](https://www.postgresql.org/docs/16/functions-aggregate.html)
+- **Como medir.** Alterar a consulta e a formatação do JSON da rota. Preservar pedidos distintos, unidades, receita, intervalo inclusivo, filtro de cancelados, dias com itens e ordem crescente. Confirmar o contrato e comparar com a [H7](#resultado-da-h7) em três rodadas com 20 usuários virtuais, 60 s, aquecimento de 15 s e semente 42.
+
+### Resultado da H8
+
+Status **aplicada e medida** no commit `2d9d1d3`. A referência direta é a H7. A linha de base original mostra a evolução acumulada. As métricas abaixo são medianas das três rodadas, salvo os maiores valores amostrados de memória.
+
+| Métrica | Base original | H7 | H8 |
+| --- | ---: | ---: | ---: |
+| Requisições/s | 2,87 | 19,27 | 23,19 |
+| p50 geral | 1.299,9 ms | 598,1 ms | 492,6 ms |
+| p95 geral | 21.354,1 ms | 3.416,2 ms | 2.402,7 ms |
+| p99 geral | 25.935,8 ms | 7.256,0 ms | 9.623,8 ms |
+| p50 de vendas por dia | 6.614,3 ms | 2.604,7 ms | 1.494,9 ms |
+| p95 de vendas por dia | 12.543,8 ms | 5.819,2 ms | 2.809,0 ms |
+| p95 de pedidos por status | 19.588,4 ms | 2.986,0 ms | 6.847,2 ms |
+| Erros HTTP | 0,00% | 0,00% | 0,00% |
+| CPU média do banco | 98,5% | 100,3% | 100,0% |
+| Memória média do banco | 405,7 MiB | 320,2 MiB | 298,8 MiB |
+| CPU média da API | 5,9% | 19,2% | 3,0% |
+| Memória média da API | 32,8 MiB | 50,0 MiB | 78,7 MiB |
+| Maior amostra de memória do banco | 497,8 MiB | 497,3 MiB | 492,8 MiB |
+| Maior amostra de memória da API | 39,86 MiB | 72,24 MiB | 80,05 MiB |
+
+Rodadas da base [B1](resultados/20261117-020419-00-linha-de-base/), [B2](resultados/20261117-020610-00-linha-de-base/), [B3](resultados/20261117-020801-00-linha-de-base/). H7 [A1](resultados/20261119-000113-08-indice-email/), [A2](resultados/20261119-000238-08-indice-email/), [A3](resultados/20261119-000402-08-indice-email/). H8 [R1](resultados/20261119-030803-09-vendas-por-dia-sql/), [R2](resultados/20261119-030925-09-vendas-por-dia-sql/), [R3](resultados/20261119-031049-09-vendas-por-dia-sql/). As latências e a vazão vêm de `resumo.txt`. As médias de recursos vêm de `recursos.txt` e os picos de memória foram conferidos em `recursos.csv`.
+
+**A hipótese principal ganhou força.** Todas as rodadas da H8 tiveram mais vazão (22,78 a 23,55 contra 18,21 a 20,03 req/s), menor p95 geral (2.293,6 a 2.908,6 contra 3.200,6 a 3.655,3 ms) e menor p95 no relatório (2.298,0 a 3.067,0 contra 5.302,5 a 6.018,8 ms). Na H8, a rota de vendas por dia recebeu 104 a 108 chamadas por rodada.
+
+**Contrapartidas.** O p99 geral subiu nas três rodadas (7.997,0 a 9.898,8 contra 6.767,7 a 7.531,8 ms). Também subiu o p95 de pedidos por status. A atribuição da piora na cauda exige outra coleta. O banco continuou perto do limite de CPU. A memória média do banco caiu e a da API subiu. A CPU média da API caiu.
+
+O plano da consulta aplicada devolveu sete linhas para sete dias. As 42 respostas do contrato passaram antes da carga e após cada rodada. A resposta de 31 dias também bateu com os totais calculados a partir dos itens individuais, e um período sem vendas devolveu lista vazia. [Plano da H8](diagnostico/vendas-por-dia-h8.txt#L6)
+
+A H8 reaproveitou o volume da H7. As medições foram feitas mais tarde, com os mesmos parâmetros e limites e com a árvore limpa no commit medido. A amostragem durante as rodadas não detectou Chrome ou Chromium.
+
+**Decisão após medir.** A pessoa autorizou integrar a H8. Foram mantidos os ganhos de vazão e de p95 geral e do relatório. A piora do p99 geral e do p95 de pedidos por status segue registrada como contrapartida da medição. [Decisões](docs/decisoes.md#mudanças-integradas)
