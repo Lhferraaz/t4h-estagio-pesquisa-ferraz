@@ -75,3 +75,28 @@ Registro de trabalho para apoiar a seção **9. Uso de IA** do artigo. O enuncia
 
 - **Pedido da pessoa.** Priorizar a página de pedidos por status, diagnosticar as causas e comparar alternativas com fontes que incluíssem casos e artigos de empresas.
 - **Contribuição da IA.** Separou a página da contagem no ranking sob carga, executou 21 planos em uma transação somente leitura e conferiu uma variante de seleção explícita. Leu os relatos de Shopify, GitLab e Citus Data e registrou quais técnicas preservam o contrato. Salvou as evidências e as alternativas em `diagnostico/pedidos-por-status/`.
+
+## 18/11/2026 — Escolha do índice para pedidos por status
+
+- **Decisão da pessoa.** Escolheu testar o índice composto em `pedidos(status, criado_em DESC, id DESC)`. Considerou que a troca para cursor mudaria a maneira como o cliente usa a API e que o ganho não justifica esse custo agora. Pediu manter a opção como experimento futuro.
+- **Contribuição da IA.** Explicou a diferença entre filtrar e ordenar, relacionou os casos do GitLab, Shopify e Citus Data ao código local e registrou a hipótese, a referência e a medição antes da alteração.
+
+- **Execução e verificação.** O Codex implementou apenas o índice, confirmou o contrato, mediu três vezes com a carga de referência e repetiu os 21 planos. Registrou os ganhos, os casos em que a ordenação permaneceu, o tamanho do índice e os picos encontrados em `recursos.csv`.
+
+## 18/11/2026 — Diagnóstico de top produtos
+
+- **Pedido da pessoa.** Investigar a próxima rota, `top-produtos`, explicar o problema e comparar alternativas com fontes de engenharia.
+- **Contribuição da IA.** Leu a rota, fez quatro planos somente leitura e comparou os 50 primeiros produtos nos dois formatos de consulta. Pesquisou os casos de Sisense, Crunchy Data e Algolia. Salvou a comparação e propôs um teste de carga com a reescrita em SQL.
+
+## H6 — Reescrita da consulta de top produtos
+
+- **Contribuição da IA.** Propôs somar por ID antes do join com o catálogo e explicou, com o caso da Sisense, por que o cálculo pode acontecer antes da busca por nome e categoria.
+- **Decisão da pessoa.** Escolheu seguir com a reescrita. Questionou a defasagem de uma view materializada entre refreshes num cenário em que novas vendas precisam aparecer no ranking.
+- **Verificação.** O Codex mudou apenas o SQL, aplicou a revisão sobre o volume da H5, validou as 42 respostas e executou três rodadas com a régua original. As medianas e o consumo de recursos foram calculados a partir dos arquivos gerados. [Resultado da H6](experimentos.md#resultado-da-h6)
+- **Decisão após medir.** A pessoa escolheu manter a H6 e pediu para conferir o p50 geral. O Codex conferiu os três resumos da H5 e da H6, registrou a decisão e integrou o PR #11.
+
+## 18/11/2026 — Revisão após a H6
+
+- **Pedido da pessoa.** Reler o código, levantar os principais gargalos restantes e propor alternativas. Também pediu confirmação de que as conversas e decisões estavam sendo registradas.
+- **Contribuição da IA.** Releu as rotas e o middleware, cruzou os suspeitos com os três resumos da H6 e conferiu referências do PostgreSQL, GitLab e Sisense. Executou planos somente leitura para vendas por dia, busca por e-mail, busca de produtos e pedidos por status. Sugeriu levar a agregação de vendas por dia ao banco como próximo experimento.
+- **Verificação.** Salvou o SQL, a saída integral e a comparação de opções. Os tempos HTTP citados vêm das rodadas da H6. A revisão não aplicou as alternativas na API nem mediu sua carga. [Revisão após a H6](diagnostico/pos-h6/README.md)

@@ -1,5 +1,11 @@
 # Próximos testes
 
+## Paginação por cursor como experimento futuro
+
+- **Proposta.** Comparar a paginação por cursor (`keyset pagination`) com o `OFFSET` em uma página profunda. A comparação SQL pode usar a data e o ID do último pedido da página anterior como ponto de partida já conhecido.
+- **Limite.** Na API atual, o cliente pode pedir diretamente qualquer número de página. Adotar cursor mudaria essa forma de uso. O experimento futuro deve avaliar a busca separadamente e manter o contrato atual.
+- **Leitura.** [Caso de cursores da Shopify](https://shopify.engineering/pagination-relative-cursors).
+
 ## Pool com quatro conexões
 
 - **Próximo experimento.** A pessoa propôs reduzir o limite do `pg.Pool` de 10 para 4 conexões. Usar como referência a versão escolhida com 10 conexões e o mesmo conjunto de índices. O [teste anterior com 10](experimentos/pool-com-indice.md#resultado-da-combinação) serve de referência se a configuração do banco ainda for a mesma.
@@ -17,13 +23,23 @@
 
 ## Índice de expressão para busca por e-mail
 
-- **Proposta.** A pessoa levantou a hipótese de que um índice B-tree em `clientes(lower(email))` aumentaria a vazão. A consulta já compara `lower(email)` e o plano inicial fez uma varredura na tabela. [Diagnóstico](diagnostico/leitura-inicial.md#o-que-os-planos-mostram)
+- **Proposta.** A pessoa levantou a hipótese de que um índice B-tree em `clientes(lower(email))` aumentaria a vazão. A consulta já compara `lower(email)` e o plano inicial fez uma varredura na tabela. [Plano após a H6](diagnostico/pos-h6/planos.txt#L83) · [Índices de expressão no PostgreSQL](https://www.postgresql.org/docs/16/indexes-expressional.html)
 - **Como testar.** Comparar o plano e a carga da versão atual com a mesma versão acrescida somente do índice. Conferir o contrato, incluindo os casos que variam maiúsculas e minúsculas. Comparar a vazão geral, o p95 da rota e o custo de armazenar o índice.
 
-## Pedidos por status e relatórios
+## Totais calculados previamente para top produtos
 
-- **Primeiro candidato pelo tempo SQL.** Testar um índice B-tree em `pedidos(status, criado_em DESC, id DESC)`. A página liderou em tempo acumulado e ordenou em arquivo temporário no plano examinado. Usar a `main` medida como referência. Conferir o plano da página, o da contagem e o contrato antes da carga.
-- **Depois da página.** Medir o trabalho restante do `count(*)` exato. A contagem e a paginação são duas consultas da mesma rota.
-- **Candidatos entre os relatórios.** Em vendas por dia, testar acesso indexado pelo período e agregação no SQL em experimentos independentes. Em top produtos, investigar a agregação antes do `LIMIT` se a prioridade for reduzir os piores tempos por chamada.
+- **View materializada.** Uma leitura dos totais prontos pode reduzir o trabalho a cada chamada. Ficou em aberto porque o ranking pode ficar defasado entre atualizações. Para testar, definir a defasagem permitida e medir tempo e custo do refresh, espaço e latência de leitura. [PostgreSQL 16](https://www.postgresql.org/docs/16/rules-materializedviews.html)
+- **Tabela de totais transacionais.** Pode servir o ranking pronto e refletir as vendas confirmadas. Para testar, é preciso ter um caminho de escrita e atualizar os totais na mesma transação, incluindo alterações e cancelamentos. Medir também o custo das escritas. [Alternativas no diagnóstico](diagnostico/top-produtos/README.md#alternativas)
 
-A pessoa escolheu investigar a página de pedidos por status primeiro. O [diagnóstico detalhado](diagnostico/pedidos-por-status/README.md) compara profundidades, contagem e seleção de colunas. Os experimentos com índice e projeção devem ser medidos separadamente. [Ranking sob carga](diagnostico/pg-stat-statements/README.md#o-que-apareceu-sob-carga).
+## Alternativas da revisão após a H6
+
+As ideias abaixo têm status de pesquisadas, teste futuro. A hipótese, a fonte e os planos estão na [revisão após a H6](diagnostico/pos-h6/README.md).
+
+- **Vendas por dia.** Agrupar no banco, preservando totais, datas, cancelamentos e ordem. Comparar a quantidade de linhas que chega à API e medir a carga. Em experimentos separados, retirar a coluna descartada ou testar o intervalo sobre `criado_em` com índice. [PostgreSQL sobre agregados](https://www.postgresql.org/docs/16/functions-aggregate.html)
+- **Pedidos por status.** Selecionar os campos da resposta e, se necessário, obter apenas os IDs antes de carregar as linhas. Conferir a primeira página, páginas profundas e páginas vazias com total exato. Um contador transacional só entra se o custo da contagem justificar o trabalho extra na escrita. [Caso do GitLab](https://docs.gitlab.com/development/database/offset_pagination_optimization/)
+- **Busca de produtos.** Testar `pg_trgm` com índice GIN. Comparar termos comuns, raros e ausentes, a ordem, o tamanho do índice e a carga geral. [Documentação de trigramas](https://www.postgresql.org/docs/16/pgtrgm.html)
+- **Logs.** Emitir método, rota, status e duração em vez de serializar o corpo inteiro. Conferir diagnósticos disponíveis e comparar CPU, memória e volume de logs para verificar se o custo justifica a mudança. [Middleware atual](api/src/server.js#L7)
+
+## Coleta SQL antes da H5
+
+A [coleta com pg_stat_statements](diagnostico/pg-stat-statements/README.md) e o [diagnóstico de paginação](diagnostico/pedidos-por-status/README.md) motivaram o índice composto adotado na [H5](experimentos.md#resultado-da-h5). A reescrita de top produtos foi adotada na [H6](experimentos.md#resultado-da-h6). A contagem exata, a seleção dos campos da página e as alternativas para vendas por dia continuam nas fichas da revisão após a H6.
