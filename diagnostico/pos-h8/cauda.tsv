@@ -1,0 +1,8 @@
+rota	requisicoes	acima_p95_geral	pct_da_cauda	pct_da_rota
+pedidos-por-status	146	19	35.8	13.0
+vendas-por-dia	72	17	32.1	23.6
+top-produtos	16	16	30.2	100.0
+pedidos-do-cliente	221	1	1.9	0.5
+busca-produtos	156	0	0.0	0.0
+cliente	279	0	0.0	0.0
+cliente-por-email	160	0	0.0	0.0

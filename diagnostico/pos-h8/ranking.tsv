@@ -1,0 +1,12 @@
+capturado_em	stats_reset	dealloc
+2026-11-19 23:47:01.35115+00	2026-11-19 23:45:57.380143+00	0
+consulta	calls	total_ms	pct_tempo_sql	media_ms	max_ms	rows	shared_blks_hit	shared_blks_read	temp_blks_read	temp_blks_written	queryid	sql
+vendas por dia	72	188289.4	31.8	2615.1	6299.2	504	2054929	583737	0	0	3504431218859053199	SELECT to_char(p.criado_em::date, $3) AS dia, count(DISTINCT p.id) AS pedidos, sum(i.quantidade) AS itens, sum(i.quantidade::bigint * i.preco_unitario_centavos) AS receita_centavos FROM pedidos p JOIN itens_pedido i ON i.pedido_id = p.id WHERE p.criado_em::date BETWEEN $1 AND $2 AND p.status <> $4 GROUP BY p.criado_em::date ORDER BY p.criado_em::date
+contagem de pedidos por status	146	164371.9	27.8	1125.8	3100.6	146	1647493	931239	0	0	-1890180653471874579	SELECT count(*) AS total FROM pedidos WHERE status = $1
+top produtos	16	147179.2	24.9	9198.7	20503.1	160	277722	209045	0	0	-2966155878508707036	SELECT pr.id, pr.nome, pr.categoria, ranking.unidades, ranking.receita_centavos FROM ( SELECT i.produto_id, sum(i.quantidade) AS unidades, sum(i.quantidade * i.preco_unitario_centavos) AS receita_centavos FROM itens_pedido i JOIN pedidos p ON p.id = i.pedido_id WHERE p.status <> $2 GROUP BY i.produto_id ORDER BY receita_centavos DESC, i.produto_id LIMIT $1 ) AS ranking JOIN produtos pr ON pr.id = ranking.produto_id ORDER BY ranking.receita_centavos DESC, pr.id
+página de pedidos por status	146	44449.3	7.5	304.4	2699.8	2920	1241840	203441	8529	11415	-3940025543376342440	SELECT * FROM pedidos WHERE status = $1 ORDER BY criado_em DESC, id DESC LIMIT $2 OFFSET $3
+busca de produtos	156	34124.9	5.8	218.7	496.5	3120	26593	3074	0	0	-8824106211762854601	SELECT * FROM produtos WHERE nome ILIKE $2 || $1 || $3 ORDER BY nome, id LIMIT $4
+clientes por id	500	4728.1	0.8	9.5	98.2	500	517	983	0	0	3781620986192754237	SELECT * FROM clientes WHERE id = $1
+itens dos pedidos em lote	221	4469.0	0.8	20.2	191.0	3200	12059	1987	0	0	567071275289873681	SELECT i.pedido_id, i.produto_id, pr.nome AS produto_nome, i.quantidade, i.preco_unitario_centavos FROM itens_pedido i JOIN produtos pr ON pr.id = i.produto_id WHERE i.pedido_id = ANY($1::integer[]) ORDER BY i.pedido_id, i.id
+pedidos do cliente	221	2144.4	0.4	9.7	99.8	1105	1040	749	0	0	-7877847192193463136	SELECT * FROM pedidos WHERE cliente_id = $1 ORDER BY criado_em DESC, id DESC
+clientes por email	160	1621.1	0.3	10.1	97.4	160	204	439	0	0	7791463582805634528	SELECT * FROM clientes WHERE lower(email) = lower($1) ORDER BY id

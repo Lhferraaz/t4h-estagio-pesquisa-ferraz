@@ -1,0 +1,17 @@
+Medição: diagnostico-h8
+Carga: 20 usuários virtuais por 60s
+
+Requisições:        1050
+Requisições/s:      16.81
+Tempo de resposta:  mediana 697.5 ms | p95 3297.4 ms | p99 7244.1 ms
+Erros:              0.00%
+
+Por rota:
+rota                  req       mediana       p95           p99           erros   
+cliente               279       308.0 ms      1096.4 ms     1362.9 ms     0.0%    
+cliente-por-email     160       302.1 ms      1009.3 ms     1240.1 ms     0.0%    
+pedidos-do-cliente    221       1096.8 ms     2307.2 ms     2880.6 ms     0.0%    
+pedidos-por-status    146       1804.1 ms     4077.5 ms     4750.7 ms     0.0%    
+busca-produtos        156       597.2 ms      1133.8 ms     1804.3 ms     0.0%    
+vendas-por-dia        72        2696.8 ms     5695.7 ms     7023.0 ms     0.0%    
+top-produtos          16        8125.5 ms     15918.3 ms    20302.7 ms    0.0%    

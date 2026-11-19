@@ -297,3 +297,10 @@ O plano da consulta aplicada devolveu sete linhas para sete dias. As 42 resposta
 A H8 reaproveitou o volume da H7. As medições foram feitas mais tarde, com os mesmos parâmetros e limites e com a árvore limpa no commit medido. A amostragem durante as rodadas não detectou Chrome ou Chromium.
 
 **Decisão após medir.** A pessoa autorizou integrar a H8. Foram mantidos os ganhos de vazão e de p95 geral e do relatório. A piora do p99 geral e do p95 de pedidos por status segue registrada como contrapartida da medição. [Decisões](docs/decisoes.md#mudanças-integradas)
+
+## H9 — Índice simples para a contagem de pedidos por status
+
+- **Origem.** A pessoa pediu uma revisão final e autorizou testar mais uma melhoria. A IA propôs investigar pedidos por status e, após a coleta da H8, priorizou a contagem exata. Ela respondeu por 27,8% do tempo SQL acumulado nessa rodada, frente a 7,5% da consulta da página. [Diagnóstico](diagnostico/pos-h8/README.md)
+- **Hipótese.** Um B-tree simples em `pedidos(status)` permite contar pelo índice menor, com menos acesso a blocos. O índice composto continua disponível para atender ao filtro e à ordem da página. O custo adicional é espaço em disco e manutenção do novo índice nas escritas. [Planos locais](diagnostico/pos-h8/planos.txt) · [Deduplicação em B-tree no PostgreSQL 16](https://www.postgresql.org/docs/16/btree-implementation.html#BTREE-DEDUPLICATION)
+- **Previsão antes da carga.** Esperamos menor p95 de pedidos por status e possível ganho de vazão. O p95 geral depende de como a mudança afeta a espera das demais rotas. O ganho observado em planos isolados pode diminuir durante a carga ou com alterações frequentes na tabela.
+- **Como medir.** Comparar três rodadas da H8 com três rodadas após adicionar somente o índice. Iniciar um volume novo para cada versão com os mesmos dados e verificar o contrato antes e após a carga. Manter 20 usuários virtuais, 60 s, aquecimento de 15 s, semente 42 e os mesmos limites dos contêineres. Comparar vazão, p50/p95/p99 gerais, p95 de pedidos por status, erros, CPU e memória.
