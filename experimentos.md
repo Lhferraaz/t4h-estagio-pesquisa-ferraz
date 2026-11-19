@@ -295,3 +295,5 @@ Rodadas da base [B1](resultados/20261117-020419-00-linha-de-base/), [B2](resulta
 O plano da consulta aplicada devolveu sete linhas para sete dias. As 42 respostas do contrato passaram antes da carga e após cada rodada. A resposta de 31 dias também bateu com os totais calculados a partir dos itens individuais, e um período sem vendas devolveu lista vazia. [Plano da H8](diagnostico/vendas-por-dia-h8.txt#L6)
 
 A H8 reaproveitou o volume da H7. As medições foram feitas mais tarde, com os mesmos parâmetros e limites e com a árvore limpa no commit medido. A amostragem durante as rodadas não detectou Chrome ou Chromium.
+
+**Decisão após medir.** A pessoa autorizou integrar a H8. Foram mantidos os ganhos de vazão e de p95 geral e do relatório. A piora do p99 geral e do p95 de pedidos por status segue registrada como contrapartida da medição. [Decisões](docs/decisoes.md#mudanças-integradas)
