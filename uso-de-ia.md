@@ -117,3 +117,4 @@ Registro de trabalho para apoiar a seção **9. Uso de IA** do artigo. O enuncia
 
 - **Decisão da pessoa.** Propôs retirar o campo `observacoes` que o Node descarta e escolheu levar os totais diários ao SQL. Preferiu medir a agregação antes de criar um índice de data.
 - **Contribuição da IA.** Comparou os planos de sete e 31 dias em um banco isolado, mediu os bytes das observações e explicou como preservar a diferença entre contagem de pedidos e soma de unidades. Registrou a hipótese antes da alteração.
+- **Execução e verificação.** O Codex mudou a agregação da rota para SQL, reaproveitou o volume da H7 e verificou o contrato antes e após três rodadas. Comparou também a resposta de 31 dias com os totais calculados a partir dos itens e conferiu um período sem vendas. Registrou os ganhos e a piora do p99 geral e do p95 de pedidos por status. [Resultado da H8](experimentos.md#resultado-da-h8)
