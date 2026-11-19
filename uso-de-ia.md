@@ -82,3 +82,10 @@ Registro de trabalho para apoiar a seção **9. Uso de IA** do artigo. O enuncia
 - **Contribuição da IA.** Propôs somar por ID antes do join com o catálogo e explicou, com o caso da Sisense, por que o cálculo pode acontecer antes da busca por nome e categoria.
 - **Decisão da pessoa.** Escolheu seguir com a reescrita. Questionou a defasagem de uma view materializada entre refreshes num cenário em que novas vendas precisam aparecer no ranking.
 - **Verificação.** O Codex mudou apenas o SQL, aplicou a revisão sobre o volume da H5, validou as 42 respostas e executou três rodadas com a régua original. As medianas e o consumo de recursos foram calculados a partir dos arquivos gerados. [Resultado da H6](experimentos.md#resultado-da-h6)
+- **Decisão após medir.** A pessoa escolheu manter a H6 e pediu para conferir o p50 geral. O Codex conferiu os três resumos da H5 e da H6, registrou a decisão e integrou o PR #11.
+
+## 18/11/2026 — Revisão após a H6
+
+- **Pedido da pessoa.** Reler o código, levantar os principais gargalos restantes e propor alternativas. Também pediu confirmação de que as conversas e decisões estavam sendo registradas.
+- **Contribuição da IA.** Releu as rotas e o middleware, cruzou os suspeitos com os três resumos da H6 e conferiu referências do PostgreSQL, GitLab e Sisense. Executou planos somente leitura para vendas por dia, busca por e-mail, busca de produtos e pedidos por status. Sugeriu levar a agregação de vendas por dia ao banco como próximo experimento.
+- **Verificação.** Salvou o SQL, a saída integral e a comparação de opções. Os tempos HTTP citados vêm das rodadas da H6. A revisão não aplicou as alternativas na API nem mediu sua carga. [Revisão após a H6](diagnostico/pos-h6/README.md)
