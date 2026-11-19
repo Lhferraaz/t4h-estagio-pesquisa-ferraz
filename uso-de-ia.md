@@ -2,6 +2,11 @@
 
 Registro de trabalho para apoiar a seção **9. Uso de IA** do artigo. O enunciado pede que essa seção diga, em 2 a 3 linhas, onde a IA foi usada e como suas contribuições foram verificadas. Este arquivo registra as interações enquanto acontecem; não substitui a seção do artigo.
 
+## Referências científicas escolhidas
+
+- **Decisão da pessoa.** Decidiu estudar as fontes antes da redação do artigo para fundamentar a interpretação dos experimentos. Selecionou a Lei de Little para a discussão de carga, vazão e latência média e o artigo de Patricia Selinger e colegas para a leitura dos planos com índice.
+- **Contribuição da IA.** Conferiu as publicações e registrou onde elas se aplicam aos experimentos. [Carga e pool](experimentos.md#h2--reutilizar-conexões-com-pgpool) · [Índice de pedidos por status](experimentos.md#h5--índice-composto-para-pedidos-por-status)
+
 ## 17/11/2026 — Configuração do trabalho
 
 - **Pedido:** configurar instruções para os agentes e uma skill para o ciclo de medição; trabalhar em uma branch por mudança, com pull request e merge em `main`.
@@ -17,7 +22,7 @@ Registro de trabalho para apoiar a seção **9. Uso de IA** do artigo. O enuncia
 ## 17/11/2026 — Contrato e linha de base
 
 - **Pedido:** executar o ciclo inicial para obter as informações de base.
-- **Contribuição da IA:** identificou que os containers da tentativa anterior usavam o mesmo nome e as mesmas portas; parou esses containers preservando seu volume e subiu esta cópia com `COMPOSE_PROJECT_NAME=desafio-novo`. Gravou o contrato original, executou três medições com `scripts/medir.sh 00-linha-de-base`, calculou as medianas a partir dos arquivos gerados e abriu o PR #2, posteriormente integrado em `main`.
+- **Contribuição da IA:** subiu a aplicação local. Gravou o contrato original, executou três medições com `scripts/medir.sh 00-linha-de-base`, calculou as medianas a partir dos arquivos gerados e abriu o PR #2, posteriormente integrado em `main`.
 - **Verificação feita:** cada `contexto.txt` registra os mesmos parâmetros, o commit do contrato e zero arquivos alterados sem commit; cada `contrato.txt` termina em “Contrato mantido”. Os arquivos de origem estão nas três pastas `resultados/*-00-linha-de-base/`. Nenhuma otimização foi aplicada e a causa dos tempos de resposta ainda não foi diagnosticada.
 
 ## 17/11/2026 — Diagnóstico das consultas SQL
@@ -113,3 +118,10 @@ Registro de trabalho para apoiar a seção **9. Uso de IA** do artigo. O enuncia
 - **Pedido da pessoa.** Rodar a coleta da cauda de latência na versão atual para descobrir quais rotas aparecem acima do p95 geral.
 - **Contribuição da IA.** Reaproveitou o ambiente isolado de `pg_stat_statements`, ajustou o rótulo da consulta de top produtos para sua versão atual e coletou latências individuais com a régua original. Capturou também os contadores de restrição de CPU do banco e da API.
 - **Verificação.** Confirmou o contrato antes e depois, bateu os totais e o p95 do k6 com as amostras e salvou a divisão da cauda por rota. A rodada diagnóstica caracterizou a H7 e deixou a comparação causal com a H6 em aberto. [Coleta e evidências](diagnostico/p95-h7/README.md)
+
+## H8 — Agregação de vendas por dia
+
+- **Decisão da pessoa.** Propôs retirar o campo `observacoes` que o Node descarta e escolheu levar os totais diários ao SQL. Preferiu medir a agregação antes de criar um índice de data.
+- **Contribuição da IA.** Comparou os planos de sete e 31 dias em um banco isolado, mediu os bytes das observações e explicou como preservar a diferença entre contagem de pedidos e soma de unidades. Registrou a hipótese antes da alteração.
+- **Execução e verificação.** O Codex mudou a agregação da rota para SQL, reaproveitou o volume da H7 e verificou o contrato antes e após três rodadas. Comparou também a resposta de 31 dias com os totais calculados a partir dos itens e conferiu um período sem vendas. Registrou os ganhos e a piora do p99 geral e do p95 de pedidos por status. [Resultado da H8](experimentos.md#resultado-da-h8)
+- **Integração.** A pessoa autorizou incorporar a H8 após a comparação com a H7. O Codex registrou a decisão e as contrapartidas das medições no PR.
