@@ -39,3 +39,7 @@ As ideias abaixo têm status de pesquisadas, teste futuro. A hipótese, a fonte 
 - **Pedidos por status.** Selecionar os campos da resposta e, se necessário, obter apenas os IDs antes de carregar as linhas. Conferir a primeira página, páginas profundas e páginas vazias com total exato. Um contador transacional só entra se o custo da contagem justificar o trabalho extra na escrita. [Caso do GitLab](https://docs.gitlab.com/development/database/offset_pagination_optimization/)
 - **Busca de produtos.** Testar `pg_trgm` com índice GIN. Comparar termos comuns, raros e ausentes, a ordem, o tamanho do índice e a carga geral. [Documentação de trigramas](https://www.postgresql.org/docs/16/pgtrgm.html)
 - **Logs.** Emitir método, rota, status e duração em vez de serializar o corpo inteiro. Conferir diagnósticos disponíveis e comparar CPU, memória e volume de logs para verificar se o custo justifica a mudança. [Middleware atual](api/src/server.js#L7)
+
+## Coleta SQL antes da H5
+
+A [coleta com pg_stat_statements](diagnostico/pg-stat-statements/README.md) e o [diagnóstico de paginação](diagnostico/pedidos-por-status/README.md) motivaram o índice composto adotado na [H5](experimentos.md#resultado-da-h5). A reescrita de top produtos foi adotada na [H6](experimentos.md#resultado-da-h6). A contagem exata, a seleção dos campos da página e as alternativas para vendas por dia continuam nas fichas da revisão após a H6.

@@ -1,5 +1,16 @@
 # Experimentos
 
+## Alternativas consideradas e descartadas
+
+| Onde | Alternativa | Motivo do descarte |
+| --- | --- | --- |
+| Conexões | Abrir uma conexão com o PostgreSQL por requisição HTTP | Nas rotas que executam um único SQL, a abertura continuaria acontecendo a cada requisição. O `pg.Pool` permite reaproveitar conexões entre requisições. |
+| Conexões | Adicionar PgBouncer | A aplicação tem um processo Node.js. A pessoa escolheu o pool do `pg` e deixou o PgBouncer fora deste cenário. Ele pode voltar à discussão se várias instâncias precisarem compartilhar conexões com o banco. |
+| Pedidos por status | Substituir o número da página por um cursor | O contrato aceita saltar direto para uma página, inclusive a 15.000. Um cursor exige um ponto de partida, como o último pedido da página anterior. [Diagnóstico da paginação](diagnostico/pedidos-por-status/README.md#relatos-de-engenharia-e-artigos) |
+| Pedidos por status | Devolver uma estimativa no campo `total` | O contrato exige a contagem exata dos pedidos no status escolhido. A estimativa poderia devolver um valor diferente. [Consulta e alternativas de contagem](diagnostico/pedidos-por-status/README.md#alternativas-para-experimentar) |
+
+As propostas ainda em aberto estão em [Próximos testes](proximos-testes.md).
+
 ## H1 — Itens dos pedidos em lote
 
 - **Decisão da pessoa, antes da mudança:** testar primeiro a busca em lote dos itens. A consulta única com todos os joins fica como alternativa para testar depois, por ter maior risco de alterar o contrato; uma única ida ao banco não garante menor trabalho total.

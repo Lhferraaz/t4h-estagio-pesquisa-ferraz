@@ -1,0 +1,24 @@
+Commit da aplicação: 96073c52ff4a78889dd1b829199dfeacb512ccbf
+Projeto Compose: desafio-pgstat
+Carga: 20 VUs, 60s, semente 42
+Aquecimento: 5 VUs, 15s, semente 43
+Data: 2026-11-17 22:20:29 -0300
+server_version
+16.4 (Debian 16.4-1.pgdg120+2)
+shared_preload_libraries
+pg_stat_statements
+compute_query_id
+auto
+pg_stat_statements.track
+top
+pg_stat_statements.track_planning
+off
+track_io_timing
+off
+work_mem
+4MB
+block_size
+8192
+extversion
+1.10
+Chrome/Chromium ausentes nas verificações antes, durante e após a carga (amostragem a cada 5s).
