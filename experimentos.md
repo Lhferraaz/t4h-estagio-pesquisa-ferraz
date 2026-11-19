@@ -201,3 +201,5 @@ Medições da base [B1](resultados/20261117-020419-00-linha-de-base/), [B2](resu
 Todas as rodadas da H6 tiveram maior vazão (17,02 a 17,75 contra 14,66 a 14,92 req/s), p95 geral menor (2.869,6 a 2.914,8 contra 3.756,6 a 4.010,8 ms) e p95 de top produtos menor (12.786,0 a 17.084,9 contra 17.907,9 a 18.319,0 ms). A rota teve 16 a 17 respostas por rodada na H6 e 14 na H5. Por isso a leitura do p95 da rota é sensível a amostras individuais. O banco continuou perto do limite de CPU. A memória média do banco caiu, com pico ainda próximo do limite de 512 MiB, e a memória média da API subiu.
 
 A H6 reutilizou o volume da H5 com os mesmos índices. A referência foi medida mais cedo no mesmo dia. As três rodadas registraram o commit `be5976d`, árvore limpa e os mesmos limites e parâmetros. A amostragem não detectou Chrome ou Chromium. As 42 respostas do contrato passaram antes da carga e após cada rodada.
+
+**Decisão após medir.** A pessoa autora escolheu manter a reescrita depois de conferir o ganho de vazão e a queda no p95. O p50 geral também caiu, de 813,2 ms na H5 para 803,5 ms na H6. [Decisões](docs/decisoes.md#mudanças-integradas)
