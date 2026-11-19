@@ -71,3 +71,8 @@ Registro de trabalho para apoiar a seção **9. Uso de IA** do artigo. O enuncia
 - **Contribuição da IA.** Explicou a diferença entre filtrar e ordenar, relacionou os casos do GitLab, Shopify e Citus Data ao código local e registrou a hipótese, a referência e a medição antes da alteração.
 
 - **Execução e verificação.** O Codex implementou apenas o índice, confirmou o contrato, mediu três vezes com a carga de referência e repetiu os 21 planos. Registrou os ganhos, os casos em que a ordenação permaneceu, o tamanho do índice e os picos encontrados em `recursos.csv`.
+
+## H6 — Reescrita da consulta de top produtos
+
+- **Contribuição da IA.** Propôs somar por ID antes do join com o catálogo e explicou, com o caso da Sisense, por que o cálculo pode acontecer antes da busca por nome e categoria.
+- **Decisão da pessoa.** Escolheu seguir com a reescrita. Questionou a defasagem de uma view materializada entre refreshes num cenário em que novas vendas precisam aparecer no ranking.
