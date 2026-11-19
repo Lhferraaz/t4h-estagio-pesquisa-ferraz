@@ -214,3 +214,10 @@ Todas as rodadas da H6 tiveram maior vazão (17,02 a 17,75 contra 14,66 a 14,92 
 A H6 reutilizou o volume da H5 com os mesmos índices. A referência foi medida mais cedo no mesmo dia. As três rodadas registraram o commit `be5976d`, árvore limpa e os mesmos limites e parâmetros. A amostragem não detectou Chrome ou Chromium. As 42 respostas do contrato passaram antes da carga e após cada rodada.
 
 **Decisão após medir.** A pessoa autora escolheu manter a reescrita depois de conferir o ganho de vazão e a queda no p95. O p50 geral também caiu, de 813,2 ms na H5 para 803,5 ms na H6. [Decisões](docs/decisoes.md#mudanças-integradas)
+
+## H7 — Índice para busca por e-mail
+
+- **Decisão da pessoa.** Priorizar o índice em `lower(email)`, hipótese já discutida na H3. A busca representa 15% da carga. A pessoa espera queda no p50 e no p95 gerais porque o banco repete uma leitura ampla para responder a uma consulta frequente. [Distribuição da carga](carga/teste-carga.js#L44)
+- **Evidência e fonte.** Na versão da H6, o plano para um e-mail cadastrado devolveu uma linha após descartar 99.999. O PostgreSQL pode indexar a expressão usada no filtro. O índice não será único, pois o contrato devolve todos os clientes correspondentes em ordem de ID. [Plano sem índice](diagnostico/pos-h6/planos.txt#L83) · [Índices de expressão no PostgreSQL](https://www.postgresql.org/docs/16/indexes-expressional.html)
+- **Hipótese de trabalho.** Um B-tree em `clientes(lower(email))` deve reduzir o trabalho na busca e diminuir o p50 e o p95 da rota. A hipótese da pessoa será avaliada pelas medianas gerais e pela vazão. Medir CPU, memória e espaço do índice. Com usuários virtuais fixos, o banco pode continuar perto do limite enquanto atende mais requisições.
+- **Como medir.** Adicionar somente o índice, criar um volume isolado com os mesmos dados e verificar as 42 respostas, incluindo e-mails com maiúsculas e ausentes. Comparar três rodadas com a [H6](#resultado-da-h6), com 20 usuários virtuais, 60 s, aquecimento de 15 s e semente 42.

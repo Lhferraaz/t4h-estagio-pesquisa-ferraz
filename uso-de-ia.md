@@ -100,3 +100,8 @@ Registro de trabalho para apoiar a seção **9. Uso de IA** do artigo. O enuncia
 - **Pedido da pessoa.** Reler o código, levantar os principais gargalos restantes e propor alternativas. Também pediu confirmação de que as conversas e decisões estavam sendo registradas.
 - **Contribuição da IA.** Releu as rotas e o middleware, cruzou os suspeitos com os três resumos da H6 e conferiu referências do PostgreSQL, GitLab e Sisense. Executou planos somente leitura para vendas por dia, busca por e-mail, busca de produtos e pedidos por status. Sugeriu levar a agregação de vendas por dia ao banco como próximo experimento.
 - **Verificação.** Salvou o SQL, a saída integral e a comparação de opções. Os tempos HTTP citados vêm das rodadas da H6. A revisão não aplicou as alternativas na API nem mediu sua carga. [Revisão após a H6](diagnostico/pos-h6/README.md)
+
+## H7 — Índice para busca por e-mail
+
+- **Decisão e previsão da pessoa.** Priorizou o índice em `lower(email)` pela frequência da rota e pela varredura observada. Previu redução do p50 e do p95 gerais. Escolheu usar as fontes já registradas.
+- **Contribuição da IA.** Conferiu o peso da rota, contou suas chamadas nas três rodadas da H6 e relacionou a previsão ao trabalho de busca e à espera no banco. Registrou a hipótese antes de adicionar o índice.
