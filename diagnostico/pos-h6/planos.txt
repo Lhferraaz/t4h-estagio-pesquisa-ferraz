@@ -1,0 +1,183 @@
+data: 2026-11-18T23:49:28-03:00
+commit: 9e5c39af4ff21fa23484abdda4458ee9e706f786
+BEGIN
+SET
+SET
+SET
+CONTEXTO
+                                                       version                                                       
+---------------------------------------------------------------------------------------------------------------------
+ PostgreSQL 16.4 (Debian 16.4-1.pgdg120+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14) 12.2.0, 64-bit
+(1 row)
+
+ work_mem 
+----------
+ 4MB
+(1 row)
+
+  tablename   |            indexname            
+--------------+---------------------------------
+ clientes     | clientes_pkey
+ itens_pedido | itens_pedido_pedido_id_idx
+ itens_pedido | itens_pedido_pkey
+ pedidos      | pedidos_cliente_id_idx
+ pedidos      | pedidos_pkey
+ pedidos      | pedidos_status_criado_em_id_idx
+ produtos     | produtos_pkey
+(7 rows)
+
+VENDAS_LINHAS_ATUAIS
+                                                                    QUERY PLAN                                                                     
+---------------------------------------------------------------------------------------------------------------------------------------------------
+ Gather  (cost=1000.43..33689.47 rows=6738 width=298) (actual rows=12945 loops=1)
+   Workers Planned: 2
+   Workers Launched: 2
+   Buffers: shared hit=15537 read=22605
+   ->  Nested Loop  (cost=0.43..32015.67 rows=2808 width=298) (actual rows=4315 loops=3)
+         Buffers: shared hit=15537 read=22605
+         ->  Parallel Seq Scan on pedidos p  (cost=0.00..25521.50 rows=936 width=290) (actual rows=1438 loops=3)
+               Filter: ((status <> 'cancelado'::text) AND ((criado_em)::date >= '2024-01-01'::date) AND ((criado_em)::date <= '2024-01-07'::date))
+               Rows Removed by Filter: 165229
+               Buffers: shared read=20834
+         ->  Index Scan using itens_pedido_pedido_id_idx on itens_pedido i  (cost=0.43..6.90 rows=4 width=12) (actual rows=3 loops=4313)
+               Index Cond: (pedido_id = p.id)
+               Buffers: shared hit=15537 read=1771
+ Planning:
+   Buffers: shared hit=229 read=25
+ Planning Time: 3.777 ms
+ Execution Time: 481.169 ms
+(17 rows)
+
+VENDAS_AGRUPADAS_NO_SQL
+                                                                               QUERY PLAN                                                                                
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=25716.34..26635.85 rows=2246 width=52) (actual rows=7 loops=1)
+   Group Key: ((p.criado_em)::date)
+   Buffers: shared hit=17530 read=2702
+   ->  Gather Merge  (cost=25716.34..26501.09 rows=6738 width=16) (actual rows=12945 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         Buffers: shared hit=17530 read=2702
+         ->  Sort  (cost=24716.31..24723.33 rows=2808 width=16) (actual rows=4315 loops=3)
+               Sort Key: ((p.criado_em)::date), p.id
+               Sort Method: quicksort  Memory: 388kB
+               Buffers: shared hit=17530 read=2702
+               Worker 0:  Sort Method: quicksort  Memory: 367kB
+               Worker 1:  Sort Method: quicksort  Memory: 233kB
+               ->  Nested Loop  (cost=0.85..24555.48 rows=2808 width=16) (actual rows=4315 loops=3)
+                     Buffers: shared hit=17500 read=2702
+                     ->  Parallel Index Only Scan using pedidos_status_criado_em_id_idx on pedidos p  (cost=0.42..18054.29 rows=936 width=12) (actual rows=1438 loops=3)
+                           Filter: ((status <> 'cancelado'::text) AND ((criado_em)::date >= '2024-01-01'::date) AND ((criado_em)::date <= '2024-01-07'::date))
+                           Rows Removed by Filter: 165229
+                           Heap Fetches: 408
+                           Buffers: shared hit=192 read=2702
+                     ->  Index Scan using itens_pedido_pedido_id_idx on itens_pedido i  (cost=0.43..6.90 rows=4 width=12) (actual rows=3 loops=4313)
+                           Index Cond: (pedido_id = p.id)
+                           Buffers: shared hit=17308
+ Planning:
+   Buffers: shared hit=36 read=6
+ Planning Time: 0.435 ms
+ Execution Time: 112.486 ms
+(27 rows)
+
+EMAIL_CADASTRADO
+                                         QUERY PLAN                                         
+--------------------------------------------------------------------------------------------
+ Sort  (cost=2678.41..2679.66 rows=500 width=60) (actual rows=1 loops=1)
+   Sort Key: id
+   Sort Method: quicksort  Memory: 25kB
+   Buffers: shared read=1156
+   ->  Seq Scan on clientes  (cost=0.00..2656.00 rows=500 width=60) (actual rows=1 loops=1)
+         Filter: (lower(email) = 'cliente3@exemplo.com'::text)
+         Rows Removed by Filter: 99999
+         Buffers: shared read=1156
+ Planning:
+   Buffers: shared hit=30 read=1
+ Planning Time: 0.592 ms
+ Execution Time: 76.464 ms
+(12 rows)
+
+BUSCA_TERMO_COMUM
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=466.88..466.93 rows=20 width=44) (actual rows=20 loops=1)
+   Buffers: shared hit=3 read=190
+   ->  Sort  (cost=466.88..469.40 rows=1010 width=44) (actual rows=20 loops=1)
+         Sort Key: nome, id
+         Sort Method: top-N heapsort  Memory: 27kB
+         Buffers: shared hit=3 read=190
+         ->  Seq Scan on produtos  (cost=0.00..440.00 rows=1010 width=44) (actual rows=1000 loops=1)
+               Filter: (nome ~~* '%cadeira%'::text)
+               Rows Removed by Filter: 19000
+               Buffers: shared read=190
+ Planning:
+   Buffers: shared hit=31 read=2
+ Planning Time: 0.614 ms
+ Execution Time: 15.470 ms
+(14 rows)
+
+BUSCA_TERMO_AUSENTE
+                                          QUERY PLAN                                           
+-----------------------------------------------------------------------------------------------
+ Limit  (cost=440.01..440.01 rows=2 width=44) (actual rows=0 loops=1)
+   Buffers: shared hit=190
+   ->  Sort  (cost=440.01..440.01 rows=2 width=44) (actual rows=0 loops=1)
+         Sort Key: nome, id
+         Sort Method: quicksort  Memory: 25kB
+         Buffers: shared hit=190
+         ->  Seq Scan on produtos  (cost=0.00..440.00 rows=2 width=44) (actual rows=0 loops=1)
+               Filter: (nome ~~* '%inexistente%'::text)
+               Rows Removed by Filter: 20000
+               Buffers: shared hit=190
+ Planning Time: 0.164 ms
+ Execution Time: 11.489 ms
+(12 rows)
+
+PEDIDOS_CONTAGEM_PAGO
+                                                                             QUERY PLAN                                                                              
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize Aggregate  (cost=11345.87..11345.88 rows=1 width=8) (actual rows=1 loops=1)
+   Buffers: shared hit=1590 read=1
+   ->  Gather  (cost=11345.65..11345.86 rows=2 width=8) (actual rows=3 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         Buffers: shared hit=1590 read=1
+         ->  Partial Aggregate  (cost=10345.65..10345.66 rows=1 width=8) (actual rows=1 loops=3)
+               Buffers: shared hit=1590 read=1
+               ->  Parallel Index Only Scan using pedidos_status_criado_em_id_idx on pedidos  (cost=0.42..10033.55 rows=124840 width=0) (actual rows=100000 loops=3)
+                     Index Cond: (status = 'pago'::text)
+                     Heap Fetches: 246
+                     Buffers: shared hit=1590 read=1
+ Planning:
+   Buffers: shared hit=5 read=1
+ Planning Time: 0.233 ms
+ Execution Time: 16.623 ms
+(16 rows)
+
+PEDIDOS_PAGINA_1
+                                                               QUERY PLAN                                                                
+-----------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=0.42..6.25 rows=20 width=300) (actual rows=20 loops=1)
+   Buffers: shared hit=3 read=20
+   ->  Index Scan using pedidos_status_criado_em_id_idx on pedidos  (cost=0.42..87234.05 rows=299617 width=300) (actual rows=20 loops=1)
+         Index Cond: (status = 'pago'::text)
+         Buffers: shared hit=3 read=20
+ Planning:
+   Buffers: shared hit=17 read=1
+ Planning Time: 0.159 ms
+ Execution Time: 0.293 ms
+(9 rows)
+
+PEDIDOS_PAGINA_1000
+                                                                 QUERY PLAN                                                                 
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=5817.61..5823.43 rows=20 width=300) (actual rows=20 loops=1)
+   Buffers: shared hit=17976 read=2125
+   ->  Index Scan using pedidos_status_criado_em_id_idx on pedidos  (cost=0.42..87234.05 rows=299617 width=300) (actual rows=20000 loops=1)
+         Index Cond: (status = 'pago'::text)
+         Buffers: shared hit=17976 read=2125
+ Planning Time: 0.059 ms
+ Execution Time: 52.133 ms
+(7 rows)
+
+COMMIT

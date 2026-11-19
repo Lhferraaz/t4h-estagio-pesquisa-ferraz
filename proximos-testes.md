@@ -23,10 +23,19 @@
 
 ## Índice de expressão para busca por e-mail
 
-- **Proposta.** A pessoa levantou a hipótese de que um índice B-tree em `clientes(lower(email))` aumentaria a vazão. A consulta já compara `lower(email)` e o plano inicial fez uma varredura na tabela. [Diagnóstico](diagnostico/leitura-inicial.md#o-que-os-planos-mostram)
+- **Proposta.** A pessoa levantou a hipótese de que um índice B-tree em `clientes(lower(email))` aumentaria a vazão. A consulta já compara `lower(email)` e o plano inicial fez uma varredura na tabela. [Plano após a H6](diagnostico/pos-h6/planos.txt#L83) · [Índices de expressão no PostgreSQL](https://www.postgresql.org/docs/16/indexes-expressional.html)
 - **Como testar.** Comparar o plano e a carga da versão atual com a mesma versão acrescida somente do índice. Conferir o contrato, incluindo os casos que variam maiúsculas e minúsculas. Comparar a vazão geral, o p95 da rota e o custo de armazenar o índice.
 
 ## Totais calculados previamente para top produtos
 
 - **View materializada.** Uma leitura dos totais prontos pode reduzir o trabalho a cada chamada. Ficou em aberto porque o ranking pode ficar defasado entre atualizações. Para testar, definir a defasagem permitida e medir tempo e custo do refresh, espaço e latência de leitura. [PostgreSQL 16](https://www.postgresql.org/docs/16/rules-materializedviews.html)
 - **Tabela de totais transacionais.** Pode servir o ranking pronto e refletir as vendas confirmadas. Para testar, é preciso ter um caminho de escrita e atualizar os totais na mesma transação, incluindo alterações e cancelamentos. Medir também o custo das escritas. [Alternativas no diagnóstico](diagnostico/top-produtos/README.md#alternativas)
+
+## Alternativas da revisão após a H6
+
+As ideias abaixo têm status de pesquisadas, teste futuro. A hipótese, a fonte e os planos estão na [revisão após a H6](diagnostico/pos-h6/README.md).
+
+- **Vendas por dia.** Agrupar no banco, preservando totais, datas, cancelamentos e ordem. Comparar a quantidade de linhas que chega à API e medir a carga. Em experimentos separados, retirar a coluna descartada ou testar o intervalo sobre `criado_em` com índice. [PostgreSQL sobre agregados](https://www.postgresql.org/docs/16/functions-aggregate.html)
+- **Pedidos por status.** Selecionar os campos da resposta e, se necessário, obter apenas os IDs antes de carregar as linhas. Conferir a primeira página, páginas profundas e páginas vazias com total exato. Um contador transacional só entra se o custo da contagem justificar o trabalho extra na escrita. [Caso do GitLab](https://docs.gitlab.com/development/database/offset_pagination_optimization/)
+- **Busca de produtos.** Testar `pg_trgm` com índice GIN. Comparar termos comuns, raros e ausentes, a ordem, o tamanho do índice e a carga geral. [Documentação de trigramas](https://www.postgresql.org/docs/16/pgtrgm.html)
+- **Logs.** Emitir método, rota, status e duração em vez de serializar o corpo inteiro. Conferir diagnósticos disponíveis e comparar CPU, memória e volume de logs para verificar se o custo justifica a mudança. [Middleware atual](api/src/server.js#L7)
