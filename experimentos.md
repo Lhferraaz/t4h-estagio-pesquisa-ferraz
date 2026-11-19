@@ -176,3 +176,28 @@ A H5 usou um volume isolado criado com os dados do desafio. As três rodadas reg
 - **Evidência e fonte.** O plano lê os itens, exclui pedidos cancelados e junta o catálogo antes de agrupar. A variante do diagnóstico devolveu os mesmos 50 resultados na mesma ordem e foi mais rápida nas duas execuções isoladas. A Sisense publicou o padrão de agregar por ID antes de buscar nomes em uma consulta de contagem por painel. [Diagnóstico e planos](https://github.com/Lhferraaz/t4h-estagio-pesquisa-ferraz/blob/8c358c22253a7d0b05f04fd373e8cb8db39b9d14/diagnostico/top-produtos/README.md) · [Sisense](https://www.sisense.com/blog/use-subqueries-to-count-distinct-50x-faster/)
 - **Hipótese.** Somar unidades e receita por `produto_id`, limitar o ranking e buscar o catálogo só dos finalistas deve reduzir o p95 de `GET /relatorios/top-produtos`. O banco ainda precisa percorrer os itens elegíveis. O efeito na vazão e no p95 gerais depende da participação da rota na carga e da disputa por CPU no banco.
 - **Como medir.** Mudar só o SQL da rota. Validar campos, filtro, limites e ordenação, com receita decrescente e ID ascendente para desempates. Comparar três rodadas com 20 usuários virtuais, 60 s, aquecimento de 15 s e semente 42 com a [H5](#resultado-da-h5). Usar a linha de base original como referência acumulada. Conferir também CPU e memória.
+
+### Resultado da H6
+
+Status **aplicada e medida** no commit `be5976d`. A referência direta é a H5. A linha de base original mostra o efeito acumulado.
+
+| Métrica | Base original | H5 | H6 |
+| --- | ---: | ---: | ---: |
+| Requisições/s | 2,87 | 14,75 | 17,30 |
+| p50 geral | 1.299,9 ms | 813,2 ms | 803,5 ms |
+| p95 geral | 21.354,1 ms | 3.998,3 ms | 2.905,4 ms |
+| p99 geral | 25.935,8 ms | 9.480,2 ms | 7.526,2 ms |
+| p95 de top produtos | 25.039,1 ms | 18.274,7 ms | 14.215,6 ms |
+| Erros HTTP | 0,00% | 0,00% | 0,00% |
+| CPU média do banco | 98,5% | 100,1% | 100,0% |
+| Memória média do banco | 405,7 MiB | 355,5 MiB | 296,8 MiB |
+| CPU média da API | 5,9% | 15,2% | 17,5% |
+| Memória média da API | 32,8 MiB | 99,8 MiB | 106,5 MiB |
+| Maior amostra de memória do banco | 497,8 MiB | 511,4 MiB | 510,6 MiB |
+| Maior amostra de memória da API | 39,86 MiB | 118,1 MiB | 123,8 MiB |
+
+Medições da base [B1](resultados/20261117-020419-00-linha-de-base/), [B2](resultados/20261117-020610-00-linha-de-base/), [B3](resultados/20261117-020801-00-linha-de-base/). H5 [A1](resultados/20261118-023254-06-indice-pedidos-status/), [A2](resultados/20261118-023420-06-indice-pedidos-status/), [A3](resultados/20261118-023547-06-indice-pedidos-status/). H6 [R1](resultados/20261118-233026-07-top-produtos-agregar-primeiro/), [R2](resultados/20261118-233152-07-top-produtos-agregar-primeiro/), [R3](resultados/20261118-233318-07-top-produtos-agregar-primeiro/). A vazão e as latências vêm de `resumo.txt`. As médias de recursos vêm de `recursos.txt` e os maiores valores de memória foram conferidos em `recursos.csv`.
+
+Todas as rodadas da H6 tiveram maior vazão (17,02 a 17,75 contra 14,66 a 14,92 req/s), p95 geral menor (2.869,6 a 2.914,8 contra 3.756,6 a 4.010,8 ms) e p95 de top produtos menor (12.786,0 a 17.084,9 contra 17.907,9 a 18.319,0 ms). A rota teve 16 a 17 respostas por rodada na H6 e 14 na H5. Por isso a leitura do p95 da rota é sensível a amostras individuais. O banco continuou perto do limite de CPU. A memória média do banco caiu, com pico ainda próximo do limite de 512 MiB, e a memória média da API subiu.
+
+A H6 reutilizou o volume da H5 com os mesmos índices. A referência foi medida mais cedo no mesmo dia. As três rodadas registraram o commit `be5976d`, árvore limpa e os mesmos limites e parâmetros. A amostragem não detectou Chrome ou Chromium. As 42 respostas do contrato passaram antes da carga e após cada rodada.

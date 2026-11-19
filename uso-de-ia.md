@@ -76,3 +76,4 @@ Registro de trabalho para apoiar a seção **9. Uso de IA** do artigo. O enuncia
 
 - **Contribuição da IA.** Propôs somar por ID antes do join com o catálogo e explicou, com o caso da Sisense, por que o cálculo pode acontecer antes da busca por nome e categoria.
 - **Decisão da pessoa.** Escolheu seguir com a reescrita. Questionou a defasagem de uma view materializada entre refreshes num cenário em que novas vendas precisam aparecer no ranking.
+- **Verificação.** O Codex mudou apenas o SQL, aplicou a revisão sobre o volume da H5, validou as 42 respostas e executou três rodadas com a régua original. As medianas e o consumo de recursos foram calculados a partir dos arquivos gerados. [Resultado da H6](experimentos.md#resultado-da-h6)
