@@ -1,0 +1,13 @@
+commit da aplicação: 531a1bd4bc2c0003a412a24a909d66443ebf0c1b
+projeto: desafio-p95-h7-1795058351
+data de início: 2026-11-19T00:20:41-03:00
+vus: 20
+duracao: 60s
+aquecimento: 15s (5 VUs, semente 43)
+semente: 42
+k6: grafana/k6:0.54.0, saída por requisição (--out json)
+api: cpus=500000000 memoria=268435456 bytes
+banco: cpus=1000000000 memoria=536870912 bytes
+PostgreSQL 16.4 (Debian 16.4-1.pgdg120+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14) 12.2.0, 64-bit
+none
+Amostragem não detectou Chrome durante a rodada.

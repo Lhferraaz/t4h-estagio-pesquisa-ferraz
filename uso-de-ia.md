@@ -113,6 +113,12 @@ Registro de trabalho para apoiar a seção **9. Uso de IA** do artigo. O enuncia
 - **Execução e verificação.** O Codex criou apenas o índice, conferiu o plano e o espaço ocupado, validou as 42 respostas e mediu três rodadas. A pessoa fechou o Chrome. A busca e o p50 geral melhoraram e o p95 geral subiu. [Resultado da H7](experimentos.md#resultado-da-h7)
 - **Integração.** A pessoa autorizou o merge dos PRs abertos e pediu uma avaliação dos próximos experimentos, incluindo o ambiente dos containers. O Codex conferiu o PR #13 e registrou a piora de p95 junto dos ganhos observados.
 
+## 19/11/2026 — Coleta de latência na H7
+
+- **Pedido da pessoa.** Rodar a coleta da cauda de latência na versão atual para descobrir quais rotas aparecem acima do p95 geral.
+- **Contribuição da IA.** Reaproveitou o ambiente isolado de `pg_stat_statements`, ajustou o rótulo da consulta de top produtos para sua versão atual e coletou latências individuais com a régua original. Capturou também os contadores de restrição de CPU do banco e da API.
+- **Verificação.** Confirmou o contrato antes e depois, bateu os totais e o p95 do k6 com as amostras e salvou a divisão da cauda por rota. A rodada diagnóstica caracterizou a H7 e deixou a comparação causal com a H6 em aberto. [Coleta e evidências](diagnostico/p95-h7/README.md)
+
 ## H8 — Agregação de vendas por dia
 
 - **Decisão da pessoa.** Propôs retirar o campo `observacoes` que o Node descarta e escolheu levar os totais diários ao SQL. Preferiu medir a agregação antes de criar um índice de data.
