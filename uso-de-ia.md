@@ -72,6 +72,11 @@ Registro de trabalho para apoiar a seção **9. Uso de IA** do artigo. O enuncia
 
 - **Execução e verificação.** O Codex implementou apenas o índice, confirmou o contrato, mediu três vezes com a carga de referência e repetiu os 21 planos. Registrou os ganhos, os casos em que a ordenação permaneceu, o tamanho do índice e os picos encontrados em `recursos.csv`.
 
+## 18/11/2026 — Diagnóstico de top produtos
+
+- **Pedido da pessoa.** Investigar a próxima rota, `top-produtos`, explicar o problema e comparar alternativas com fontes de engenharia.
+- **Contribuição da IA.** Leu a rota, fez quatro planos somente leitura e comparou os 50 primeiros produtos nos dois formatos de consulta. Pesquisou os casos de Sisense, Crunchy Data e Algolia. Salvou a comparação e propôs um teste de carga com a reescrita em SQL.
+
 ## H6 — Reescrita da consulta de top produtos
 
 - **Contribuição da IA.** Propôs somar por ID antes do join com o catálogo e explicou, com o caso da Sisense, por que o cálculo pode acontecer antes da busca por nome e categoria.
