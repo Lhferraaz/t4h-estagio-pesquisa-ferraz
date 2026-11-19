@@ -1,5 +1,7 @@
 # Experimentos
 
+Na preparação do artigo, selecionamos leituras científicas para aprofundar a interpretação dos experimentos. A Lei de Little ajuda a ler carga, vazão e latência média. O artigo de Selinger e colegas ajuda a explicar a escolha de caminhos de acesso e o papel da ordenação nos planos de consulta. Os valores observados vêm das rodadas registradas abaixo.
+
 ## Alternativas consideradas e descartadas
 
 | Onde | Alternativa | Motivo do descarte |
@@ -48,6 +50,8 @@ A primeira rodada do lote permanece preservada em [A1](resultados/20261117-02573
 - **Previsão:** com 10 conexões e 20 usuários virtuais, consultas podem esperar no pool. A redução da concorrência pode aliviar a disputa por CPU no PostgreSQL ou alongar a espera de consultas rápidas atrás de consultas lentas. O teste mede o efeito conjunto do reuso e do limite de 10. O consumo de CPU e memória será observado nos dois serviços.
 - **Como julgar:** manter as respostas do contrato e comparar a mediana de três execuções com 20 usuários virtuais, 60 s, aquecimento de 15 s e semente 42. Usar a rodada de itens em lote com Chrome fechado como referência imediata e a linha de base original como referência do ganho acumulado.
 - **Leitura:** [Pooling no node-postgres](https://node-postgres.com/features/pooling), [tamanho do pool](https://node-postgres.com/guides/pool-sizing) e [modos do PgBouncer](https://www.pgbouncer.org/features.html).
+
+**Leitura da carga.** A Lei de Little relaciona a quantidade média de requisições em andamento à vazão e ao tempo médio de resposta. No cenário fechado do k6, cada usuário virtual envia a próxima requisição quando a atual termina. Com os mesmos usuários virtuais, ciclos mais curtos podem aumentar a vazão. Os percentis vêm das medições. [John D. C. Little, *Little's Law as Viewed on Its 50th Anniversary*, Operations Research, 2011](https://pubsonline.informs.org/doi/abs/10.1287/opre.1110.0940?journalCode=opre)
 
 ### Resultado da H2
 
@@ -152,6 +156,8 @@ O banco com o índice foi criado em um volume isolado, usando os scripts de dado
 - **Hipótese e previsão.** O índice pode entregar os registros do status na ordem da consulta, reduzindo ou eliminando a ordenação em disco. Esperamos menor p95 para a rota e possível aumento de req/s e redução de p95 geral. O `OFFSET` ainda precisa avançar pelas entradas anteriores, e a contagem exata pode mudar de plano conforme o status e a visibilidade das linhas.
 - **Como medir.** Alterar apenas o índice. Comparar os planos da página e da contagem, medir o espaço ocupado, verificar o contrato e executar três rodadas com 20 usuários virtuais, 60 s, aquecimento de 15 s e semente 42. Usar a [H4](#resultado-da-h4) como referência imediata e a linha de base original para o ganho acumulado.
 
+**Base para entender o plano.** Selinger e colegas descrevem como um otimizador baseado em custo compara caminhos de acesso e considera a ordem produzida por cada um. Na H5, essa distinção orienta a leitura dos planos com varredura seguida de ordenação e com acesso pelo índice composto. [Patricia Selinger et al., *Access Path Selection in a Relational Database Management System*, ACM SIGMOD, 1979](https://web.eecs.umich.edu/~michjc/eecs584/Papers/selinger_1979.pdf)
+
 ### Resultado da H5
 
 Mediana de três rodadas por versão. CPU e memória médias são as medianas das médias por rodada. O pico na tabela é a maior amostra de memória das três rodadas.
@@ -251,3 +257,10 @@ O plano usou o índice tanto para o e-mail cadastrado quanto para o ausente. No 
 As três rodadas registraram `58d5f0c`, árvore limpa, os mesmos parâmetros da H6 e os mesmos limites de CPU e memória. A H7 usou um volume novo com os mesmos scripts de dados e com o novo índice. A amostragem não detectou Chrome ou Chromium. As 42 respostas do contrato foram iguais antes da carga e após cada rodada.
 
 **Decisão após medir.** A pessoa autorizou integrar os PRs abertos. A H7 foi mantida com o ganho de vazão e de p50 e a piora de p95 registrados. [Decisões](docs/decisoes.md#mudanças-integradas)
+
+## H8 — Agrupar vendas por dia no PostgreSQL
+
+- **Decisão da pessoa.** Retirar a coluna `observacoes` da consulta porque a API descarta seu conteúdo. A pessoa escolheu calcular os totais em SQL e deixar o índice de data para um teste separado. A escolha reduz o volume enviado ao Node e evita introduzir uma estrutura de armazenamento e manutenção para este experimento.
+- **Evidência.** Na semana do diagnóstico, a consulta de detalhes devolveu 12.945 linhas, com 3.551.664 bytes só no campo de observações. A versão agrupada devolveu sete linhas. O índice de data ajudou o banco a localizar os pedidos do período em um plano isolado. [Comparação dos planos](https://github.com/Lhferraaz/t4h-estagio-pesquisa-ferraz/blob/76bf5bb770923f8039b29dbf3d8af158b8517fe5/diagnostico/vendas-por-dia/README.md)
+- **Hipótese.** Agrupar por dia no PostgreSQL deve reduzir o p95 de vendas por dia e o trabalho de leitura e agregação no Node. Esperamos melhora na vazão e no p95 geral se a redução de tráfego compensar o trabalho de contar pedidos distintos e somar no banco. O efeito sob concorrência e na memória dos dois serviços será medido. [Agregações no PostgreSQL](https://www.postgresql.org/docs/16/functions-aggregate.html)
+- **Como medir.** Alterar a consulta e a formatação do JSON da rota. Preservar pedidos distintos, unidades, receita, intervalo inclusivo, filtro de cancelados, dias com itens e ordem crescente. Confirmar o contrato e comparar com a [H7](#resultado-da-h7) em três rodadas com 20 usuários virtuais, 60 s, aquecimento de 15 s e semente 42.
