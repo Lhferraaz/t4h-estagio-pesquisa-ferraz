@@ -20,9 +20,10 @@ Este registro explica por que o projeto segue as escolhas abaixo. Os números e 
 | Criar um índice B-tree simples em `itens_pedido(pedido_id)`. | O índice aumentou a vazão e reduziu o p95 geral e o da rota de pedidos do cliente. A mediana do p99 geral e o uso médio de memória subiram no teste. | [H4 e PR #7](https://github.com/Lhferraaz/t4h-estagio-pesquisa-ferraz/pull/7) |
 | Criar um índice B-tree em `pedidos(status, criado_em DESC, id DESC)`. | As três rodadas ganharam vazão e reduziram o p95 geral e o da rota. A memória média da API subiu. A pessoa autora escolheu adotar o índice e deixar a paginação por cursor para um experimento futuro. | [H5](../experimentos.md#resultado-da-h5) · [PR #10](https://github.com/Lhferraaz/t4h-estagio-pesquisa-ferraz/pull/10) |
 | Somar por ID e buscar nome e categoria após escolher o topo. | A pessoa autora decidiu adotar a reescrita após a melhora de vazão e de p95 nas três rodadas. A consulta usa os dados atuais a cada chamada. A view materializada ficou para um cenário que aceite defasagem entre atualizações. | [H6](../experimentos.md#resultado-da-h6) · [PR #11](https://github.com/Lhferraaz/t4h-estagio-pesquisa-ferraz/pull/11) |
+| Indexar a expressão de busca de clientes por e-mail. | A H7 aumentou a vazão e reduziu o p50 geral e a latência da rota. O p95 geral subiu nas três rodadas e ficou como ponto para investigar. | [H7](../experimentos.md#resultado-da-h7) · [PR #13](https://github.com/Lhferraaz/t4h-estagio-pesquisa-ferraz/pull/13) |
 
 ## Próximos testes
 
-O pool de quatro conexões, o índice em `lower(email)` e a consulta única com joins estão em [próximos testes](../proximos-testes.md).
+O pool de quatro conexões e a consulta única com joins estão em [próximos testes](../proximos-testes.md).
 
 Atualize esta página quando uma decisão mudar ou uma revisão terminar. Resuma o motivo e a contrapartida e aponte para o experimento ou PR que sustenta a escolha.

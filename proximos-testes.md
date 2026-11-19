@@ -21,11 +21,6 @@
 - **Como testar:** partir de um estado medido, alterar só a rota, preservar `404`, listas vazias, campos, valores e ordem; passar no verificador de contrato e fazer três medições com os mesmos parâmetros. Comparar as medianas gerais, da rota e de CPU e memória com o estado escolhido como “antes”.
 - **O que é necessário:** tempo para implementar a reconstrução do JSON e revisar os casos de cliente inexistente, pedido sem itens e ordenação. Não exige serviço novo. Nenhum ganho foi medido para esta alternativa.
 
-## Índice de expressão para busca por e-mail
-
-- **Proposta.** A pessoa levantou a hipótese de que um índice B-tree em `clientes(lower(email))` aumentaria a vazão. A consulta já compara `lower(email)` e o plano inicial fez uma varredura na tabela. [Plano após a H6](diagnostico/pos-h6/planos.txt#L83) · [Índices de expressão no PostgreSQL](https://www.postgresql.org/docs/16/indexes-expressional.html)
-- **Como testar.** Comparar o plano e a carga da versão atual com a mesma versão acrescida somente do índice. Conferir o contrato, incluindo os casos que variam maiúsculas e minúsculas. Comparar a vazão geral, o p95 da rota e o custo de armazenar o índice.
-
 ## Totais calculados previamente para top produtos
 
 - **View materializada.** Uma leitura dos totais prontos pode reduzir o trabalho a cada chamada. Ficou em aberto porque o ranking pode ficar defasado entre atualizações. Para testar, definir a defasagem permitida e medir tempo e custo do refresh, espaço e latência de leitura. [PostgreSQL 16](https://www.postgresql.org/docs/16/rules-materializedviews.html)

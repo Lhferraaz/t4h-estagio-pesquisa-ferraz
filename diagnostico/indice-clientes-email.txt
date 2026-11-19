@@ -1,0 +1,41 @@
+data: 2026-11-19T00:00:53-03:00
+commit: 58d5f0c9edc1818df3eb27393ac538bef0d657c9
+BEGIN
+version
+PostgreSQL 16.4 (Debian 16.4-1.pgdg120+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14) 12.2.0, 64-bit
+(1 row)
+bytes	tamanho
+4907008	4792 kB
+(1 row)
+QUERY PLAN
+Sort  (cost=956.32..957.57 rows=500 width=60) (actual rows=1 loops=1)
+  Sort Key: id
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=3 read=4
+  ->  Bitmap Heap Scan on clientes  (cost=16.29..933.91 rows=500 width=60) (actual rows=1 loops=1)
+        Recheck Cond: (lower(email) = 'cliente3@exemplo.com'::text)
+        Heap Blocks: exact=1
+        Buffers: shared read=4
+        ->  Bitmap Index Scan on clientes_lower_email_idx  (cost=0.00..16.17 rows=500 width=0) (actual rows=1 loops=1)
+              Index Cond: (lower(email) = 'cliente3@exemplo.com'::text)
+              Buffers: shared read=3
+Planning:
+  Buffers: shared hit=74 read=14
+Planning Time: 0.884 ms
+Execution Time: 0.409 ms
+(15 rows)
+QUERY PLAN
+Sort  (cost=956.32..957.57 rows=500 width=60) (actual rows=0 loops=1)
+  Sort Key: id
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=1 read=2
+  ->  Bitmap Heap Scan on clientes  (cost=16.29..933.91 rows=500 width=60) (actual rows=0 loops=1)
+        Recheck Cond: (lower(email) = 'ninguem@exemplo.com'::text)
+        Buffers: shared hit=1 read=2
+        ->  Bitmap Index Scan on clientes_lower_email_idx  (cost=0.00..16.17 rows=500 width=0) (actual rows=0 loops=1)
+              Index Cond: (lower(email) = 'ninguem@exemplo.com'::text)
+              Buffers: shared hit=1 read=2
+Planning Time: 0.029 ms
+Execution Time: 0.187 ms
+(12 rows)
+COMMIT
