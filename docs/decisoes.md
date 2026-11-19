@@ -23,6 +23,6 @@ Este registro explica por que o projeto segue as escolhas abaixo. Os números e 
 
 ## Próximos testes
 
-O pool de quatro conexões, o índice em `lower(email)` e a consulta única com joins estão em [próximos testes](../proximos-testes.md).
+O pool de quatro conexões e a consulta única com joins estão em [próximos testes](../proximos-testes.md). O índice de e-mail foi medido na [H7](../experimentos.md#resultado-da-h7) e está em revisão.
 
 Atualize esta página quando uma decisão mudar ou uma revisão terminar. Resuma o motivo e a contrapartida e aponte para o experimento ou PR que sustenta a escolha.

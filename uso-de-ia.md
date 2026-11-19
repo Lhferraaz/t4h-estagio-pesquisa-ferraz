@@ -105,3 +105,4 @@ Registro de trabalho para apoiar a seção **9. Uso de IA** do artigo. O enuncia
 
 - **Decisão e previsão da pessoa.** Priorizou o índice em `lower(email)` pela frequência da rota e pela varredura observada. Previu redução do p50 e do p95 gerais. Escolheu usar as fontes já registradas.
 - **Contribuição da IA.** Conferiu o peso da rota, contou suas chamadas nas três rodadas da H6 e relacionou a previsão ao trabalho de busca e à espera no banco. Registrou a hipótese antes de adicionar o índice.
+- **Execução e verificação.** O Codex criou apenas o índice, conferiu o plano e o espaço ocupado, validou as 42 respostas e mediu três rodadas. A pessoa fechou o Chrome. A busca e o p50 geral melhoraram e o p95 geral subiu. [Resultado da H7](experimentos.md#resultado-da-h7)

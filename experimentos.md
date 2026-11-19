@@ -221,3 +221,31 @@ A H6 reutilizou o volume da H5 com os mesmos índices. A referência foi medida 
 - **Evidência e fonte.** Na versão da H6, o plano para um e-mail cadastrado devolveu uma linha após descartar 99.999. O PostgreSQL pode indexar a expressão usada no filtro. O índice não será único, pois o contrato devolve todos os clientes correspondentes em ordem de ID. [Plano sem índice](diagnostico/pos-h6/planos.txt#L83) · [Índices de expressão no PostgreSQL](https://www.postgresql.org/docs/16/indexes-expressional.html)
 - **Hipótese de trabalho.** Um B-tree em `clientes(lower(email))` deve reduzir o trabalho na busca e diminuir o p50 e o p95 da rota. A hipótese da pessoa será avaliada pelas medianas gerais e pela vazão. Medir CPU, memória e espaço do índice. Com usuários virtuais fixos, o banco pode continuar perto do limite enquanto atende mais requisições.
 - **Como medir.** Adicionar somente o índice, criar um volume isolado com os mesmos dados e verificar as 42 respostas, incluindo e-mails com maiúsculas e ausentes. Comparar três rodadas com a [H6](#resultado-da-h6), com 20 usuários virtuais, 60 s, aquecimento de 15 s e semente 42.
+
+### Resultado da H7
+
+Status **aplicada e medida** no commit `58d5f0c`. A comparação direta usa a H6. As latências e os recursos médios são medianas das três rodadas. A linha de base original mostra a evolução acumulada.
+
+| Métrica | Base original | H6 | H7 |
+| --- | ---: | ---: | ---: |
+| Requisições/s | 2,87 | 17,30 | 19,27 |
+| p50 geral | 1.299,9 ms | 803,5 ms | 598,1 ms |
+| p95 geral | 21.354,1 ms | 2.905,4 ms | 3.416,2 ms |
+| p99 geral | 25.935,8 ms | 7.526,2 ms | 7.256,0 ms |
+| p50 de cliente por e-mail | 1.300,3 ms | 988,3 ms | 302,6 ms |
+| p95 de cliente por e-mail | 2.540,5 ms | 1.401,0 ms | 880,9 ms |
+| Erros HTTP | 0,00% | 0,00% | 0,00% |
+| CPU média do banco | 98,5% | 100,0% | 100,3% |
+| Memória média do banco | 405,7 MiB | 296,8 MiB | 320,2 MiB |
+| CPU média da API | 5,9% | 17,5% | 19,2% |
+| Memória média da API | 32,8 MiB | 106,5 MiB | 50,0 MiB |
+| Maior amostra de memória do banco | 497,8 MiB | 510,6 MiB | 497,3 MiB |
+| Maior amostra de memória da API | 39,86 MiB | 123,8 MiB | 72,24 MiB |
+
+Rodadas da base [B1](resultados/20261117-020419-00-linha-de-base/), [B2](resultados/20261117-020610-00-linha-de-base/), [B3](resultados/20261117-020801-00-linha-de-base/). H6 [A1](resultados/20261118-233026-07-top-produtos-agregar-primeiro/), [A2](resultados/20261118-233152-07-top-produtos-agregar-primeiro/), [A3](resultados/20261118-233318-07-top-produtos-agregar-primeiro/). H7 [R1](resultados/20261119-000113-08-indice-email/), [R2](resultados/20261119-000238-08-indice-email/), [R3](resultados/20261119-000402-08-indice-email/). Latência e vazão vêm de `resumo.txt`. Médias de recursos vêm de `recursos.txt` e os picos de memória foram conferidos em `recursos.csv`.
+
+**A hipótese se confirmou parcialmente.** Todas as rodadas da H7 tiveram maior vazão (18,21 a 20,03 contra 17,02 a 17,75 req/s), p50 geral menor (595,7 a 601,3 contra 800,7 a 804,3 ms) e p95 da busca por e-mail menor (804,1 a 953,0 contra 1.394,6 a 1.473,1 ms). O p95 geral subiu em todas as rodadas (3.200,6 a 3.655,3 contra 2.869,6 a 2.914,8 ms). O banco permaneceu perto do limite de CPU, e a memória média do banco subiu. A decisão de adoção está em aberto.
+
+O plano usou o índice tanto para o e-mail cadastrado quanto para o ausente. No caso cadastrado, o índice apontou uma linha e o executor acessou um bloco da tabela, em vez de percorrer todos os clientes. O índice ocupa 4.907.008 bytes (4792 kB na saída do PostgreSQL). Os planos foram executados fora da carga e ajudam a explicar o efeito na busca. [Plano da H6](diagnostico/pos-h6/planos.txt#L83) · [Plano e tamanho na H7](diagnostico/indice-clientes-email.txt#L7)
+
+As três rodadas registraram `58d5f0c`, árvore limpa, os mesmos parâmetros da H6 e os mesmos limites de CPU e memória. A H7 usou um volume novo com os mesmos scripts de dados e com o novo índice. A amostragem não detectou Chrome ou Chromium. As 42 respostas do contrato foram iguais antes da carga e após cada rodada.
