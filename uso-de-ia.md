@@ -2,6 +2,13 @@
 
 Registro de trabalho para apoiar a seção **9. Uso de IA** do artigo. O enunciado pede que essa seção diga, em 2 a 3 linhas, onde a IA foi usada e como suas contribuições foram verificadas. Este arquivo registra as interações enquanto acontecem; não substitui a seção do artigo.
 
+## Referências científicas escolhidas
+
+- **Decisão da pessoa.** Decidiu estudar as fontes antes da redação do artigo para fundamentar a interpretação dos experimentos. Selecionou a Lei de Little para a discussão de carga, vazão e latência média e o artigo de Patricia Selinger e colegas para a leitura dos planos com índice.
+- **Contribuição da IA.** Conferiu as publicações e registrou onde elas se aplicam aos experimentos. [Carga e pool](experimentos.md#h2--reutilizar-conexões-com-pgpool) · [Índice de pedidos por status](experimentos.md#h5--índice-composto-para-pedidos-por-status)
+- **Pedido e verificação da pessoa.** A pessoa pediu a padronização das citações para o artigo e informou que verificou as três fontes acadêmicas antes da inclusão. Elas são Dean e Barroso, Selinger e colegas, e Little.
+- **Contribuição da IA.** Inventariou os links dos registros de pesquisa, conferiu o acesso e reuniu as afirmações sustentadas, as limitações e os pontos de uso no [registro central de fontes](docs/fontes.md).
+
 ## 17/11/2026 — Configuração do trabalho
 
 - **Pedido:** configurar instruções para os agentes e uma skill para o ciclo de medição; trabalhar em uma branch por mudança, com pull request e merge em `main`.
@@ -17,7 +24,7 @@ Registro de trabalho para apoiar a seção **9. Uso de IA** do artigo. O enuncia
 ## 17/11/2026 — Contrato e linha de base
 
 - **Pedido:** executar o ciclo inicial para obter as informações de base.
-- **Contribuição da IA:** identificou que os containers da tentativa anterior usavam o mesmo nome e as mesmas portas; parou esses containers preservando seu volume e subiu esta cópia com `COMPOSE_PROJECT_NAME=desafio-novo`. Gravou o contrato original, executou três medições com `scripts/medir.sh 00-linha-de-base`, calculou as medianas a partir dos arquivos gerados e abriu o PR #2, posteriormente integrado em `main`.
+- **Contribuição da IA:** subiu a aplicação local. Gravou o contrato original, executou três medições com `scripts/medir.sh 00-linha-de-base`, calculou as medianas a partir dos arquivos gerados e abriu o PR #2, posteriormente integrado em `main`.
 - **Verificação feita:** cada `contexto.txt` registra os mesmos parâmetros, o commit do contrato e zero arquivos alterados sem commit; cada `contrato.txt` termina em “Contrato mantido”. Os arquivos de origem estão nas três pastas `resultados/*-00-linha-de-base/`. Nenhuma otimização foi aplicada e a causa dos tempos de resposta ainda não foi diagnosticada.
 
 ## 17/11/2026 — Diagnóstico das consultas SQL
