@@ -25,3 +25,10 @@
 
 - **Proposta.** A pessoa levantou a hipótese de que um índice B-tree em `clientes(lower(email))` aumentaria a vazão. A consulta já compara `lower(email)` e o plano inicial fez uma varredura na tabela. [Diagnóstico](diagnostico/leitura-inicial.md#o-que-os-planos-mostram)
 - **Como testar.** Comparar o plano e a carga da versão atual com a mesma versão acrescida somente do índice. Conferir o contrato, incluindo os casos que variam maiúsculas e minúsculas. Comparar a vazão geral, o p95 da rota e o custo de armazenar o índice.
+
+## Top produtos
+
+- **Primeiro candidato.** Somar unidades e receita por `produto_id`, escolher o topo e só então buscar nome e categoria. O diagnóstico em SQL devolveu os mesmos 50 registros e reduziu o tempo isolado de execução. Medir o efeito sob a carga oficial.
+- **Se a leitura continuar cara.** Avaliar uma view materializada por produto com uma regra de atualização compatível com o contrato. Avaliar uma tabela de totais transacionais se houver necessidade de refletir escritas imediatamente.
+
+[Planos, comparação e casos de empresas](diagnostico/top-produtos/README.md).
