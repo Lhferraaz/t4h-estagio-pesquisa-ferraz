@@ -1,0 +1,14 @@
+14-h10-referencia-cpu-cgroup.txt
+1 api usage_usec=2683436 nr_periods=603 nr_throttled=0 throttled_usec=0 oom_kill=0
+1 banco usage_usec=80833546 nr_periods=823 nr_throttled=803 throttled_usec=653567073 oom_kill=0
+2 api usage_usec=2625933 nr_periods=673 nr_throttled=1 throttled_usec=110630 oom_kill=0
+2 banco usage_usec=82406972 nr_periods=831 nr_throttled=819 throttled_usec=697235432 oom_kill=0
+3 api usage_usec=2118238 nr_periods=703 nr_throttled=0 throttled_usec=0 oom_kill=0
+3 banco usage_usec=81815773 nr_periods=827 nr_throttled=816 throttled_usec=724582314 oom_kill=0
+15-redistribuir-cpu-cgroup.txt
+1 api usage_usec=3245882 nr_periods=634 nr_throttled=7 throttled_usec=151572 oom_kill=0
+1 banco usage_usec=100162218 nr_periods=811 nr_throttled=798 throttled_usec=540420444 oom_kill=0
+2 api usage_usec=2676774 nr_periods=660 nr_throttled=2 throttled_usec=138695 oom_kill=0
+2 banco usage_usec=100939463 nr_periods=815 nr_throttled=804 throttled_usec=661430181 oom_kill=0
+3 api usage_usec=2326607 nr_periods=668 nr_throttled=2 throttled_usec=102966 oom_kill=0
+3 banco usage_usec=98687184 nr_periods=799 nr_throttled=786 throttled_usec=670898317 oom_kill=0

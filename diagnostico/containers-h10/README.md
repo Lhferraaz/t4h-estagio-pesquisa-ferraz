@@ -19,6 +19,6 @@ A API enviou 1.640.101 bytes aos logs na janela de diagnóstico. Os dois contêi
 
 ## Próximos testes
 
-1. Redistribuir o teto de CPU para 1,25 no banco e 0,25 na API, mantendo 1,5 CPU de teto somado. Medir vazão, p50, p95, p99 e restrição de CPU nos dois serviços.
+1. Redistribuir o teto de CPU para 1,25 no banco e 0,25 na API, mantendo 1,5 CPU de teto somado. A [H12](../../experimentos.md#resultado-da-h12) mediu vazão, p50, p95, p99 e restrição de CPU nos dois serviços.
 2. Avaliar um worker por consulta separadamente. Os planos mostram menos processos por consulta e temporários no ranking, por isso o efeito precisa ser medido com a mistura completa de rotas.
 3. Avaliar rotação de logs para limitar uso de disco. A redução dos campos registrados pela API seria outra mudança.

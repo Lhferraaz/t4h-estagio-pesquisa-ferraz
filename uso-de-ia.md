@@ -141,3 +141,9 @@ Registro de trabalho para apoiar a seção **9. Uso de IA** do artigo. O enuncia
 - **Contribuição da IA.** Comparou a folga de memória da API e do banco. Sugeriu limitar a API a 128 MiB na primeira série e reduzir apenas o pool na segunda. Registrou as hipóteses antes de cada alteração e coletou eventos de memória para complementar os picos amostrados pelo Docker.
 - **Execução e verificação.** Usou a H9 como referência, validou as 42 respostas antes e depois das rodadas e mediu três execuções de cada ajuste. Registrou que o teto de memória da API coube na carga e que o pool menor aumentou a vazão e reduziu o p95 e o p99 gerais, com p50 e memória média do banco maiores. [H10](experimentos.md#resultado-da-h10) · [H11](experimentos.md#resultado-da-h11)
 - **Integração.** A pessoa decidiu manter a API em 128 MiB para reduzir o orçamento e adiar o pool de quatro. O Codex restaurou o limite de dez conexões e preservou os commits e as medições das duas séries. [PR #19](https://github.com/Lhferraaz/t4h-estagio-pesquisa-ferraz/pull/19)
+
+## H12 — Redistribuição de CPU no Docker Compose
+
+- **Pedido da pessoa.** Pediu analisar o Docker, confirmou o fechamento do Chrome e autorizou testar a redistribuição de CPU após a coleta dos contadores.
+- **Contribuição da IA.** Inspecionou os limites aplicados e comparou a restrição de CPU, a memória e os planos do PostgreSQL. Sugeriu transferir 0,25 CPU do teto da API para o teto do banco, com a mesma soma das cotas. Registrou a hipótese antes de alterar o Compose.
+- **Execução e verificação.** Mediu três rodadas de cada distribuição com o mesmo conjunto de índices, salvou as cotas e os contadores do cgroup e verificou as 42 respostas antes e depois das rodadas. Registrou o ganho de vazão e de p50, a piora no p95 de pedidos por status e o aumento do uso de CPU do banco. [Diagnóstico dos contêineres](diagnostico/containers-h10/README.md) · [Resultado da H12](experimentos.md#resultado-da-h12)
