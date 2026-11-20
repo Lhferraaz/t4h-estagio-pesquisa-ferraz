@@ -1,0 +1,17 @@
+Medição: 14-h10-referencia-cpu
+Carga: 20 usuários virtuais por 60s
+
+Requisições:        1113
+Requisições/s:      18.15
+Tempo de resposta:  mediana 598.7 ms | p95 3496.2 ms | p99 6604.8 ms
+Erros:              0.00%
+
+Por rota:
+rota                  req       mediana       p95           p99           erros   
+cliente               287       298.5 ms      877.8 ms      1701.2 ms     0.0%    
+cliente-por-email     164       291.9 ms      802.0 ms      1397.3 ms     0.0%    
+pedidos-do-cliente    244       1100.0 ms     2302.2 ms     3556.9 ms     0.0%    
+pedidos-por-status    158       1901.4 ms     4416.2 ms     5220.9 ms     0.0%    
+busca-produtos        167       497.3 ms      1069.5 ms     1800.5 ms     0.0%    
+vendas-por-dia        77        2493.8 ms     4939.0 ms     6723.3 ms     0.0%    
+top-produtos          16        6753.6 ms     13602.9 ms    14077.2 ms    0.0%    
