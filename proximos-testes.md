@@ -6,7 +6,7 @@
 - **Limite.** Na API atual, o cliente pode pedir diretamente qualquer número de página. Adotar cursor mudaria essa forma de uso. O experimento futuro deve avaliar a busca separadamente e manter o contrato atual.
 - **Leitura.** [Caso de cursores da Shopify](https://shopify.engineering/pagination-relative-cursors).
 
-## Pool em outras cargas
+## Pool com quatro conexões
 
 A troca de dez para quatro conexões foi testada na [H11](experimentos.md#resultado-da-h11). O pool menor melhorou a vazão e o p95 geral com 20 usuários virtuais. O p50 e a memória média do banco subiram. Um teste futuro pode medir espera por conexão e repetir a comparação com outros níveis de concorrência e volumes de dados. O [teste anterior com 10](experimentos/pool-com-indice.md#resultado-da-combinação) registra o ganho inicial de reutilizar conexões.
 
