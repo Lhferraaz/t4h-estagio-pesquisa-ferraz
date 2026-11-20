@@ -1,0 +1,5 @@
+container                            amostras  cpu_media    cpu_max    mem_media      mem_max
+desafio-cpu-h12-n6mh9mk9-banco-1           30     125.1%     129.6%    409.3 MiB    494.7 MiB
+desafio-cpu-h12-n6mh9mk9-api-1             30       3.2%       7.2%     27.5 MiB     28.2 MiB
+
+cpu_percentual: 100% = 1 CPU inteira.

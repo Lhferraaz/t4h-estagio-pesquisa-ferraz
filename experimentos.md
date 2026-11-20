@@ -400,3 +400,43 @@ O objetivo de reduzir a memória observada do banco ficou sem apoio nas médias 
 **Decisão após medir.** A pessoa decidiu adiar o pool de quatro e manter dez conexões. Embora a H11 tenha melhorado o p95 e o p99 gerais, o p50 subiu nas cinco rotas que somam 90% do peso previsto na carga. A H11 fica registrada como experimento. [Decisões](docs/decisoes.md#mudanças-integradas)
 
 [Referência H10](#resultado-da-h10) · [P1](resultados/20261119-211433-13-pool-quatro/) · [P2](resultados/20261119-211556-13-pool-quatro/) · [P3](resultados/20261119-211719-13-pool-quatro/).
+
+## H12 — Redistribuir a cota de CPU dos contêineres
+
+- **Origem.** A pessoa pediu avaliar o Docker e autorizou testar a redistribuição. Na coleta da H10, o PostgreSQL atingiu a cota em 627 de 632 períodos ativos e a API em zero de 527. Uma segunda coleta deu 620 de 626 para o banco e zero de 512 para a API. [Diagnóstico dos contêineres](diagnostico/containers-h10/README.md) · [Segunda coleta](diagnostico/containers-h10/repeticao/deltas.txt)
+- **Hipótese.** Alterar o teto do PostgreSQL de 1,00 para 1,25 CPU e o da API de 0,50 para 0,25 CPU libera mais CPU para as consultas dentro do teto somado de 1,5 CPU. Manter o pool de dez e os limites de memória da H10. A API pode ter restrição na cota menor. [Limites de CPU no Docker](https://docs.docker.com/engine/containers/resource_constraints/#cpu)
+- **Previsão e critério.** Esperamos ganho de vazão ou redução do p95 geral, com p50 das rotas mais frequentes dentro da variação da referência. Conferir se a API passou a atingir a cota com frequência, se o p99 mudou e quanto de CPU e memória cada contêiner usou. Um banco mais rápido pode continuar atingindo a cota com usuários virtuais em carga contínua.
+- **Como medir.** Comparar três rodadas novas da H10 com três rodadas da distribuição proposta. Cada série começa com um volume novo com os mesmos dados e índices. Usar Chrome fechado, 20 usuários virtuais, 60 s de carga, 15 s de aquecimento e semente 42. Conferir o contrato antes da carga e após cada rodada. Ler `cpu.stat` antes e depois de cada execução do script oficial.
+
+### Resultado da H12
+
+Status **aplicada, medida e integrada**. A alteração foi medida no commit `8fc2fba`. A referência é uma nova série da H10 no commit `f08a8aa`. Os bancos foram criados em volumes novos a partir dos mesmos scripts. Cada série usou Chrome fechado, 20 usuários virtuais, 60 s de carga, aquecimento de 15 s e semente 42. As 42 respostas do contrato passaram antes de cada série e após cada rodada.
+
+| Métrica | H10, banco 1,00 e API 0,50 CPU | H12, banco 1,25 e API 0,25 CPU |
+| --- | ---: | ---: |
+| Vazão | 23,75 req/s | 26,27 req/s |
+| p50 geral | 499,8 ms | 402,5 ms |
+| p95 geral | 2.409,5 ms | 2.399,6 ms |
+| p99 geral | 6.604,8 ms | 6.580,4 ms |
+| p50 de cliente por ID | 204,6 ms | 197,5 ms |
+| p50 de cliente por e-mail | 206,5 ms | 200,5 ms |
+| p50 de pedidos do cliente | 795,1 ms | 605,2 ms |
+| p50 de pedidos por status | 898,5 ms | 794,5 ms |
+| p50 de busca de produtos | 497,1 ms | 391,7 ms |
+| p95 de pedidos por status | 4.416,2 ms | 5.426,9 ms |
+| p99 de pedidos por status | 8.706,2 ms | 10.235,0 ms |
+| Erros HTTP | 0,00% | 0,00% |
+| CPU média do banco | 99,8% | 125,0% |
+| Memória média do banco | 325,1 MiB | 367,1 MiB |
+| Maior amostra de memória do banco | 506,2 MiB | 494,7 MiB |
+| CPU média da API | 3,3% | 3,6% |
+| Memória média da API | 27,2 MiB | 26,9 MiB |
+| Maior amostra de memória da API | 28,92 MiB | 28,20 MiB |
+
+Os valores são medianas de três rodadas, exceto os maiores picos amostrados de memória nos CSVs. A vazão da H12 ficou entre 24,31 e 26,70 req/s, acima de toda a faixa da H10, de 18,15 a 23,80 req/s. As medianas de p50 das cinco rotas mais frequentes caíram. O p95 e o p99 gerais ficaram próximos e as faixas entre rodadas se sobrepuseram. O p95 e o p99 de pedidos por status subiram na mediana.
+
+O teto total permaneceu em 1,5 CPU, e o consumo medido do banco aumentou. O banco ainda atingiu a cota na maior parte dos períodos ativos. Na API, os contadores subiram em 11 de 1.962 períodos na H12 e em 1 de 1.979 na H10. A janela inclui o aquecimento e o contrato ao fim da carga. Nenhum contêiner registrou encerramento por falta de memória. A memória média do banco subiu. [Cotas aplicadas e contadores](diagnostico/redistribuicao-cpu/README.md)
+
+**Conclusão.** A hipótese ganhou força pelo aumento de vazão e pela queda no p50, com a mesma soma das cotas. A pessoa decidiu adotar a redistribuição pelo ganho de vazão e de p50. A piora da cauda de pedidos por status ficou registrada. [Decisões](docs/decisoes.md#mudanças-integradas)
+
+Referência [R1](resultados/20261119-220254-14-h10-referencia-cpu/) · [R2](resultados/20261119-220418-14-h10-referencia-cpu/) · [R3](resultados/20261119-220543-14-h10-referencia-cpu/). H12 [C1](resultados/20261119-220806-15-redistribuir-cpu/) · [C2](resultados/20261119-220929-15-redistribuir-cpu/) · [C3](resultados/20261119-221053-15-redistribuir-cpu/).

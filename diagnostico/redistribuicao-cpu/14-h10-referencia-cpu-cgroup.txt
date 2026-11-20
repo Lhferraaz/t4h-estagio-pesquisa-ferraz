@@ -1,0 +1,406 @@
+
+2026-11-19T22:02:54-03:00 depois-do-contrato-inicial
+/desafio-cpu-base-n6mh9mk9-api-1 limite_bytes=134217728 oom_killed=false reinicios=0
+cpu.max
+50000 100000
+cpu.stat
+usage_usec 286177
+user_usec 226763
+system_usec 59413
+nice_usec 0
+core_sched.force_idle_usec 0
+nr_periods 31
+nr_throttled 3
+throttled_usec 160241
+nr_bursts 0
+burst_usec 0
+memory.events
+low 0
+high 0
+max 0
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 0
+memory.current
+24862720
+memory.peak
+25075712
+memory.swap.current
+0
+/desafio-cpu-base-n6mh9mk9-banco-1 limite_bytes=536870912 oom_killed=false reinicios=0
+cpu.max
+100000 100000
+cpu.stat
+usage_usec 29001677
+user_usec 25462938
+system_usec 3538738
+nice_usec 0
+core_sched.force_idle_usec 0
+nr_periods 437
+nr_throttled 119
+throttled_usec 7542863
+nr_bursts 0
+burst_usec 0
+memory.events
+low 0
+high 0
+max 5601
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 0
+memory.current
+509034496
+memory.peak
+536875008
+memory.swap.current
+9367552
+
+2026-11-19T22:02:54-03:00 antes-da-rodada-1
+/desafio-cpu-base-n6mh9mk9-api-1 limite_bytes=134217728 oom_killed=false reinicios=0
+cpu.max
+50000 100000
+cpu.stat
+usage_usec 310763
+user_usec 241263
+system_usec 69499
+nice_usec 0
+core_sched.force_idle_usec 0
+nr_periods 33
+nr_throttled 3
+throttled_usec 160241
+nr_bursts 0
+burst_usec 0
+memory.events
+low 0
+high 0
+max 0
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 0
+memory.current
+25255936
+memory.peak
+25739264
+memory.swap.current
+0
+/desafio-cpu-base-n6mh9mk9-banco-1 limite_bytes=536870912 oom_killed=false reinicios=0
+cpu.max
+100000 100000
+cpu.stat
+usage_usec 29026561
+user_usec 25477634
+system_usec 3548926
+nice_usec 0
+core_sched.force_idle_usec 0
+nr_periods 439
+nr_throttled 119
+throttled_usec 7542863
+nr_bursts 0
+burst_usec 0
+memory.events
+low 0
+high 0
+max 5601
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 0
+memory.current
+509173760
+memory.peak
+536875008
+memory.swap.current
+9367552
+
+2026-11-19T22:04:17-03:00 depois-da-rodada-1
+/desafio-cpu-base-n6mh9mk9-api-1 limite_bytes=134217728 oom_killed=false reinicios=0
+cpu.max
+50000 100000
+cpu.stat
+usage_usec 2994199
+user_usec 2267849
+system_usec 726350
+nice_usec 0
+core_sched.force_idle_usec 0
+nr_periods 636
+nr_throttled 3
+throttled_usec 160241
+nr_bursts 0
+burst_usec 0
+memory.events
+low 0
+high 0
+max 0
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 0
+memory.current
+33288192
+memory.peak
+33546240
+memory.swap.current
+0
+/desafio-cpu-base-n6mh9mk9-banco-1 limite_bytes=536870912 oom_killed=false reinicios=0
+cpu.max
+100000 100000
+cpu.stat
+usage_usec 109860107
+user_usec 89335541
+system_usec 20524565
+nice_usec 0
+core_sched.force_idle_usec 0
+nr_periods 1262
+nr_throttled 922
+throttled_usec 661109936
+nr_bursts 0
+burst_usec 0
+memory.events
+low 0
+high 0
+max 12096
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 0
+memory.current
+486477824
+memory.peak
+536875008
+memory.swap.current
+10985472
+
+2026-11-19T22:04:17-03:00 antes-da-rodada-2
+/desafio-cpu-base-n6mh9mk9-api-1 limite_bytes=134217728 oom_killed=false reinicios=0
+cpu.max
+50000 100000
+cpu.stat
+usage_usec 3019454
+user_usec 2284048
+system_usec 735405
+nice_usec 0
+core_sched.force_idle_usec 0
+nr_periods 638
+nr_throttled 3
+throttled_usec 160241
+nr_bursts 0
+burst_usec 0
+memory.events
+low 0
+high 0
+max 0
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 0
+memory.current
+33599488
+memory.peak
+33878016
+memory.swap.current
+0
+/desafio-cpu-base-n6mh9mk9-banco-1 limite_bytes=536870912 oom_killed=false reinicios=0
+cpu.max
+100000 100000
+cpu.stat
+usage_usec 109885918
+user_usec 89353113
+system_usec 20532804
+nice_usec 0
+core_sched.force_idle_usec 0
+nr_periods 1264
+nr_throttled 922
+throttled_usec 661109936
+nr_bursts 0
+burst_usec 0
+memory.events
+low 0
+high 0
+max 12096
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 0
+memory.current
+486617088
+memory.peak
+536875008
+memory.swap.current
+10985472
+
+2026-11-19T22:05:42-03:00 depois-da-rodada-2
+/desafio-cpu-base-n6mh9mk9-api-1 limite_bytes=134217728 oom_killed=false reinicios=0
+cpu.max
+50000 100000
+cpu.stat
+usage_usec 5645387
+user_usec 4187766
+system_usec 1457620
+nice_usec 0
+core_sched.force_idle_usec 0
+nr_periods 1311
+nr_throttled 4
+throttled_usec 270871
+nr_bursts 0
+burst_usec 0
+memory.events
+low 0
+high 0
+max 0
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 0
+memory.current
+31744000
+memory.peak
+33878016
+memory.swap.current
+0
+/desafio-cpu-base-n6mh9mk9-banco-1 limite_bytes=536870912 oom_killed=false reinicios=0
+cpu.max
+100000 100000
+cpu.stat
+usage_usec 192292890
+user_usec 157948953
+system_usec 34343937
+nice_usec 0
+core_sched.force_idle_usec 0
+nr_periods 2095
+nr_throttled 1741
+throttled_usec 1358345368
+nr_bursts 0
+burst_usec 0
+memory.events
+low 0
+high 0
+max 16922
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 31
+memory.current
+454836224
+memory.peak
+536879104
+memory.swap.current
+49709056
+
+2026-11-19T22:05:43-03:00 antes-da-rodada-3
+/desafio-cpu-base-n6mh9mk9-api-1 limite_bytes=134217728 oom_killed=false reinicios=0
+cpu.max
+50000 100000
+cpu.stat
+usage_usec 5671200
+user_usec 4203087
+system_usec 1468112
+nice_usec 0
+core_sched.force_idle_usec 0
+nr_periods 1313
+nr_throttled 4
+throttled_usec 270871
+nr_bursts 0
+burst_usec 0
+memory.events
+low 0
+high 0
+max 0
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 0
+memory.current
+32833536
+memory.peak
+33878016
+memory.swap.current
+0
+/desafio-cpu-base-n6mh9mk9-banco-1 limite_bytes=536870912 oom_killed=false reinicios=0
+cpu.max
+100000 100000
+cpu.stat
+usage_usec 192318087
+user_usec 157966070
+system_usec 34352017
+nice_usec 0
+core_sched.force_idle_usec 0
+nr_periods 2097
+nr_throttled 1741
+throttled_usec 1358345368
+nr_bursts 0
+burst_usec 0
+memory.events
+low 0
+high 0
+max 16922
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 31
+memory.current
+459214848
+memory.peak
+536879104
+memory.swap.current
+49709056
+
+2026-11-19T22:07:07-03:00 depois-da-rodada-3
+/desafio-cpu-base-n6mh9mk9-api-1 limite_bytes=134217728 oom_killed=false reinicios=0
+cpu.max
+50000 100000
+cpu.stat
+usage_usec 7789438
+user_usec 5730858
+system_usec 2058579
+nice_usec 0
+core_sched.force_idle_usec 0
+nr_periods 2016
+nr_throttled 4
+throttled_usec 270871
+nr_bursts 0
+burst_usec 0
+memory.events
+low 0
+high 0
+max 0
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 0
+memory.current
+32837632
+memory.peak
+33878016
+memory.swap.current
+0
+/desafio-cpu-base-n6mh9mk9-banco-1 limite_bytes=536870912 oom_killed=false reinicios=0
+cpu.max
+100000 100000
+cpu.stat
+usage_usec 274133860
+user_usec 227381002
+system_usec 46752858
+nice_usec 0
+core_sched.force_idle_usec 0
+nr_periods 2924
+nr_throttled 2557
+throttled_usec 2082927682
+nr_bursts 0
+burst_usec 0
+memory.events
+low 0
+high 0
+max 20210
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 62
+memory.current
+441581568
+memory.peak
+536879104
+memory.swap.current
+43601920

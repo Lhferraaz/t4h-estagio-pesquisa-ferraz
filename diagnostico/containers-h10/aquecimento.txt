@@ -1,0 +1,2 @@
+ Container desafio-docker-diag-5e7uqj9a-carga-run-59ac096b8b0f Creating 
+ Container desafio-docker-diag-5e7uqj9a-carga-run-59ac096b8b0f Created 

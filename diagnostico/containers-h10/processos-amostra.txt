@@ -1,0 +1,7 @@
+autovacuum launcher|1
+background writer|1
+checkpointer|1
+client backend|11
+logical replication launcher|1
+parallel worker|5
+walwriter|1

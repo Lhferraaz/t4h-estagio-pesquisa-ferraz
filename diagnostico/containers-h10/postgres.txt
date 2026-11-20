@@ -1,0 +1,13 @@
+name	setting	unit	source
+effective_cache_size	524288	8kB	default
+hash_mem_multiplier	2		default
+jit	on		default
+log_temp_files	-1	kB	default
+maintenance_work_mem	65536	kB	default
+max_connections	100		configuration file
+max_parallel_workers	8		default
+max_parallel_workers_per_gather	2		default
+shared_buffers	16384	8kB	configuration file
+temp_file_limit	-1	kB	default
+work_mem	4096	kB	default
+(11 rows)
