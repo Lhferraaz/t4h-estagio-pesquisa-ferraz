@@ -1,0 +1,17 @@
+Medição: 17-zero-workers
+Carga: 20 usuários virtuais por 60s
+
+Requisições:        1639
+Requisições/s:      25.13
+Tempo de resposta:  mediana 398.3 ms | p95 2017.9 ms | p99 10739.5 ms
+Erros:              0.00%
+
+Por rota:
+rota                  req       mediana       p95           p99           erros   
+cliente               422       195.7 ms      793.4 ms      1101.3 ms     0.0%    
+cliente-por-email     247       197.3 ms      804.2 ms      1053.3 ms     0.0%    
+pedidos-do-cliente    345       603.1 ms      1503.9 ms     2006.3 ms     0.0%    
+pedidos-por-status    233       899.3 ms      2297.9 ms     2507.3 ms     0.0%    
+busca-produtos        245       304.4 ms      797.5 ms      1101.8 ms     0.0%    
+vendas-por-dia        119       1595.7 ms     2591.4 ms     2896.7 ms     0.0%    
+top-produtos          28        11111.0 ms    12366.6 ms    12837.5 ms    0.0%    

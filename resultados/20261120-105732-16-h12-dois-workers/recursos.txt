@@ -1,0 +1,5 @@
+container                            amostras  cpu_media    cpu_max    mem_media      mem_max
+desafio-workers2-omwqjy8l-banco-1          30     125.0%     130.3%    406.4 MiB    502.0 MiB
+desafio-workers2-omwqjy8l-api-1            30       3.5%       7.7%     78.8 MiB     80.8 MiB
+
+cpu_percentual: 100% = 1 CPU inteira.

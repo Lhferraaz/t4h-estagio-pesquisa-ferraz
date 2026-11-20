@@ -1,0 +1,12 @@
+rotulo: 17-zero-workers
+data: 2026-11-20 11:04:24 -0300
+vus: 20
+duracao: 60s
+aquecimento: 15s
+semente: 42
+commit: 77a3d16
+arquivos alterados sem commit: 0
+
+limites dos containers:
+  banco: cpus=1250000000 (1e9 = 1 CPU, 0 = sem limite) memoria=536870912 bytes (0 = sem limite)
+  api: cpus=250000000 (1e9 = 1 CPU, 0 = sem limite) memoria=134217728 bytes (0 = sem limite)
