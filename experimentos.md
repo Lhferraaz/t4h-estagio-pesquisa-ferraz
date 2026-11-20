@@ -307,7 +307,7 @@ A H8 reaproveitou o volume da H7. As medições foram feitas mais tarde, com os 
 
 ### Resultado da H9
 
-Status **aplicada e medida** no commit `1dc06e9`, em revisão. A referência direta é uma nova série da H8 no commit `4d18769`, sem mudança no código da API ou no banco em relação à H8 original. Cada série começou com um volume novo, com os mesmos dados, parâmetros e limites. A amostragem não detectou Chrome ou Chromium. O verificador comparou as 42 respostas antes e depois de cada série de carga e após cada rodada.
+Status **aplicada, medida e integrada**. O código foi medido no commit `1dc06e9`. A referência direta é uma nova série da H8 no commit `4d18769`, sem mudança no código da API ou no banco em relação à H8 original. Cada série começou com um volume novo, com os mesmos dados, parâmetros e limites. A amostragem não detectou Chrome ou Chromium. O verificador comparou as 42 respostas antes e depois de cada série de carga e após cada rodada.
 
 | Métrica | H8 de referência | H9 com índice |
 | --- | ---: | ---: |
@@ -332,6 +332,8 @@ Referência [R1](resultados/20261119-204957-10-h8-referencia-contagem/) · [R2](
 
 **Conclusão.** A hipótese ganhou força para vazão e p50. O p95 de pedidos por status teve mediana menor e faixas sobrepostas. O p95 geral mudou pouco frente à variação entre rodadas, e o p99 da rota piorou na mediana. O índice ocupou 3.514.368 bytes também no banco da H9. A memória média do banco subiu e as duas séries tiveram picos próximos ao limite de 512 MiB. A carga contém só leituras, então o custo de manter o índice nas escritas continua em aberto. [Índice no banco da H9](diagnostico/pos-h8/indice-h9-ativo.txt)
 
+**Decisão após medir.** A pessoa decidiu incorporar o índice pelo ganho de vazão e pela queda do p50, com a piora do p99 da rota registrada. [Decisões](docs/decisoes.md#mudanças-integradas)
+
 ## H10 — Reduzir o limite de memória da API
 
 - **Origem.** A pessoa pediu testar uma versão com menor custo de memória. A IA sugeriu começar pelo limite da API e testar depois o tamanho do pool, conforme a proposta anterior da pessoa.
@@ -341,7 +343,7 @@ Referência [R1](resultados/20261119-204957-10-h8-referencia-contagem/) · [R2](
 
 ### Resultado da H10
 
-Status **aplicada e medida** no commit `6968756`. A comparação usa as três rodadas da H9 da mesma noite como referência. As duas séries começaram com volumes novos e usaram a mesma carga. A amostragem não detectou Chrome ou Chromium.
+Status **aplicada, medida e integrada**. O código foi medido no commit `6968756`. A comparação usa as três rodadas da H9 da mesma noite como referência. As duas séries começaram com volumes novos e usaram a mesma carga. A amostragem não detectou Chrome ou Chromium.
 
 | Métrica | H9, API 256 MiB | H10, API 128 MiB |
 | --- | ---: | ---: |
@@ -361,6 +363,8 @@ Os valores são medianas de três rodadas, exceto os maiores picos do CSV. A API
 
 [Referência H9](#resultado-da-h9) · [A1](resultados/20261119-210917-12-api-128-mib/) · [A2](resultados/20261119-211041-12-api-128-mib/) · [A3](resultados/20261119-211206-12-api-128-mib/).
 
+**Decisão após medir.** A pessoa decidiu manter o limite de 128 MiB na API para reduzir o orçamento de memória. A variação do p95 geral ficou registrada. [Decisões](docs/decisoes.md#mudanças-integradas)
+
 ## H11 — Reduzir o pool do PostgreSQL para quatro conexões
 
 - **Origem.** A pessoa propôs testar o pool com quatro conexões e retomou a proposta ao pedir uma versão com menor custo de memória. A IA sugeriu medir a redução do pool em uma série separada do ajuste do limite da API.
@@ -370,7 +374,7 @@ Os valores são medianas de três rodadas, exceto os maiores picos do CSV. A API
 
 ### Resultado da H11
 
-Status **aplicada e medida** no commit `6354ae5`. A H10 com dez conexões é a referência direta. Cada série começou com um volume novo e a mesma configuração do PostgreSQL. Mantivemos o limite da API em 128 MiB. A amostragem não detectou Chrome ou Chromium.
+Status **testada e adiada**. O código experimental foi medido no commit `6354ae5`. A H10 com dez conexões é a referência direta. Cada série começou com um volume novo e a mesma configuração do PostgreSQL. Mantivemos o limite da API em 128 MiB. A amostragem não detectou Chrome ou Chromium.
 
 | Métrica | H10, pool de 10 | H11, pool de 4 |
 | --- | ---: | ---: |
@@ -393,6 +397,6 @@ Os valores são medianas de três rodadas, exceto os maiores picos do CSV. O con
 
 O objetivo de reduzir a memória observada do banco ficou sem apoio nas médias e picos amostrados. O banco ainda chegou perto dos 512 MiB. O contador `max` do banco, que indica tentativas de ultrapassar o limite do cgroup, aumentou 12.795 vezes na H10 e 2.996 na H11 entre a checagem inicial e a checagem ao fim da terceira rodada. O swap do banco também estava menor na checagem final. A janela inclui aquecimentos e verificações de contrato, além da carga. Não houve reinícios ou encerramentos por falta de memória. [Série com dez](diagnostico/testes-de-memoria/12-api-128-mib-memoria.txt) · [Série com quatro](diagnostico/testes-de-memoria/13-pool-quatro-memoria.txt) · [Contadores do cgroup v2](https://docs.kernel.org/admin-guide/cgroup-v2.html#memory-interface-files)
 
-A interpretação é manter 128 MiB como opção de orçamento para a API e considerar quatro conexões pela vazão e pela redução da cauda, com o aumento no p50 registrado. O limite do banco deve ser reavaliado em outro experimento se o objetivo for baixar a capacidade disponível ao PostgreSQL.
+**Decisão após medir.** A pessoa decidiu adiar o pool de quatro e manter dez conexões. Embora a H11 tenha melhorado o p95 e o p99 gerais, o p50 subiu nas cinco rotas que somam 90% do peso previsto na carga. A H11 fica registrada como experimento. [Decisões](docs/decisoes.md#mudanças-integradas)
 
 [Referência H10](#resultado-da-h10) · [P1](resultados/20261119-211433-13-pool-quatro/) · [P2](resultados/20261119-211556-13-pool-quatro/) · [P3](resultados/20261119-211719-13-pool-quatro/).

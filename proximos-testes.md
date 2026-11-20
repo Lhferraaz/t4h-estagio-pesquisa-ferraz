@@ -8,7 +8,7 @@
 
 ## Pool com quatro conexões
 
-A troca de dez para quatro conexões foi testada na [H11](experimentos.md#resultado-da-h11). O pool menor melhorou a vazão e o p95 geral com 20 usuários virtuais. O p50 e a memória média do banco subiram. Um teste futuro pode medir espera por conexão e repetir a comparação com outros níveis de concorrência e volumes de dados. O [teste anterior com 10](experimentos/pool-com-indice.md#resultado-da-combinação) registra o ganho inicial de reutilizar conexões.
+A troca de dez para quatro conexões foi testada na [H11](experimentos.md#resultado-da-h11). O pool menor melhorou a vazão e o p95 geral com 20 usuários virtuais. O p50 e a memória média do banco subiram. A pessoa autora preferiu manter dez conexões. Uma nova comparação pode testar seis conexões e medir a espera no pool com a mesma carga. O [teste anterior com 10](experimentos/pool-com-indice.md#resultado-da-combinação) registra o ganho inicial de reutilizar conexões.
 
 ## Consulta única com joins para os pedidos de um cliente
 
