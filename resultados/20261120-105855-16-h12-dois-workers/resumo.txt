@@ -1,0 +1,17 @@
+Medição: 16-h12-dois-workers
+Carga: 20 usuários virtuais por 60s
+
+Requisições:        1677
+Requisições/s:      27.05
+Tempo de resposta:  mediana 398.3 ms | p95 2291.5 ms | p99 6393.2 ms
+Erros:              0.00%
+
+Por rota:
+rota                  req       mediana       p95           p99           erros   
+cliente               431       195.6 ms      598.1 ms      972.0 ms      0.0%    
+cliente-por-email     260       193.9 ms      599.5 ms      1140.1 ms     0.0%    
+pedidos-do-cliente    344       598.5 ms      1602.4 ms     2711.4 ms     0.0%    
+pedidos-por-status    230       699.4 ms      5227.8 ms     11140.2 ms    0.0%    
+busca-produtos        254       397.8 ms      806.8 ms      1445.2 ms     0.0%    
+vendas-por-dia        130       1304.1 ms     2499.4 ms     3007.0 ms     0.0%    
+top-produtos          28        5048.0 ms     10546.4 ms    11367.9 ms    0.0%    
