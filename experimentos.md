@@ -8,6 +8,7 @@ Na preparação do artigo, selecionamos leituras científicas para aprofundar a 
 | --- | --- | --- |
 | Conexões | Abrir uma conexão com o PostgreSQL por requisição HTTP | Nas rotas que executam um único SQL, a abertura continuaria acontecendo a cada requisição. O `pg.Pool` permite reaproveitar conexões entre requisições. |
 | Conexões | Adicionar PgBouncer | A aplicação tem um processo Node.js. A pessoa escolheu o pool do `pg` e deixou o PgBouncer fora deste cenário. Ele pode voltar à discussão se várias instâncias precisarem compartilhar conexões com o banco. |
+| Conexões | Reduzir o pool de dez para quatro conexões (H11) | Nas três rodadas, o p95 e o p99 gerais melhoraram. O p50 geral subiu de 495,8 para 600,6 ms, e o p50 piorou nas cinco rotas que somam 90% do peso da carga. A memória média do PostgreSQL também subiu. A pessoa autora decidiu manter dez conexões na entrega. [Resultado da H11](#resultado-da-h11) |
 | Pedidos por status | Substituir o número da página por um cursor | O contrato aceita saltar direto para uma página, inclusive a 15.000. Um cursor exige um ponto de partida, como o último pedido da página anterior. [Diagnóstico da paginação](diagnostico/pedidos-por-status/README.md#relatos-de-engenharia-e-artigos) |
 | Pedidos por status | Devolver uma estimativa no campo `total` | O contrato exige a contagem exata dos pedidos no status escolhido. A estimativa poderia devolver um valor diferente. [Consulta e alternativas de contagem](diagnostico/pedidos-por-status/README.md#alternativas-para-experimentar) |
 
