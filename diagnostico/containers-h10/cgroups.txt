@@ -1,0 +1,672 @@
+
+2026-11-19T21:50:37-03:00 antes
+[api]
+cpu.max
+50000 100000
+cpu.stat
+usage_usec 641346
+user_usec 471667
+system_usec 169678
+nice_usec 0
+core_sched.force_idle_usec 0
+nr_periods 115
+nr_throttled 3
+throttled_usec 99253
+nr_bursts 0
+burst_usec 0
+cpu.pressure
+some avg10=0.00 avg60=0.03 avg300=0.00 total=72519
+full avg10=0.00 avg60=0.03 avg300=0.00 total=71208
+memory.current
+20856832
+memory.peak
+23449600
+memory.swap.current
+0
+memory.events
+low 0
+high 0
+max 0
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 0
+memory.pressure
+some avg10=0.00 avg60=0.00 avg300=0.00 total=0
+full avg10=0.00 avg60=0.00 avg300=0.00 total=0
+memory.stat
+anon 15761408
+file 3092480
+kernel 1880064
+shmem 0
+inactive_file 1650688
+pgmajfault 7
+[banco]
+cpu.max
+100000 100000
+cpu.stat
+usage_usec 45952101
+user_usec 38576679
+system_usec 7375422
+nice_usec 0
+core_sched.force_idle_usec 0
+nr_periods 594
+nr_throttled 294
+throttled_usec 121787316
+nr_bursts 0
+burst_usec 0
+cpu.pressure
+some avg10=50.49 avg60=15.31 avg300=3.58 total=11392703
+full avg10=50.31 avg60=15.28 avg300=3.57 total=11360132
+memory.current
+418029568
+memory.peak
+536883200
+memory.swap.current
+16596992
+memory.events
+low 0
+high 0
+max 8621
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 2
+memory.pressure
+some avg10=0.00 avg60=0.00 avg300=0.00 total=108964
+full avg10=0.00 avg60=0.00 avg300=0.00 total=107942
+memory.stat
+anon 21028864
+file 380436480
+kernel 12898304
+shmem 145698816
+inactive_file 232312832
+pgmajfault 2810
+
+2026-11-19T21:50:45-03:00 amostra-1
+[api]
+cpu.max
+50000 100000
+cpu.stat
+usage_usec 1037342
+user_usec 768590
+system_usec 268752
+nice_usec 0
+core_sched.force_idle_usec 0
+nr_periods 187
+nr_throttled 3
+throttled_usec 99253
+nr_bursts 0
+burst_usec 0
+cpu.pressure
+some avg10=0.00 avg60=0.03 avg300=0.00 total=84399
+full avg10=0.00 avg60=0.03 avg300=0.00 total=80008
+memory.current
+27713536
+memory.peak
+28954624
+memory.swap.current
+0
+memory.events
+low 0
+high 0
+max 0
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 0
+memory.pressure
+some avg10=0.00 avg60=0.00 avg300=0.00 total=0
+full avg10=0.00 avg60=0.00 avg300=0.00 total=0
+memory.stat
+anon 20762624
+file 3092480
+kernel 2109440
+shmem 0
+inactive_file 1650688
+pgmajfault 7
+[banco]
+cpu.max
+100000 100000
+cpu.stat
+usage_usec 53859434
+user_usec 44627040
+system_usec 9232393
+nice_usec 0
+core_sched.force_idle_usec 0
+nr_periods 675
+nr_throttled 372
+throttled_usec 191426562
+nr_bursts 0
+burst_usec 0
+cpu.pressure
+some avg10=59.70 avg60=21.35 avg300=5.19 total=17439442
+full avg10=58.84 avg60=21.16 avg300=5.15 total=17251817
+memory.current
+535019520
+memory.peak
+536883200
+memory.swap.current
+16592896
+memory.events
+low 0
+high 0
+max 8971
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 2
+memory.pressure
+some avg10=0.00 avg60=0.00 avg300=0.00 total=115523
+full avg10=0.00 avg60=0.00 avg300=0.00 total=112228
+memory.stat
+anon 61263872
+file 448114688
+kernel 21016576
+shmem 212025344
+inactive_file 233234432
+pgmajfault 2812
+
+2026-11-19T21:50:53-03:00 amostra-2
+[api]
+cpu.max
+50000 100000
+cpu.stat
+usage_usec 1348723
+user_usec 995918
+system_usec 352805
+nice_usec 0
+core_sched.force_idle_usec 0
+nr_periods 249
+nr_throttled 3
+throttled_usec 99253
+nr_bursts 0
+burst_usec 0
+cpu.pressure
+some avg10=0.00 avg60=0.02 avg300=0.00 total=88745
+full avg10=0.00 avg60=0.02 avg300=0.00 total=84216
+memory.current
+28356608
+memory.peak
+29908992
+memory.swap.current
+0
+memory.events
+low 0
+high 0
+max 0
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 0
+memory.pressure
+some avg10=0.00 avg60=0.00 avg300=0.00 total=0
+full avg10=0.00 avg60=0.00 avg300=0.00 total=0
+memory.stat
+anon 22110208
+file 3092480
+kernel 2154496
+shmem 0
+inactive_file 1650688
+pgmajfault 7
+[banco]
+cpu.max
+100000 100000
+cpu.stat
+usage_usec 61864256
+user_usec 51106548
+system_usec 10757707
+nice_usec 0
+core_sched.force_idle_usec 0
+nr_periods 755
+nr_throttled 452
+throttled_usec 260006071
+nr_bursts 0
+burst_usec 0
+cpu.pressure
+some avg10=66.86 avg60=27.77 avg300=7.02 total=23374665
+full avg10=65.70 avg60=27.42 avg300=6.94 total=23075536
+memory.current
+533987328
+memory.peak
+536883200
+memory.swap.current
+16592896
+memory.events
+low 0
+high 0
+max 9900
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 4
+memory.pressure
+some avg10=0.00 avg60=0.00 avg300=0.00 total=122275
+full avg10=0.00 avg60=0.00 avg300=0.00 total=118939
+memory.stat
+anon 64864256
+file 447213568
+kernel 21209088
+shmem 201527296
+inactive_file 236728320
+pgmajfault 2816
+
+2026-11-19T21:51:01-03:00 amostra-3
+[api]
+cpu.max
+50000 100000
+cpu.stat
+usage_usec 1710377
+user_usec 1265679
+system_usec 444698
+nice_usec 0
+core_sched.force_idle_usec 0
+nr_periods 316
+nr_throttled 3
+throttled_usec 99253
+nr_bursts 0
+burst_usec 0
+cpu.pressure
+some avg10=0.00 avg60=0.02 avg300=0.00 total=95978
+full avg10=0.00 avg60=0.02 avg300=0.00 total=90992
+memory.current
+27885568
+memory.peak
+30195712
+memory.swap.current
+0
+memory.events
+low 0
+high 0
+max 0
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 0
+memory.pressure
+some avg10=0.00 avg60=0.00 avg300=0.00 total=0
+full avg10=0.00 avg60=0.00 avg300=0.00 total=0
+memory.stat
+anon 22376448
+file 3092480
+kernel 2154496
+shmem 0
+inactive_file 1650688
+pgmajfault 7
+[banco]
+cpu.max
+100000 100000
+cpu.stat
+usage_usec 69958948
+user_usec 57489947
+system_usec 12469000
+nice_usec 0
+core_sched.force_idle_usec 0
+nr_periods 836
+nr_throttled 533
+throttled_usec 329823777
+nr_bursts 0
+burst_usec 0
+cpu.pressure
+some avg10=70.93 avg60=33.51 avg300=8.83 total=29404146
+full avg10=69.67 avg60=33.05 avg300=8.72 total=28990453
+memory.current
+536858624
+memory.peak
+536883200
+memory.swap.current
+16592896
+memory.events
+low 0
+high 0
+max 10925
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 8
+memory.pressure
+some avg10=0.00 avg60=0.00 avg300=0.00 total=147442
+full avg10=0.00 avg60=0.00 avg300=0.00 total=137409
+memory.stat
+anon 76255232
+file 437755904
+kernel 19570688
+shmem 274104320
+inactive_file 158515200
+pgmajfault 2823
+
+2026-11-19T21:51:09-03:00 amostra-4
+[api]
+cpu.max
+50000 100000
+cpu.stat
+usage_usec 1965449
+user_usec 1450282
+system_usec 515166
+nice_usec 0
+core_sched.force_idle_usec 0
+nr_periods 384
+nr_throttled 3
+throttled_usec 99253
+nr_bursts 0
+burst_usec 0
+cpu.pressure
+some avg10=0.00 avg60=0.02 avg300=0.00 total=107696
+full avg10=0.00 avg60=0.02 avg300=0.00 total=99139
+memory.current
+28631040
+memory.peak
+30195712
+memory.swap.current
+0
+memory.events
+low 0
+high 0
+max 0
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 0
+memory.pressure
+some avg10=0.00 avg60=0.00 avg300=0.00 total=0
+full avg10=0.00 avg60=0.00 avg300=0.00 total=0
+memory.stat
+anon 22274048
+file 3092480
+kernel 2162688
+shmem 0
+inactive_file 1650688
+pgmajfault 7
+[banco]
+cpu.max
+100000 100000
+cpu.stat
+usage_usec 78009519
+user_usec 64620886
+system_usec 13388632
+nice_usec 0
+core_sched.force_idle_usec 0
+nr_periods 917
+nr_throttled 614
+throttled_usec 407434239
+nr_bursts 0
+burst_usec 0
+cpu.pressure
+some avg10=76.97 avg60=39.47 avg300=10.79 total=35998399
+full avg10=75.53 avg60=38.88 avg300=10.64 total=35488640
+memory.current
+519602176
+memory.peak
+536883200
+memory.swap.current
+16592896
+memory.events
+low 0
+high 0
+max 11177
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 8
+memory.pressure
+some avg10=0.09 avg60=0.02 avg300=0.00 total=208135
+full avg10=0.00 avg60=0.00 avg300=0.00 total=161243
+memory.stat
+anon 71716864
+file 424361984
+kernel 19136512
+shmem 225280000
+inactive_file 186118144
+pgmajfault 2923
+
+2026-11-19T21:51:17-03:00 amostra-5
+[api]
+cpu.max
+50000 100000
+cpu.stat
+usage_usec 2429088
+user_usec 1791917
+system_usec 637170
+nice_usec 0
+core_sched.force_idle_usec 0
+nr_periods 458
+nr_throttled 3
+throttled_usec 99253
+nr_bursts 0
+burst_usec 0
+cpu.pressure
+some avg10=0.00 avg60=0.01 avg300=0.00 total=114740
+full avg10=0.00 avg60=0.01 avg300=0.00 total=104241
+memory.current
+31014912
+memory.peak
+32616448
+memory.swap.current
+0
+memory.events
+low 0
+high 0
+max 0
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 0
+memory.pressure
+some avg10=0.00 avg60=0.00 avg300=0.00 total=0
+full avg10=0.00 avg60=0.00 avg300=0.00 total=0
+memory.stat
+anon 24186880
+file 3092480
+kernel 2228224
+shmem 0
+inactive_file 1650688
+pgmajfault 7
+[banco]
+cpu.max
+100000 100000
+cpu.stat
+usage_usec 86058556
+user_usec 71340361
+system_usec 14718194
+nice_usec 0
+core_sched.force_idle_usec 0
+nr_periods 997
+nr_throttled 694
+throttled_usec 477974031
+nr_bursts 0
+burst_usec 0
+cpu.pressure
+some avg10=76.34 avg60=44.04 avg300=12.57 total=42089604
+full avg10=75.47 avg60=43.46 avg300=12.41 total=41514800
+memory.current
+534888448
+memory.peak
+536883200
+memory.swap.current
+16592896
+memory.events
+low 0
+high 0
+max 11746
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 8
+memory.pressure
+some avg10=0.64 avg60=0.15 avg300=0.03 total=356978
+full avg10=0.14 avg60=0.03 avg300=0.00 total=251312
+memory.stat
+anon 70623232
+file 443551744
+kernel 16936960
+shmem 230522880
+inactive_file 126930944
+pgmajfault 2927
+
+2026-11-19T21:51:25-03:00 amostra-6
+[api]
+cpu.max
+50000 100000
+cpu.stat
+usage_usec 2696434
+user_usec 1984510
+system_usec 711923
+nice_usec 0
+core_sched.force_idle_usec 0
+nr_periods 524
+nr_throttled 3
+throttled_usec 99253
+nr_bursts 0
+burst_usec 0
+cpu.pressure
+some avg10=0.00 avg60=0.01 avg300=0.00 total=118442
+full avg10=0.00 avg60=0.01 avg300=0.00 total=107541
+memory.current
+30105600
+memory.peak
+33521664
+memory.swap.current
+0
+memory.events
+low 0
+high 0
+max 0
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 0
+memory.pressure
+some avg10=0.00 avg60=0.00 avg300=0.00 total=0
+full avg10=0.00 avg60=0.00 avg300=0.00 total=0
+memory.stat
+anon 24141824
+file 3092480
+kernel 2228224
+shmem 0
+inactive_file 1650688
+pgmajfault 7
+[banco]
+cpu.max
+100000 100000
+cpu.stat
+usage_usec 94157847
+user_usec 77912459
+system_usec 16245388
+nice_usec 0
+core_sched.force_idle_usec 0
+nr_periods 1078
+nr_throttled 775
+throttled_usec 547992027
+nr_bursts 0
+burst_usec 0
+cpu.pressure
+some avg10=74.30 avg60=47.67 avg300=14.21 total=48060444
+full avg10=73.58 avg60=47.10 avg300=14.04 total=47410909
+memory.current
+536858624
+memory.peak
+536883200
+memory.swap.current
+16592896
+memory.events
+low 0
+high 0
+max 12420
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 8
+memory.pressure
+some avg10=0.95 avg60=0.31 avg300=0.07 total=488316
+full avg10=0.23 avg60=0.08 avg300=0.01 total=329712
+memory.stat
+anon 81793024
+file 433332224
+kernel 18640896
+shmem 225660928
+inactive_file 118665216
+pgmajfault 2927
+
+2026-11-19T21:51:40-03:00 depois
+[api]
+cpu.max
+50000 100000
+cpu.stat
+usage_usec 3054972
+user_usec 2255530
+system_usec 799441
+nice_usec 0
+core_sched.force_idle_usec 0
+nr_periods 642
+nr_throttled 3
+throttled_usec 99253
+nr_bursts 0
+burst_usec 0
+cpu.pressure
+some avg10=0.00 avg60=0.00 avg300=0.00 total=125795
+full avg10=0.00 avg60=0.00 avg300=0.00 total=114029
+memory.current
+29499392
+memory.peak
+33521664
+memory.swap.current
+0
+memory.events
+low 0
+high 0
+max 0
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 0
+memory.pressure
+some avg10=0.00 avg60=0.00 avg300=0.00 total=0
+full avg10=0.00 avg60=0.00 avg300=0.00 total=0
+memory.stat
+anon 24256512
+file 3092480
+kernel 2150400
+shmem 0
+inactive_file 1650688
+pgmajfault 7
+[banco]
+cpu.max
+100000 100000
+cpu.stat
+usage_usec 108708341
+user_usec 90313165
+system_usec 18395175
+nice_usec 0
+core_sched.force_idle_usec 0
+nr_periods 1226
+nr_throttled 921
+throttled_usec 667614548
+nr_bursts 0
+burst_usec 0
+cpu.pressure
+some avg10=72.09 avg60=53.59 avg300=17.36 total=58467181
+full avg10=71.43 avg60=52.98 avg300=17.16 total=57729735
+memory.current
+427548672
+memory.peak
+536883200
+memory.swap.current
+16592896
+memory.events
+low 0
+high 0
+max 13303
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 10
+memory.pressure
+some avg10=1.00 avg60=0.50 avg300=0.13 total=734869
+full avg10=0.48 avg60=0.21 avg300=0.05 total=489774
+memory.stat
+anon 54558720
+file 356921344
+kernel 13504512
+shmem 146714624
+inactive_file 115384320
+pgmajfault 2944

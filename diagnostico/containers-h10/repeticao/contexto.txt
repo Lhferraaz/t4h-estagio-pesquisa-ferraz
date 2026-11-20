@@ -1,0 +1,8 @@
+f61f1b267edbc60ade1934c6d057b8a6647096c9
+2026-11-19T21:57:47-03:00
+projeto: desafio-throttling
+20 VUs, 60 s, semente 42. Aquecimento de 15 s com 5 VUs e semente 43.
+banco 100000 100000
+api 50000 100000
+Chrome/Chromium ausente no início
+Chrome/Chromium ausente no fim

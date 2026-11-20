@@ -1,0 +1,3 @@
+blks_read	blks_hit	temp_files	temp_bytes	deadlocks
+1413553	28824086	36	293522560	0
+(1 row)

@@ -1,0 +1,10 @@
+banco
+usage_usec 44705642 -> 106756853 (delta 62051211)
+nr_periods 489 -> 1115 (delta 626)
+nr_throttled 293 -> 913 (delta 620)
+throttled_usec 125972495 -> 674146165 (delta 548173670)
+api
+usage_usec 692627 -> 2927151 (delta 2234524)
+nr_periods 123 -> 635 (delta 512)
+nr_throttled 2 -> 2 (delta 0)
+throttled_usec 112882 -> 112882 (delta 0)

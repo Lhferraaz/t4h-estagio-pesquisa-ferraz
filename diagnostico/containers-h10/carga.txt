@@ -1,0 +1,19 @@
+ Container desafio-docker-diag-5e7uqj9a-carga-run-1188ace5ecb0 Creating 
+ Container desafio-docker-diag-5e7uqj9a-carga-run-1188ace5ecb0 Created 
+Medição: diagnostico-containers-h10
+Carga: 20 usuários virtuais por 60s
+
+Requisições:        1362
+Requisições/s:      21.72
+Tempo de resposta:  mediana 490.9 ms | p95 2806.4 ms | p99 7393.4 ms
+Erros:              0.00%
+
+Por rota:
+rota                  req       mediana       p95           p99           erros   
+cliente               358       203.1 ms      807.7 ms      1201.7 ms     0.0%    
+cliente-por-email     207       199.4 ms      800.9 ms      1092.4 ms     0.0%    
+pedidos-do-cliente    284       705.8 ms      1901.5 ms     3015.3 ms     0.0%    
+pedidos-por-status    181       905.9 ms      5993.2 ms     12716.4 ms    0.0%    
+busca-produtos        206       402.8 ms      1204.1 ms     1791.2 ms     0.0%    
+vendas-por-dia        102       1651.7 ms     3904.9 ms     6096.4 ms     0.0%    
+top-produtos          24        6000.4 ms     12398.7 ms    12637.2 ms    0.0%    

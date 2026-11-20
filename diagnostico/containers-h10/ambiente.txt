@@ -1,0 +1,14 @@
+f61f1b267edbc60ade1934c6d057b8a6647096c9
+2026-11-19T21:50:20-03:00
+Chrome/Chromium ausente
+nome=/desafio-docker-diag-5e7uqj9a-api-1 cpus=500000000 memoria=134217728 memoria_swap=268435456 shm=67108864 log={"Config":{},"Type":"json-file"}
+nome=/desafio-docker-diag-5e7uqj9a-banco-1 cpus=1000000000 memoria=536870912 memoria_swap=1073741824 shm=268435456 log={"Config":{},"Type":"json-file"}
+Filesystem      Size  Used Avail Use% Mounted on
+shm             256M  1.3M  255M   1% /dev/shm
+/dev/nvme0n1p5  147G  101G   39G  73% /var/lib/postgresql/data
+Filesystem      Size  Used Avail Use% Mounted on
+shm             256M  3.0M  254M   2% /dev/shm
+/dev/nvme0n1p5  147G  101G   39G  73% /var/lib/postgresql/data
+desafio-docker-diag-5e7uqj9a-api:latest tamanho_bytes=49511943
+postgres:16.4 tamanho_bytes=153472075
+Chrome/Chromium ausente no fim
