@@ -1,0 +1,5 @@
+container                            amostras  cpu_media    cpu_max    mem_media      mem_max
+desafio-h9-indice-schy5rn1-api-1           31       2.6%       5.9%     27.4 MiB     28.2 MiB
+desafio-h9-indice-schy5rn1-banco-1         31      99.7%     100.0%    279.9 MiB    338.7 MiB
+
+cpu_percentual: 100% = 1 CPU inteira.
