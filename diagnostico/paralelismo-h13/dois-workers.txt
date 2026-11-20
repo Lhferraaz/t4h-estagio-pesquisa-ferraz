@@ -1,0 +1,386 @@
+[1-antes/api-cpu.txt]
+usage_usec 358679
+user_usec 244877
+system_usec 113801
+nice_usec 0
+core_sched.force_idle_usec 0
+nr_periods 34
+nr_throttled 8
+throttled_usec 591283
+nr_bursts 0
+burst_usec 0
+
+[1-antes/api-memoria.txt]
+low 0
+high 0
+max 0
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 0
+
+[1-antes/banco-cpu.txt]
+usage_usec 28635629
+user_usec 24657585
+system_usec 3978044
+nice_usec 0
+core_sched.force_idle_usec 0
+nr_periods 371
+nr_throttled 40
+throttled_usec 3517309
+nr_bursts 0
+burst_usec 0
+
+[1-antes/banco-memoria.txt]
+low 0
+high 0
+max 8237
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 0
+
+[1-antes/temporarios.tsv]
+15	178113664
+
+[1-depois/api-cpu.txt]
+usage_usec 3387405
+user_usec 2533539
+system_usec 853866
+nice_usec 0
+core_sched.force_idle_usec 0
+nr_periods 667
+nr_throttled 19
+throttled_usec 1285346
+nr_bursts 0
+burst_usec 0
+
+[1-depois/api-memoria.txt]
+low 0
+high 0
+max 0
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 0
+
+[1-depois/banco-cpu.txt]
+usage_usec 127834381
+user_usec 101358532
+system_usec 26475848
+nice_usec 0
+core_sched.force_idle_usec 0
+nr_periods 1186
+nr_throttled 829
+throttled_usec 652346963
+nr_bursts 0
+burst_usec 0
+
+[1-depois/banco-memoria.txt]
+low 0
+high 0
+max 17048
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 6
+
+[1-depois/temporarios.tsv]
+37	376802432
+
+[2-antes/api-cpu.txt]
+usage_usec 3429346
+user_usec 2566996
+system_usec 862350
+nice_usec 0
+core_sched.force_idle_usec 0
+nr_periods 670
+nr_throttled 19
+throttled_usec 1285346
+nr_bursts 0
+burst_usec 0
+
+[2-antes/api-memoria.txt]
+low 0
+high 0
+max 0
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 0
+
+[2-antes/banco-cpu.txt]
+usage_usec 127970254
+user_usec 101454670
+system_usec 26515584
+nice_usec 0
+core_sched.force_idle_usec 0
+nr_periods 1190
+nr_throttled 829
+throttled_usec 652346963
+nr_bursts 0
+burst_usec 0
+
+[2-antes/banco-memoria.txt]
+low 0
+high 0
+max 17048
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 6
+
+[2-antes/temporarios.tsv]
+37	376802432
+
+[2-depois/api-cpu.txt]
+usage_usec 6306526
+user_usec 4654673
+system_usec 1651853
+nice_usec 0
+core_sched.force_idle_usec 0
+nr_periods 1357
+nr_throttled 22
+throttled_usec 1645287
+nr_bursts 0
+burst_usec 0
+
+[2-depois/api-memoria.txt]
+low 0
+high 0
+max 0
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 0
+
+[2-depois/banco-cpu.txt]
+usage_usec 228395460
+user_usec 184496137
+system_usec 43899322
+nice_usec 0
+core_sched.force_idle_usec 0
+nr_periods 2005
+nr_throttled 1628
+throttled_usec 1325790318
+nr_bursts 0
+burst_usec 0
+
+[2-depois/banco-memoria.txt]
+low 0
+high 0
+max 23814
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 10
+
+[2-depois/temporarios.tsv]
+66	622267520
+
+[3-antes/api-cpu.txt]
+usage_usec 6349697
+user_usec 4685311
+system_usec 1664385
+nice_usec 0
+core_sched.force_idle_usec 0
+nr_periods 1360
+nr_throttled 22
+throttled_usec 1645287
+nr_bursts 0
+burst_usec 0
+
+[3-antes/api-memoria.txt]
+low 0
+high 0
+max 0
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 0
+
+[3-antes/banco-cpu.txt]
+usage_usec 228491673
+user_usec 184561123
+system_usec 43930549
+nice_usec 0
+core_sched.force_idle_usec 0
+nr_periods 2009
+nr_throttled 1628
+throttled_usec 1325790318
+nr_bursts 0
+burst_usec 0
+
+[3-antes/banco-memoria.txt]
+low 0
+high 0
+max 23814
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 10
+
+[3-antes/temporarios.tsv]
+66	622267520
+
+[3-depois/api-cpu.txt]
+usage_usec 8746291
+user_usec 6446133
+system_usec 2300157
+nice_usec 0
+core_sched.force_idle_usec 0
+nr_periods 2060
+nr_throttled 23
+throttled_usec 1840842
+nr_bursts 0
+burst_usec 0
+
+[3-depois/api-memoria.txt]
+low 0
+high 0
+max 0
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 0
+
+[3-depois/banco-cpu.txt]
+usage_usec 327948456
+user_usec 268044721
+system_usec 59903734
+nice_usec 0
+core_sched.force_idle_usec 0
+nr_periods 2820
+nr_throttled 2417
+throttled_usec 2016122146
+nr_bursts 0
+burst_usec 0
+
+[3-depois/banco-memoria.txt]
+low 0
+high 0
+max 29264
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 22
+
+[3-depois/temporarios.tsv]
+96	879275136
+
+[configuracao.txt]
+max_parallel_workers_per_gather=2
+4MB
+
+[contrato-antes.txt]
+ Container desafio-workers2-omwqjy8l-contrato-run-243960e81013 Creating 
+ Container desafio-workers2-omwqjy8l-contrato-run-243960e81013 Created 
+igual     /clientes/1
+igual     /clientes/2
+igual     /clientes/500
+igual     /clientes/99999
+igual     /clientes/100000
+igual     /clientes/100001
+igual     /clientes/abc
+igual     /clientes?email=cliente3%40exemplo.com
+igual     /clientes?email=Cliente4%40Exemplo.com
+igual     /clientes?email=CLIENTE10%40EXEMPLO.COM
+igual     /clientes?email=ninguem%40exemplo.com
+igual     /clientes
+igual     /clientes/7/pedidos
+igual     /clientes/42/pedidos
+igual     /clientes/31337/pedidos
+igual     /clientes/99999/pedidos
+igual     /clientes/100001/pedidos
+igual     /pedidos?status=pago
+igual     /pedidos?status=entregue&pagina=3
+igual     /pedidos?status=cancelado&pagina=250
+igual     /pedidos?status=pendente&pagina=1
+igual     /pedidos?status=pago&pagina=15000
+igual     /pedidos?status=perdido
+igual     /pedidos?status=pago&pagina=0
+igual     /produtos/busca?q=cadeira
+igual     /produtos/busca?q=lumin
+igual     /produtos/busca?q=ERGO
+igual     /produtos/busca?q=sem%20fio
+igual     /produtos/busca?q=inexistente
+igual     /produtos/busca?q=ab
+igual     /relatorios/vendas-por-dia?inicio=2024-01-01&fim=2024-01-07
+igual     /relatorios/vendas-por-dia?inicio=2024-02-27&fim=2024-03-02
+igual     /relatorios/vendas-por-dia?inicio=2025-12-25&fim=2025-12-31
+igual     /relatorios/vendas-por-dia?inicio=2023-12-30&fim=2024-01-02
+igual     /relatorios/vendas-por-dia?inicio=2024-03-01&fim=2024-02-01
+igual     /relatorios/vendas-por-dia?inicio=2024-01-01&fim=2024-03-01
+igual     /relatorios/vendas-por-dia?inicio=2024-02-30&fim=2024-03-01
+igual     /relatorios/top-produtos
+igual     /relatorios/top-produtos?limite=5
+igual     /relatorios/top-produtos?limite=50
+igual     /relatorios/top-produtos?limite=0
+igual     /relatorios/top-produtos?limite=51
+
+Contrato mantido: as 42 respostas são iguais às gravadas.
+
+[indices.txt]
+clientes_lower_email_idx
+clientes_pkey
+itens_pedido_pedido_id_idx
+itens_pedido_pkey
+pedidos_cliente_id_idx
+pedidos_pkey
+pedidos_status_criado_em_id_idx
+pedidos_status_idx
+produtos_pkey
+
+[navegador.txt]
+2026-11-20T10:56:08-03:00 Chrome e Chromium ausentes
+2026-11-20T10:56:13-03:00 Chrome e Chromium ausentes
+2026-11-20T10:56:18-03:00 Chrome e Chromium ausentes
+2026-11-20T10:56:23-03:00 Chrome e Chromium ausentes
+2026-11-20T10:56:29-03:00 Chrome e Chromium ausentes
+2026-11-20T10:56:34-03:00 Chrome e Chromium ausentes
+2026-11-20T10:56:39-03:00 Chrome e Chromium ausentes
+2026-11-20T10:56:44-03:00 Chrome e Chromium ausentes
+2026-11-20T10:56:49-03:00 Chrome e Chromium ausentes
+2026-11-20T10:56:54-03:00 Chrome e Chromium ausentes
+2026-11-20T10:56:59-03:00 Chrome e Chromium ausentes
+2026-11-20T10:57:04-03:00 Chrome e Chromium ausentes
+2026-11-20T10:57:09-03:00 Chrome e Chromium ausentes
+2026-11-20T10:57:14-03:00 Chrome e Chromium ausentes
+2026-11-20T10:57:19-03:00 Chrome e Chromium ausentes
+2026-11-20T10:57:24-03:00 Chrome e Chromium ausentes
+2026-11-20T10:57:29-03:00 Chrome e Chromium ausentes
+2026-11-20T10:57:34-03:00 Chrome e Chromium ausentes
+2026-11-20T10:57:39-03:00 Chrome e Chromium ausentes
+2026-11-20T10:57:44-03:00 Chrome e Chromium ausentes
+2026-11-20T10:57:49-03:00 Chrome e Chromium ausentes
+2026-11-20T10:57:54-03:00 Chrome e Chromium ausentes
+2026-11-20T10:57:59-03:00 Chrome e Chromium ausentes
+2026-11-20T10:58:04-03:00 Chrome e Chromium ausentes
+2026-11-20T10:58:09-03:00 Chrome e Chromium ausentes
+2026-11-20T10:58:14-03:00 Chrome e Chromium ausentes
+2026-11-20T10:58:19-03:00 Chrome e Chromium ausentes
+2026-11-20T10:58:24-03:00 Chrome e Chromium ausentes
+2026-11-20T10:58:29-03:00 Chrome e Chromium ausentes
+2026-11-20T10:58:34-03:00 Chrome e Chromium ausentes
+2026-11-20T10:58:39-03:00 Chrome e Chromium ausentes
+2026-11-20T10:58:44-03:00 Chrome e Chromium ausentes
+2026-11-20T10:58:50-03:00 Chrome e Chromium ausentes
+2026-11-20T10:58:55-03:00 Chrome e Chromium ausentes
+2026-11-20T10:59:00-03:00 Chrome e Chromium ausentes
+2026-11-20T10:59:05-03:00 Chrome e Chromium ausentes
+2026-11-20T10:59:10-03:00 Chrome e Chromium ausentes
+2026-11-20T10:59:15-03:00 Chrome e Chromium ausentes
+2026-11-20T10:59:20-03:00 Chrome e Chromium ausentes
+2026-11-20T10:59:25-03:00 Chrome e Chromium ausentes
+2026-11-20T10:59:30-03:00 Chrome e Chromium ausentes
+2026-11-20T10:59:35-03:00 Chrome e Chromium ausentes
+2026-11-20T10:59:40-03:00 Chrome e Chromium ausentes
+2026-11-20T10:59:45-03:00 Chrome e Chromium ausentes
+2026-11-20T10:59:50-03:00 Chrome e Chromium ausentes
+2026-11-20T10:59:55-03:00 Chrome e Chromium ausentes
+2026-11-20T11:00:00-03:00 Chrome e Chromium ausentes
+2026-11-20T11:00:05-03:00 Chrome e Chromium ausentes
+2026-11-20T11:00:10-03:00 Chrome e Chromium ausentes
+2026-11-20T11:00:15-03:00 Chrome e Chromium ausentes
+2026-11-20T11:00:18-03:00 Chrome e Chromium ausentes
+

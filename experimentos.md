@@ -448,3 +448,34 @@ Referência [R1](resultados/20261119-220254-14-h10-referencia-cpu/) · [R2](resu
 - **Hipótese.** Definir `max_parallel_workers_per_gather=0` reduz o número de processos disputando a cota do banco em cada consulta. As conexões do pool ainda podem executar consultas diferentes ao mesmo tempo. [Configuração do PostgreSQL 16](https://www.postgresql.org/docs/16/runtime-config-resource.html#GUC-MAX-PARALLEL-WORKERS-PER-GATHER)
 - **Previsão e critério.** Esperamos menor p95 para pedidos por status. A contagem isolada foi mais rápida sem workers no diagnóstico da H10, enquanto top produtos passou a gravar temporários quando rodou sem paralelismo. A mudança precisa preservar vazão e p50 das rotas mais usadas. Um ganho em status pode custar latência e trabalho em disco nos relatórios. [Planos isolados](diagnostico/containers-h10/planos.txt)
 - **Como medir.** Comparar três rodadas novas da H12, com o padrão de dois workers, com três rodadas sem workers por consulta. Cada série começa em um volume novo com os mesmos dados e índices. Manter cota de CPU, memória e pool da H12. Usar Chrome fechado, 20 usuários virtuais, 60 s de carga, aquecimento de 15 s e semente 42. Conferir as 42 respostas, req/s, p50, p95, p99, CPU e memória. Ler `pg_stat_database` e `cpu.stat` antes e depois de cada execução do script oficial.
+
+### Resultado da H13
+
+Status **aplicada e medida** no commit `77a3d16`, em revisão. A referência é a H12 no commit `89fd0b6`, com dois workers por consulta. Confirmamos o valor do PostgreSQL antes de cada série. Cada série teve três rodadas, com volume novo, os mesmos índices, o pool de dez e os mesmos limites de CPU e memória. O Chrome e o Chromium ficaram ausentes nas verificações. As 42 respostas do contrato passaram antes das séries e após as seis rodadas.
+
+| Métrica | H12, até dois workers | H13, zero workers |
+| --- | ---: | ---: |
+| Vazão | 26,65 req/s | 27,63 req/s |
+| p50 geral | 400,3 ms | 392,9 ms |
+| p95 geral | 2.291,5 ms | 1.616,2 ms |
+| p99 geral | 6.544,3 ms | 10.739,5 ms |
+| p50 de pedidos por status | 703,2 ms | 602,6 ms |
+| p95 de pedidos por status | 5.227,8 ms | 2.202,9 ms |
+| p99 de pedidos por status | 9.816,6 ms | 2.507,3 ms |
+| p50 de top produtos | 5.549,8 ms | 11.111,0 ms |
+| p95 de top produtos | 10.560,4 ms | 12.330,8 ms |
+| Erros HTTP | 0,00% | 0,00% |
+| CPU média do banco | 125,0% | 123,7% |
+| Memória média do banco | 406,4 MiB | 452,5 MiB |
+| Maior amostra de memória do banco | 510,2 MiB | 497,5 MiB |
+| CPU média da API | 3,5% | 3,3% |
+| Memória média da API | 78,8 MiB | 26,5 MiB |
+| Maior amostra de memória da API | 80,80 MiB | 28,25 MiB |
+| Arquivos temporários no banco | 29 | 324 |
+| Bytes escritos em temporários no banco | 245.465.088 | 2.626.828.980 |
+
+Os valores são medianas de três rodadas, exceto os maiores picos amostrados de memória nos CSVs. Os contadores de temporários cobrem aquecimento, carga e verificação do contrato no banco inteiro. As duas séries foram rodadas em sequência. A diferença observada na memória da API precisa de investigação para ser atribuída ao ajuste feito no banco. [Contadores e ambiente](diagnostico/paralelismo-h13/README.md)
+
+**Conclusão.** O p95 de pedidos por status, o p95 geral e a vazão melhoraram. As medianas de p50 das cinco rotas mais frequentes caíram. O p99 geral e o p50 de top produtos pioraram nas três rodadas. O volume escrito em temporários aumentou mais de dez vezes na mediana, e o banco continuou atingindo a cota na maior parte dos períodos ativos. O plano isolado já mostrava uso de temporários no ranking sem workers. A coleta sob carga contabiliza o banco inteiro e deixa em aberto quanto cada consulta contribuiu. Os ganhos de pedidos por status justificam investigar um ajuste menor. Para a entrega, a IA recomendou manter a configuração da H12 diante da piora nas requisições mais lentas e do aumento de temporários. [Planos isolados](diagnostico/containers-h10/planos.txt)
+
+Referência [R1](resultados/20261120-105609-16-h12-dois-workers/) · [R2](resultados/20261120-105732-16-h12-dois-workers/) · [R3](resultados/20261120-105855-16-h12-dois-workers/). H13 [W1](resultados/20261120-110131-17-zero-workers/) · [W2](resultados/20261120-110259-17-zero-workers/) · [W3](resultados/20261120-110424-17-zero-workers/).
