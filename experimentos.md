@@ -410,7 +410,7 @@ O objetivo de reduzir a memória observada do banco ficou sem apoio nas médias 
 
 ### Resultado da H12
 
-Status **aplicada e medida** no commit `8fc2fba`, em revisão. A referência é uma nova série da H10 no commit `f08a8aa`. Os bancos foram criados em volumes novos a partir dos mesmos scripts. Cada série usou Chrome fechado, 20 usuários virtuais, 60 s de carga, aquecimento de 15 s e semente 42. As 42 respostas do contrato passaram antes de cada série e após cada rodada.
+Status **aplicada, medida e integrada**. A alteração foi medida no commit `8fc2fba`. A referência é uma nova série da H10 no commit `f08a8aa`. Os bancos foram criados em volumes novos a partir dos mesmos scripts. Cada série usou Chrome fechado, 20 usuários virtuais, 60 s de carga, aquecimento de 15 s e semente 42. As 42 respostas do contrato passaram antes de cada série e após cada rodada.
 
 | Métrica | H10, banco 1,00 e API 0,50 CPU | H12, banco 1,25 e API 0,25 CPU |
 | --- | ---: | ---: |
@@ -437,6 +437,6 @@ Os valores são medianas de três rodadas, exceto os maiores picos amostrados de
 
 O teto total permaneceu em 1,5 CPU, e o consumo medido do banco aumentou. O banco ainda atingiu a cota na maior parte dos períodos ativos. Na API, os contadores subiram em 11 de 1.962 períodos na H12 e em 1 de 1.979 na H10. A janela inclui o aquecimento e o contrato ao fim da carga. Nenhum contêiner registrou encerramento por falta de memória. A memória média do banco subiu. [Cotas aplicadas e contadores](diagnostico/redistribuicao-cpu/README.md)
 
-**Conclusão.** A hipótese ganhou força pelo aumento de vazão e pela queda no p50, com a mesma soma das cotas. Os resultados sustentam avaliar a adoção pelo ganho de vazão e pela experiência típica nessa carga. A piora da cauda de pedidos por status pede atenção.
+**Conclusão.** A hipótese ganhou força pelo aumento de vazão e pela queda no p50, com a mesma soma das cotas. A pessoa decidiu adotar a redistribuição pelo ganho de vazão e de p50. A piora da cauda de pedidos por status ficou registrada. [Decisões](docs/decisoes.md#mudanças-integradas)
 
 Referência [R1](resultados/20261119-220254-14-h10-referencia-cpu/) · [R2](resultados/20261119-220418-14-h10-referencia-cpu/) · [R3](resultados/20261119-220543-14-h10-referencia-cpu/). H12 [C1](resultados/20261119-220806-15-redistribuir-cpu/) · [C2](resultados/20261119-220929-15-redistribuir-cpu/) · [C3](resultados/20261119-221053-15-redistribuir-cpu/).

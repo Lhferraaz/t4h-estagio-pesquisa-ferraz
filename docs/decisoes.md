@@ -24,6 +24,7 @@ Este registro explica por que o projeto segue as escolhas abaixo. Os números e 
 | Calcular os totais de vendas por dia no PostgreSQL. | A pessoa autorizou a integração após o ganho de vazão e a redução do p95 geral e da rota. O p99 geral e o p95 de pedidos por status subiram e ficaram registrados para investigação. | [H8](../experimentos.md#resultado-da-h8) · [PR #17](https://github.com/Lhferraaz/t4h-estagio-pesquisa-ferraz/pull/17) |
 | Criar um índice B-tree simples em `pedidos(status)` para a contagem exata. | A pessoa autora escolheu incorporar a H9 pelo ganho de vazão e pela queda do p50 de pedidos por status. O p99 da rota subiu na mediana e o índice ocupa 3.514.368 bytes. | [H9](../experimentos.md#resultado-da-h9) · [PR #18](https://github.com/Lhferraaz/t4h-estagio-pesquisa-ferraz/pull/18) |
 | Fixar o limite da API em 128 MiB. | A pessoa autora adotou a H10 pelo menor orçamento de memória. A API passou nas três rodadas sem eventos de limite máximo ou encerramentos por falta de memória. O p95 geral subiu na mediana. | [H10](../experimentos.md#resultado-da-h10) · [PR #19](https://github.com/Lhferraaz/t4h-estagio-pesquisa-ferraz/pull/19) |
+| Redistribuir a cota de CPU para 1,25 no PostgreSQL e 0,25 na API. | A pessoa autora adotou a H12 pelo ganho de vazão e pelo p50 menor nas cinco rotas mais frequentes. A soma das cotas ficou em 1,5 CPU. O p95 de pedidos por status e o consumo de CPU do banco subiram. | [H12](../experimentos.md#resultado-da-h12) · [PR #21](https://github.com/Lhferraaz/t4h-estagio-pesquisa-ferraz/pull/21) |
 
 ## Próximos testes
 
