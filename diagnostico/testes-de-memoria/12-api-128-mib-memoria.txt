@@ -1,0 +1,128 @@
+
+2026-11-19T21:09:16-03:00 depois-do-contrato-inicial
+/desafio-api128-6p4mcnny-api-1 limite_bytes=134217728 oom_killed=false reinicios=0
+memory.events
+low 0
+high 0
+max 0
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 0
+memory.current
+25071616
+memory.peak
+25296896
+memory.swap.current
+0
+/desafio-api128-6p4mcnny-banco-1 limite_bytes=536870912 oom_killed=false reinicios=0
+memory.events
+low 0
+high 0
+max 6046
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 0
+memory.current
+508755968
+memory.peak
+536870912
+memory.swap.current
+0
+
+2026-11-19T21:10:41-03:00 depois-da-rodada-1
+/desafio-api128-6p4mcnny-api-1 limite_bytes=134217728 oom_killed=false reinicios=0
+memory.events
+low 0
+high 0
+max 0
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 0
+memory.current
+32129024
+memory.peak
+32153600
+memory.swap.current
+0
+/desafio-api128-6p4mcnny-banco-1 limite_bytes=536870912 oom_killed=false reinicios=0
+memory.events
+low 0
+high 0
+max 10418
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 0
+memory.current
+493232128
+memory.peak
+536879104
+memory.swap.current
+30810112
+
+2026-11-19T21:12:05-03:00 depois-da-rodada-2
+/desafio-api128-6p4mcnny-api-1 limite_bytes=134217728 oom_killed=false reinicios=0
+memory.events
+low 0
+high 0
+max 0
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 0
+memory.current
+33460224
+memory.peak
+33980416
+memory.swap.current
+0
+/desafio-api128-6p4mcnny-banco-1 limite_bytes=536870912 oom_killed=false reinicios=0
+memory.events
+low 0
+high 0
+max 14927
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 7
+memory.current
+453201920
+memory.peak
+536879104
+memory.swap.current
+42156032
+
+2026-11-19T21:13:31-03:00 depois-da-rodada-3
+/desafio-api128-6p4mcnny-api-1 limite_bytes=134217728 oom_killed=false reinicios=0
+memory.events
+low 0
+high 0
+max 0
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 0
+memory.current
+32448512
+memory.peak
+34160640
+memory.swap.current
+0
+/desafio-api128-6p4mcnny-banco-1 limite_bytes=536870912 oom_killed=false reinicios=0
+memory.events
+low 0
+high 0
+max 18841
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 26
+memory.current
+451514368
+memory.peak
+537030656
+memory.swap.current
+48758784

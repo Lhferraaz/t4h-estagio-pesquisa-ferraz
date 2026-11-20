@@ -1,0 +1,5 @@
+container                            amostras  cpu_media    cpu_max    mem_media      mem_max
+desafio-api128-6p4mcnny-banco-1            31     100.1%      99.9%    322.9 MiB    501.1 MiB
+desafio-api128-6p4mcnny-api-1              31       3.4%       7.2%     24.3 MiB     27.8 MiB
+
+cpu_percentual: 100% = 1 CPU inteira.

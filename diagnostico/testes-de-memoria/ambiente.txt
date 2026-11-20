@@ -1,0 +1,225 @@
+[12-api-128-mib-contrato-antes]
+ Container desafio-api128-6p4mcnny-contrato-run-3c2462113a85 Creating 
+ Container desafio-api128-6p4mcnny-contrato-run-3c2462113a85 Created 
+igual     /clientes/1
+igual     /clientes/2
+igual     /clientes/500
+igual     /clientes/99999
+igual     /clientes/100000
+igual     /clientes/100001
+igual     /clientes/abc
+igual     /clientes?email=cliente3%40exemplo.com
+igual     /clientes?email=Cliente4%40Exemplo.com
+igual     /clientes?email=CLIENTE10%40EXEMPLO.COM
+igual     /clientes?email=ninguem%40exemplo.com
+igual     /clientes
+igual     /clientes/7/pedidos
+igual     /clientes/42/pedidos
+igual     /clientes/31337/pedidos
+igual     /clientes/99999/pedidos
+igual     /clientes/100001/pedidos
+igual     /pedidos?status=pago
+igual     /pedidos?status=entregue&pagina=3
+igual     /pedidos?status=cancelado&pagina=250
+igual     /pedidos?status=pendente&pagina=1
+igual     /pedidos?status=pago&pagina=15000
+igual     /pedidos?status=perdido
+igual     /pedidos?status=pago&pagina=0
+igual     /produtos/busca?q=cadeira
+igual     /produtos/busca?q=lumin
+igual     /produtos/busca?q=ERGO
+igual     /produtos/busca?q=sem%20fio
+igual     /produtos/busca?q=inexistente
+igual     /produtos/busca?q=ab
+igual     /relatorios/vendas-por-dia?inicio=2024-01-01&fim=2024-01-07
+igual     /relatorios/vendas-por-dia?inicio=2024-02-27&fim=2024-03-02
+igual     /relatorios/vendas-por-dia?inicio=2025-12-25&fim=2025-12-31
+igual     /relatorios/vendas-por-dia?inicio=2023-12-30&fim=2024-01-02
+igual     /relatorios/vendas-por-dia?inicio=2024-03-01&fim=2024-02-01
+igual     /relatorios/vendas-por-dia?inicio=2024-01-01&fim=2024-03-01
+igual     /relatorios/vendas-por-dia?inicio=2024-02-30&fim=2024-03-01
+igual     /relatorios/top-produtos
+igual     /relatorios/top-produtos?limite=5
+igual     /relatorios/top-produtos?limite=50
+igual     /relatorios/top-produtos?limite=0
+igual     /relatorios/top-produtos?limite=51
+
+Contrato mantido: as 42 respostas são iguais às gravadas.
+
+[12-api-128-mib-indices]
+clientes_lower_email_idx
+clientes_pkey
+itens_pedido_pedido_id_idx
+itens_pedido_pkey
+pedidos_cliente_id_idx
+pedidos_pkey
+pedidos_status_criado_em_id_idx
+pedidos_status_idx
+produtos_pkey
+
+[12-api-128-mib-navegador]
+2026-11-19T21:09:17-03:00 Chrome e Chromium ausentes
+2026-11-19T21:09:22-03:00 Chrome e Chromium ausentes
+2026-11-19T21:09:27-03:00 Chrome e Chromium ausentes
+2026-11-19T21:09:32-03:00 Chrome e Chromium ausentes
+2026-11-19T21:09:37-03:00 Chrome e Chromium ausentes
+2026-11-19T21:09:42-03:00 Chrome e Chromium ausentes
+2026-11-19T21:09:47-03:00 Chrome e Chromium ausentes
+2026-11-19T21:09:52-03:00 Chrome e Chromium ausentes
+2026-11-19T21:09:57-03:00 Chrome e Chromium ausentes
+2026-11-19T21:10:02-03:00 Chrome e Chromium ausentes
+2026-11-19T21:10:07-03:00 Chrome e Chromium ausentes
+2026-11-19T21:10:12-03:00 Chrome e Chromium ausentes
+2026-11-19T21:10:17-03:00 Chrome e Chromium ausentes
+2026-11-19T21:10:22-03:00 Chrome e Chromium ausentes
+2026-11-19T21:10:27-03:00 Chrome e Chromium ausentes
+2026-11-19T21:10:32-03:00 Chrome e Chromium ausentes
+2026-11-19T21:10:37-03:00 Chrome e Chromium ausentes
+2026-11-19T21:10:42-03:00 Chrome e Chromium ausentes
+2026-11-19T21:10:47-03:00 Chrome e Chromium ausentes
+2026-11-19T21:10:52-03:00 Chrome e Chromium ausentes
+2026-11-19T21:10:57-03:00 Chrome e Chromium ausentes
+2026-11-19T21:11:02-03:00 Chrome e Chromium ausentes
+2026-11-19T21:11:07-03:00 Chrome e Chromium ausentes
+2026-11-19T21:11:13-03:00 Chrome e Chromium ausentes
+2026-11-19T21:11:18-03:00 Chrome e Chromium ausentes
+2026-11-19T21:11:23-03:00 Chrome e Chromium ausentes
+2026-11-19T21:11:28-03:00 Chrome e Chromium ausentes
+2026-11-19T21:11:33-03:00 Chrome e Chromium ausentes
+2026-11-19T21:11:38-03:00 Chrome e Chromium ausentes
+2026-11-19T21:11:43-03:00 Chrome e Chromium ausentes
+2026-11-19T21:11:48-03:00 Chrome e Chromium ausentes
+2026-11-19T21:11:53-03:00 Chrome e Chromium ausentes
+2026-11-19T21:11:58-03:00 Chrome e Chromium ausentes
+2026-11-19T21:12:03-03:00 Chrome e Chromium ausentes
+2026-11-19T21:12:08-03:00 Chrome e Chromium ausentes
+2026-11-19T21:12:13-03:00 Chrome e Chromium ausentes
+2026-11-19T21:12:18-03:00 Chrome e Chromium ausentes
+2026-11-19T21:12:23-03:00 Chrome e Chromium ausentes
+2026-11-19T21:12:28-03:00 Chrome e Chromium ausentes
+2026-11-19T21:12:33-03:00 Chrome e Chromium ausentes
+2026-11-19T21:12:38-03:00 Chrome e Chromium ausentes
+2026-11-19T21:12:43-03:00 Chrome e Chromium ausentes
+2026-11-19T21:12:48-03:00 Chrome e Chromium ausentes
+2026-11-19T21:12:53-03:00 Chrome e Chromium ausentes
+2026-11-19T21:12:58-03:00 Chrome e Chromium ausentes
+2026-11-19T21:13:03-03:00 Chrome e Chromium ausentes
+2026-11-19T21:13:08-03:00 Chrome e Chromium ausentes
+2026-11-19T21:13:13-03:00 Chrome e Chromium ausentes
+2026-11-19T21:13:18-03:00 Chrome e Chromium ausentes
+2026-11-19T21:13:23-03:00 Chrome e Chromium ausentes
+2026-11-19T21:13:28-03:00 Chrome e Chromium ausentes
+2026-11-19T21:13:31-03:00 Chrome e Chromium ausentes
+
+[13-pool-quatro-contrato-antes]
+ Container desafio-pool4-6p4mcnny-contrato-run-e16fcc7fe150 Creating 
+ Container desafio-pool4-6p4mcnny-contrato-run-e16fcc7fe150 Created 
+igual     /clientes/1
+igual     /clientes/2
+igual     /clientes/500
+igual     /clientes/99999
+igual     /clientes/100000
+igual     /clientes/100001
+igual     /clientes/abc
+igual     /clientes?email=cliente3%40exemplo.com
+igual     /clientes?email=Cliente4%40Exemplo.com
+igual     /clientes?email=CLIENTE10%40EXEMPLO.COM
+igual     /clientes?email=ninguem%40exemplo.com
+igual     /clientes
+igual     /clientes/7/pedidos
+igual     /clientes/42/pedidos
+igual     /clientes/31337/pedidos
+igual     /clientes/99999/pedidos
+igual     /clientes/100001/pedidos
+igual     /pedidos?status=pago
+igual     /pedidos?status=entregue&pagina=3
+igual     /pedidos?status=cancelado&pagina=250
+igual     /pedidos?status=pendente&pagina=1
+igual     /pedidos?status=pago&pagina=15000
+igual     /pedidos?status=perdido
+igual     /pedidos?status=pago&pagina=0
+igual     /produtos/busca?q=cadeira
+igual     /produtos/busca?q=lumin
+igual     /produtos/busca?q=ERGO
+igual     /produtos/busca?q=sem%20fio
+igual     /produtos/busca?q=inexistente
+igual     /produtos/busca?q=ab
+igual     /relatorios/vendas-por-dia?inicio=2024-01-01&fim=2024-01-07
+igual     /relatorios/vendas-por-dia?inicio=2024-02-27&fim=2024-03-02
+igual     /relatorios/vendas-por-dia?inicio=2025-12-25&fim=2025-12-31
+igual     /relatorios/vendas-por-dia?inicio=2023-12-30&fim=2024-01-02
+igual     /relatorios/vendas-por-dia?inicio=2024-03-01&fim=2024-02-01
+igual     /relatorios/vendas-por-dia?inicio=2024-01-01&fim=2024-03-01
+igual     /relatorios/vendas-por-dia?inicio=2024-02-30&fim=2024-03-01
+igual     /relatorios/top-produtos
+igual     /relatorios/top-produtos?limite=5
+igual     /relatorios/top-produtos?limite=50
+igual     /relatorios/top-produtos?limite=0
+igual     /relatorios/top-produtos?limite=51
+
+Contrato mantido: as 42 respostas são iguais às gravadas.
+
+[13-pool-quatro-indices]
+clientes_lower_email_idx
+clientes_pkey
+itens_pedido_pedido_id_idx
+itens_pedido_pkey
+pedidos_cliente_id_idx
+pedidos_pkey
+pedidos_status_criado_em_id_idx
+pedidos_status_idx
+produtos_pkey
+
+[13-pool-quatro-navegador]
+2026-11-19T21:14:33-03:00 Chrome e Chromium ausentes
+2026-11-19T21:14:38-03:00 Chrome e Chromium ausentes
+2026-11-19T21:14:43-03:00 Chrome e Chromium ausentes
+2026-11-19T21:14:48-03:00 Chrome e Chromium ausentes
+2026-11-19T21:14:53-03:00 Chrome e Chromium ausentes
+2026-11-19T21:14:58-03:00 Chrome e Chromium ausentes
+2026-11-19T21:15:03-03:00 Chrome e Chromium ausentes
+2026-11-19T21:15:08-03:00 Chrome e Chromium ausentes
+2026-11-19T21:15:13-03:00 Chrome e Chromium ausentes
+2026-11-19T21:15:18-03:00 Chrome e Chromium ausentes
+2026-11-19T21:15:23-03:00 Chrome e Chromium ausentes
+2026-11-19T21:15:28-03:00 Chrome e Chromium ausentes
+2026-11-19T21:15:33-03:00 Chrome e Chromium ausentes
+2026-11-19T21:15:38-03:00 Chrome e Chromium ausentes
+2026-11-19T21:15:43-03:00 Chrome e Chromium ausentes
+2026-11-19T21:15:48-03:00 Chrome e Chromium ausentes
+2026-11-19T21:15:53-03:00 Chrome e Chromium ausentes
+2026-11-19T21:15:58-03:00 Chrome e Chromium ausentes
+2026-11-19T21:16:04-03:00 Chrome e Chromium ausentes
+2026-11-19T21:16:09-03:00 Chrome e Chromium ausentes
+2026-11-19T21:16:14-03:00 Chrome e Chromium ausentes
+2026-11-19T21:16:19-03:00 Chrome e Chromium ausentes
+2026-11-19T21:16:24-03:00 Chrome e Chromium ausentes
+2026-11-19T21:16:29-03:00 Chrome e Chromium ausentes
+2026-11-19T21:16:34-03:00 Chrome e Chromium ausentes
+2026-11-19T21:16:39-03:00 Chrome e Chromium ausentes
+2026-11-19T21:16:44-03:00 Chrome e Chromium ausentes
+2026-11-19T21:16:49-03:00 Chrome e Chromium ausentes
+2026-11-19T21:16:54-03:00 Chrome e Chromium ausentes
+2026-11-19T21:16:59-03:00 Chrome e Chromium ausentes
+2026-11-19T21:17:04-03:00 Chrome e Chromium ausentes
+2026-11-19T21:17:09-03:00 Chrome e Chromium ausentes
+2026-11-19T21:17:14-03:00 Chrome e Chromium ausentes
+2026-11-19T21:17:19-03:00 Chrome e Chromium ausentes
+2026-11-19T21:17:24-03:00 Chrome e Chromium ausentes
+2026-11-19T21:17:29-03:00 Chrome e Chromium ausentes
+2026-11-19T21:17:34-03:00 Chrome e Chromium ausentes
+2026-11-19T21:17:39-03:00 Chrome e Chromium ausentes
+2026-11-19T21:17:44-03:00 Chrome e Chromium ausentes
+2026-11-19T21:17:49-03:00 Chrome e Chromium ausentes
+2026-11-19T21:17:54-03:00 Chrome e Chromium ausentes
+2026-11-19T21:17:59-03:00 Chrome e Chromium ausentes
+2026-11-19T21:18:04-03:00 Chrome e Chromium ausentes
+2026-11-19T21:18:09-03:00 Chrome e Chromium ausentes
+2026-11-19T21:18:14-03:00 Chrome e Chromium ausentes
+2026-11-19T21:18:19-03:00 Chrome e Chromium ausentes
+2026-11-19T21:18:24-03:00 Chrome e Chromium ausentes
+2026-11-19T21:18:30-03:00 Chrome e Chromium ausentes
+2026-11-19T21:18:35-03:00 Chrome e Chromium ausentes
+2026-11-19T21:18:40-03:00 Chrome e Chromium ausentes
+2026-11-19T21:18:41-03:00 Chrome e Chromium ausentes
+

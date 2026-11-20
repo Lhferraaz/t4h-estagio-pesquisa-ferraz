@@ -1,0 +1,128 @@
+
+2026-11-19T21:14:33-03:00 depois-do-contrato-inicial
+/desafio-pool4-6p4mcnny-api-1 limite_bytes=134217728 oom_killed=false reinicios=0
+memory.events
+low 0
+high 0
+max 0
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 0
+memory.current
+25583616
+memory.peak
+25604096
+memory.swap.current
+0
+/desafio-pool4-6p4mcnny-banco-1 limite_bytes=536870912 oom_killed=false reinicios=0
+memory.events
+low 0
+high 0
+max 5144
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 0
+memory.current
+500604928
+memory.peak
+536875008
+memory.swap.current
+0
+
+2026-11-19T21:15:55-03:00 depois-da-rodada-1
+/desafio-pool4-6p4mcnny-api-1 limite_bytes=134217728 oom_killed=false reinicios=0
+memory.events
+low 0
+high 0
+max 0
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 0
+memory.current
+32833536
+memory.peak
+32854016
+memory.swap.current
+0
+/desafio-pool4-6p4mcnny-banco-1 limite_bytes=536870912 oom_killed=false reinicios=0
+memory.events
+low 0
+high 0
+max 6765
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 0
+memory.current
+460378112
+memory.peak
+536887296
+memory.swap.current
+16715776
+
+2026-11-19T21:17:18-03:00 depois-da-rodada-2
+/desafio-pool4-6p4mcnny-api-1 limite_bytes=134217728 oom_killed=false reinicios=0
+memory.events
+low 0
+high 0
+max 0
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 0
+memory.current
+33492992
+memory.peak
+33492992
+memory.swap.current
+0
+/desafio-pool4-6p4mcnny-banco-1 limite_bytes=536870912 oom_killed=false reinicios=0
+memory.events
+low 0
+high 0
+max 7620
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 8
+memory.current
+430010368
+memory.peak
+536887296
+memory.swap.current
+24612864
+
+2026-11-19T21:18:41-03:00 depois-da-rodada-3
+/desafio-pool4-6p4mcnny-api-1 limite_bytes=134217728 oom_killed=false reinicios=0
+memory.events
+low 0
+high 0
+max 0
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 0
+memory.current
+32845824
+memory.peak
+34000896
+memory.swap.current
+0
+/desafio-pool4-6p4mcnny-banco-1 limite_bytes=536870912 oom_killed=false reinicios=0
+memory.events
+low 0
+high 0
+max 8140
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 8
+memory.current
+442626048
+memory.peak
+536887296
+memory.swap.current
+29331456

@@ -8,10 +8,7 @@
 
 ## Pool com quatro conexões
 
-- **Próximo experimento.** A pessoa propôs reduzir o limite do `pg.Pool` de 10 para 4 conexões. Usar como referência a versão escolhida com 10 conexões e o mesmo conjunto de índices. O [teste anterior com 10](experimentos/pool-com-indice.md#resultado-da-combinação) serve de referência se a configuração do banco ainda for a mesma.
-- **Hipótese.** Com menos consultas simultâneas, pode haver menos disputa pela CPU do banco. Com quatro conexões, mais consultas também podem esperar no pool. A direção do efeito sobre vazão e latência será avaliada na carga.
-- **Como testar.** Alterar apenas `max` para `4` na versão de referência, verificar o contrato e medir três rodadas com o Chrome fechado, 20 usuários virtuais, 60 s de carga, 15 s de aquecimento e semente 42.
-- **Como comparar.** Conferir as medianas de req/s, p50 e p95 gerais, CPU e memória. Olhar também o p95 de cliente por ID, que piorou na versão com pool de 10.
+A troca de dez para quatro conexões foi testada na [H11](experimentos.md#resultado-da-h11). O pool menor melhorou a vazão e o p95 geral com 20 usuários virtuais. O p50 e a memória média do banco subiram. A pessoa autora preferiu manter dez conexões. Uma nova comparação pode testar seis conexões e medir a espera no pool com a mesma carga. O [teste anterior com 10](experimentos/pool-com-indice.md#resultado-da-combinação) registra o ganho inicial de reutilizar conexões.
 
 ## Consulta única com joins para os pedidos de um cliente
 
