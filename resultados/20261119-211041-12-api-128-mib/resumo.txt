@@ -1,0 +1,17 @@
+Medição: 12-api-128-mib
+Carga: 20 usuários virtuais por 60s
+
+Requisições:        1413
+Requisições/s:      22.71
+Tempo de resposta:  mediana 494.3 ms | p95 2703.0 ms | p99 7200.8 ms
+Erros:              0.00%
+
+Por rota:
+rota                  req       mediana       p95           p99           erros   
+cliente               372       203.6 ms      892.2 ms      1331.1 ms     0.0%    
+cliente-por-email     211       201.0 ms      802.2 ms      1300.2 ms     0.0%    
+pedidos-do-cliente    293       703.7 ms      2002.5 ms     2995.8 ms     0.0%    
+pedidos-por-status    200       803.6 ms      4428.8 ms     7848.3 ms     0.0%    
+busca-produtos        213       405.9 ms      1107.5 ms     2021.6 ms     0.0%    
+vendas-por-dia        103       1900.8 ms     3768.8 ms     5094.3 ms     0.0%    
+top-produtos          21        7296.3 ms     13402.1 ms    14442.3 ms    0.0%    
