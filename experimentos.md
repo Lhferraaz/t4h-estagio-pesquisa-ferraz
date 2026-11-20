@@ -304,3 +304,30 @@ A H8 reaproveitou o volume da H7. As medições foram feitas mais tarde, com os 
 - **Hipótese.** Um B-tree simples em `pedidos(status)` permite contar pelo índice menor, com menos acesso a blocos. O índice composto continua disponível para atender ao filtro e à ordem da página. O custo adicional é espaço em disco e manutenção do novo índice nas escritas. [Planos locais](diagnostico/pos-h8/planos.txt) · [Deduplicação em B-tree no PostgreSQL 16](https://www.postgresql.org/docs/16/btree-implementation.html#BTREE-DEDUPLICATION)
 - **Previsão antes da carga.** Esperamos menor p95 de pedidos por status e possível ganho de vazão. O p95 geral depende de como a mudança afeta a espera das demais rotas. O ganho observado em planos isolados pode diminuir durante a carga ou com alterações frequentes na tabela.
 - **Como medir.** Comparar três rodadas da H8 com três rodadas após adicionar somente o índice. Iniciar um volume novo para cada versão com os mesmos dados e verificar o contrato antes e após a carga. Manter 20 usuários virtuais, 60 s, aquecimento de 15 s, semente 42 e os mesmos limites dos contêineres. Comparar vazão, p50/p95/p99 gerais, p95 de pedidos por status, erros, CPU e memória.
+
+### Resultado da H9
+
+Status **aplicada e medida** no commit `1dc06e9`, em revisão. A referência direta é uma nova série da H8 no commit `4d18769`, sem mudança no código da API ou no banco em relação à H8 original. Cada série começou com um volume novo, com os mesmos dados, parâmetros e limites. A amostragem não detectou Chrome ou Chromium. O verificador comparou as 42 respostas antes e depois de cada série de carga e após cada rodada.
+
+| Métrica | H8 de referência | H9 com índice |
+| --- | ---: | ---: |
+| Requisições/s | 21,55 | 22,92 |
+| p50 geral | 594,5 ms | 494,7 ms |
+| p95 geral | 2.635,8 ms | 2.598,6 ms |
+| p99 geral | 7.425,8 ms | 7.287,1 ms |
+| p50 de pedidos por status | 1.099,5 ms | 803,8 ms |
+| p95 de pedidos por status | 4.914,5 ms | 4.733,7 ms |
+| p99 de pedidos por status | 8.073,7 ms | 8.581,3 ms |
+| Erros HTTP | 0,00% | 0,00% |
+| CPU média do banco | 100,3% | 99,7% |
+| Memória média do banco | 358,5 MiB | 373,0 MiB |
+| CPU média da API | 3,3% | 3,4% |
+| Memória média da API | 26,7 MiB | 26,9 MiB |
+| Maior amostra de memória do banco | 508,7 MiB | 508,3 MiB |
+| Maior amostra de memória da API | 28,34 MiB | 28,18 MiB |
+
+Os valores são medianas de três rodadas. As duas últimas linhas mostram o maior pico amostrado no CSV. A vazão foi de 16,22, 21,55 e 21,56 req/s na referência e de 17,50, 22,92 e 23,43 req/s com o índice. As seis rodadas foram sequenciais, com as três da referência primeiro. A primeira rodada de cada série teve menos vazão que as seguintes. As rodadas originais da H8 seguem registradas com 23,19 req/s de mediana e foram realizadas em outro horário, com um volume reaproveitado.
+
+Referência [R1](resultados/20261119-204957-10-h8-referencia-contagem/) · [R2](resultados/20261119-205121-10-h8-referencia-contagem/) · [R3](resultados/20261119-205247-10-h8-referencia-contagem/). H9 [I1](resultados/20261119-205521-11-indice-contagem-status/) · [I2](resultados/20261119-205646-11-indice-contagem-status/) · [I3](resultados/20261119-205811-11-indice-contagem-status/). [Ambiente e verificações antes das séries](diagnostico/pos-h8/medicoes.txt).
+
+**Conclusão.** A hipótese ganhou força para vazão e p50. O p95 de pedidos por status teve mediana menor e faixas sobrepostas. O p95 geral mudou pouco frente à variação entre rodadas, e o p99 da rota piorou na mediana. O índice ocupou 3.514.368 bytes também no banco da H9. A memória média do banco subiu e as duas séries tiveram picos próximos ao limite de 512 MiB. A carga contém só leituras, então o custo de manter o índice nas escritas continua em aberto. [Índice no banco da H9](diagnostico/pos-h8/indice-h9-ativo.txt)
