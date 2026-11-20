@@ -127,3 +127,9 @@ Registro de trabalho para apoiar a seção **9. Uso de IA** do artigo. O enuncia
 - **Contribuição da IA.** Comparou os planos de sete e 31 dias em um banco isolado, mediu os bytes das observações e explicou como preservar a diferença entre contagem de pedidos e soma de unidades. Registrou a hipótese antes da alteração.
 - **Execução e verificação.** O Codex mudou a agregação da rota para SQL, reaproveitou o volume da H7 e verificou o contrato antes e após três rodadas. Comparou também a resposta de 31 dias com os totais calculados a partir dos itens e conferiu um período sem vendas. Registrou os ganhos e a piora do p99 geral e do p95 de pedidos por status. [Resultado da H8](experimentos.md#resultado-da-h8)
 - **Integração.** A pessoa autorizou incorporar a H8 após a comparação com a H7. O Codex registrou a decisão e as contrapartidas das medições no PR.
+
+## H9 — Índice simples para a contagem de pedidos por status
+
+- **Pedido da pessoa.** Pediu uma revisão final do projeto e abriu espaço para mais um experimento antes da entrega. Fechou o Chrome para reproduzir as condições das rodadas de referência.
+- **Contribuição da IA.** Sugeriu investigar pedidos por status. Repetiu a coleta de `pg_stat_statements` e das latências HTTP na H8. A contagem teve uma parcela maior do tempo SQL que a consulta da página. O Codex propôs comparar um B-tree simples com o composto que já existia, salvou os planos e registrou a hipótese antes da alteração.
+- **Execução e verificação.** Mediu três rodadas da H8 e três após acrescentar o índice em um volume novo, verificou o contrato antes das séries e depois das rodadas e conferiu o uso e o tamanho do índice. Registrou a melhora de vazão e p50, a pequena diferença de p95 geral e a piora do p99 da rota. [Diagnóstico](diagnostico/pos-h8/README.md) · [Resultado da H9](experimentos.md#resultado-da-h9)

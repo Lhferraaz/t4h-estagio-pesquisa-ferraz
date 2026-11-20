@@ -1,0 +1,17 @@
+Medição: 10-h8-referencia-contagem
+Carga: 20 usuários virtuais por 60s
+
+Requisições:        995
+Requisições/s:      16.22
+Tempo de resposta:  mediana 706.3 ms | p95 3395.7 ms | p99 7522.5 ms
+Erros:              0.00%
+
+Por rota:
+rota                  req       mediana       p95           p99           erros   
+cliente               268       303.8 ms      999.1 ms      1303.4 ms     0.0%    
+cliente-por-email     149       397.7 ms      1059.7 ms     1250.0 ms     0.0%    
+pedidos-do-cliente    214       1102.0 ms     1999.5 ms     3124.8 ms     0.0%    
+pedidos-por-status    140       2077.3 ms     3821.2 ms     5033.6 ms     0.0%    
+busca-produtos        147       596.8 ms      1401.7 ms     1600.6 ms     0.0%    
+vendas-por-dia        62        2796.5 ms     6595.2 ms     7138.4 ms     0.0%    
+top-produtos          15        8806.9 ms     17350.7 ms    17713.3 ms    0.0%    

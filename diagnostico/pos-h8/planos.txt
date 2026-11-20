@@ -1,0 +1,150 @@
+Pager usage is off.
+BEGIN
+SET
+INDICE_COMPOSTO_ATUAL
+bytes
+22118400
+(1 row)
+PREPARE
+PREPARE
+CONTAGENS_EXATAS
+status|total
+cancelado|50000
+entregue|125000
+pago|300000
+pendente|25000
+(4 rows)
+H8_CONTAGEM_PAGO
+QUERY PLAN
+Finalize Aggregate  (cost=11348.82..11348.83 rows=1 width=8) (actual rows=1 loops=1)
+  Buffers: shared hit=1605
+  ->  Gather  (cost=11348.60..11348.81 rows=2 width=8) (actual rows=3 loops=1)
+        Workers Planned: 2
+        Workers Launched: 2
+        Buffers: shared hit=1605
+        ->  Partial Aggregate  (cost=10348.60..10348.61 rows=1 width=8) (actual rows=1 loops=3)
+              Buffers: shared hit=1605
+              ->  Parallel Index Only Scan using pedidos_status_criado_em_id_idx on pedidos  (cost=0.42..10036.57 rows=124812 width=0) (actual rows=100000 loops=3)
+                    Index Cond: (status = 'pago'::text)
+                    Heap Fetches: 262
+                    Buffers: shared hit=1605
+Planning Time: 0.102 ms
+Execution Time: 67.905 ms
+(14 rows)
+H8_CONTAGEM_ENTREGUE
+QUERY PLAN
+Aggregate  (cost=5329.52..5329.53 rows=1 width=8) (actual rows=1 loops=1)
+  Buffers: shared hit=810
+  ->  Index Only Scan using pedidos_status_criado_em_id_idx on pedidos  (cost=0.42..5013.48 rows=126417 width=0) (actual rows=125000 loops=1)
+        Index Cond: (status = 'entregue'::text)
+        Heap Fetches: 106
+        Buffers: shared hit=810
+Planning Time: 0.108 ms
+Execution Time: 14.144 ms
+(8 rows)
+H8_CONTAGEM_CANCELADO
+QUERY PLAN
+Aggregate  (cost=2100.20..2100.21 rows=1 width=8) (actual rows=1 loops=1)
+  Buffers: shared hit=334
+  ->  Index Only Scan using pedidos_status_criado_em_id_idx on pedidos  (cost=0.42..1978.29 rows=48767 width=0) (actual rows=50000 loops=1)
+        Index Cond: (status = 'cancelado'::text)
+        Heap Fetches: 43
+        Buffers: shared hit=334
+Planning Time: 0.078 ms
+Execution Time: 4.603 ms
+(8 rows)
+H8_CONTAGEM_PENDENTE
+QUERY PLAN
+Aggregate  (cost=1104.23..1104.24 rows=1 width=8) (actual rows=1 loops=1)
+  Buffers: shared hit=172
+  ->  Index Only Scan using pedidos_status_criado_em_id_idx on pedidos  (cost=0.42..1041.06 rows=25267 width=0) (actual rows=25000 loops=1)
+        Index Cond: (status = 'pendente'::text)
+        Heap Fetches: 21
+        Buffers: shared hit=172
+Planning Time: 0.043 ms
+Execution Time: 2.356 ms
+(8 rows)
+H8_PAGO_PAGINA_1000
+QUERY PLAN
+Limit  (cost=5837.16..5843.00 rows=20 width=298) (actual rows=20 loops=1)
+  Buffers: shared hit=19968 read=133
+  ->  Index Scan using pedidos_status_criado_em_id_idx on pedidos  (cost=0.42..87507.64 rows=299550 width=298) (actual rows=20000 loops=1)
+        Index Cond: (status = 'pago'::text)
+        Buffers: shared hit=19968 read=133
+Planning:
+  Buffers: shared hit=20
+Planning Time: 0.089 ms
+Execution Time: 12.798 ms
+(9 rows)
+CREATE INDEX
+INDICE_SIMPLES_DE_TESTE
+bytes
+3514368
+(1 row)
+INDICE_SIMPLES_CONTAGEM_PAGO
+QUERY PLAN
+Finalize Aggregate  (cost=5903.68..5903.69 rows=1 width=8) (actual rows=1 loops=1)
+  Buffers: shared hit=22 read=257 written=25
+  ->  Gather  (cost=5903.47..5903.68 rows=2 width=8) (actual rows=3 loops=1)
+        Workers Planned: 2
+        Workers Launched: 2
+        Buffers: shared hit=22 read=257 written=25
+        ->  Partial Aggregate  (cost=4903.47..4903.48 rows=1 width=8) (actual rows=1 loops=3)
+              Buffers: shared hit=22 read=257 written=25
+              ->  Parallel Index Only Scan using pedidos_status_idx on pedidos  (cost=0.42..4591.44 rows=124812 width=0) (actual rows=100000 loops=3)
+                    Index Cond: (status = 'pago'::text)
+                    Heap Fetches: 262
+                    Buffers: shared hit=22 read=257 written=25
+Planning:
+  Buffers: shared hit=5 read=1
+Planning Time: 0.133 ms
+Execution Time: 10.644 ms
+(16 rows)
+INDICE_SIMPLES_CONTAGEM_ENTREGUE
+QUERY PLAN
+Aggregate  (cost=2995.55..2995.56 rows=1 width=8) (actual rows=1 loops=1)
+  Buffers: shared hit=22 read=107 written=90
+  ->  Index Only Scan using pedidos_status_idx on pedidos  (cost=0.42..2683.05 rows=125000 width=0) (actual rows=125000 loops=1)
+        Index Cond: (status = $1)
+        Heap Fetches: 106
+        Buffers: shared hit=22 read=107 written=90
+Planning Time: 0.084 ms
+Execution Time: 7.225 ms
+(8 rows)
+INDICE_SIMPLES_CONTAGEM_CANCELADO
+QUERY PLAN
+Aggregate  (cost=2995.55..2995.56 rows=1 width=8) (actual rows=1 loops=1)
+  Buffers: shared hit=22 read=42 written=33
+  ->  Index Only Scan using pedidos_status_idx on pedidos  (cost=0.42..2683.05 rows=125000 width=0) (actual rows=50000 loops=1)
+        Index Cond: (status = $1)
+        Heap Fetches: 43
+        Buffers: shared hit=22 read=42 written=33
+Planning Time: 0.003 ms
+Execution Time: 2.678 ms
+(8 rows)
+INDICE_SIMPLES_CONTAGEM_PENDENTE
+QUERY PLAN
+Aggregate  (cost=2995.55..2995.56 rows=1 width=8) (actual rows=1 loops=1)
+  Buffers: shared hit=21 read=21 written=17
+  ->  Index Only Scan using pedidos_status_idx on pedidos  (cost=0.42..2683.05 rows=125000 width=0) (actual rows=25000 loops=1)
+        Index Cond: (status = $1)
+        Heap Fetches: 21
+        Buffers: shared hit=21 read=21 written=17
+Planning Time: 0.002 ms
+Execution Time: 1.399 ms
+(8 rows)
+INDICE_SIMPLES_PAGO_PAGINA_1000
+QUERY PLAN
+Limit  (cost=5837.16..5843.00 rows=20 width=298) (actual rows=20 loops=1)
+  Buffers: shared hit=20101
+  ->  Index Scan using pedidos_status_criado_em_id_idx on pedidos  (cost=0.42..87507.64 rows=299550 width=298) (actual rows=20000 loops=1)
+        Index Cond: (status = 'pago'::text)
+        Buffers: shared hit=20101
+Planning Time: 0.071 ms
+Execution Time: 6.246 ms
+(7 rows)
+ROLLBACK
+INDICE_TEMPORARIO_REVERTIDO
+revertido
+t
+(1 row)

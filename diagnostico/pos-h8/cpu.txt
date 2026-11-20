@@ -1,0 +1,48 @@
+api
+50000 100000
+usage_usec 637455
+user_usec 471378
+system_usec 166076
+nice_usec 0
+core_sched.force_idle_usec 0
+nr_periods 123
+nr_throttled 2
+throttled_usec 87992
+nr_bursts 0
+burst_usec 0
+banco
+100000 100000
+usage_usec 44249144
+user_usec 37594121
+system_usec 6655022
+nice_usec 0
+core_sched.force_idle_usec 0
+nr_periods 532
+nr_throttled 305
+throttled_usec 122693097
+nr_bursts 0
+burst_usec 0
+api
+50000 100000
+usage_usec 2872289
+user_usec 2152174
+system_usec 720115
+nice_usec 0
+core_sched.force_idle_usec 0
+nr_periods 658
+nr_throttled 2
+throttled_usec 87992
+nr_bursts 0
+burst_usec 0
+banco
+100000 100000
+usage_usec 106806512
+user_usec 86384603
+system_usec 20421908
+nice_usec 0
+core_sched.force_idle_usec 0
+nr_periods 1168
+nr_throttled 930
+throttled_usec 670037513
+nr_bursts 0
+burst_usec 0
