@@ -4,6 +4,42 @@ Aplicação do desafio técnico da vaga de estágio em Pesquisa e Inovação da 
 
 A aplicação é a API de uma loja fictícia, em Node.js (Express) com PostgreSQL 16, rodando em containers. Ela funciona, mas fica lenta sob carga e gasta mais recursos do que deveria. Todos os dados são sintéticos e gerados na primeira subida: 100 mil clientes, 20 mil produtos, 500 mil pedidos e 1,5 milhão de itens de pedido.
 
+## O problema e os resultados
+
+**O problema.** Na carga do teste (20 usuários virtuais por 60 s, sem pausa entre as chamadas), a API atendia 2,87 requisições por segundo, e 5% das respostas demoravam mais de 21.354,1 ms. O banco ficava no teto de CPU (98,5% de 1 CPU) enquanto a API usava 5,9%. A causa era trabalho demais no banco a cada requisição:
+
+- uma conexão nova aberta e fechada a cada consulta;
+- 17 consultas para listar os 5 pedidos de um cliente, uma por pedido e por item;
+- tabelas lidas inteiras por falta de índice nos pedidos do cliente, nos itens e na busca por e-mail;
+- ordenação em disco nas páginas profundas de pedidos por status;
+- relatórios que mandavam milhares de linhas para o Node somar ou juntavam o catálogo a todos os itens antes de somar.
+
+**O que mudou.** Testei 13 hipóteses, cada uma em três rodadas e com o contrato conferido. Adotei 11 e descartei 2:
+
+- itens dos pedidos buscados em lote (H1) e pool de 10 conexões (H2);
+- cinco índices: `pedidos(cliente_id)`, `itens_pedido(pedido_id)`, `pedidos(status, criado_em DESC, id DESC)`, `clientes(lower(email))` e `pedidos(status)` (H3, H4, H5, H7, H9);
+- top produtos somando por produto antes de buscar o catálogo (H6) e vendas por dia somadas no SQL (H8);
+- limite de memória da API de 256 para 128 MiB (H10) e CPU redistribuída para 1,25 no banco e 0,25 na API, com o mesmo total de 1,5 (H12);
+- descartados: pool de 4 conexões (H11) e consultas sem paralelismo (H13).
+
+**Resultados.** Mediana de três rodadas. Linha de base: [1](resultados/20261117-020419-00-linha-de-base/), [2](resultados/20261117-020610-00-linha-de-base/), [3](resultados/20261117-020801-00-linha-de-base/). Versão entregue: [1](resultados/20261120-105609-16-h12-dois-workers/), [2](resultados/20261120-105732-16-h12-dois-workers/), [3](resultados/20261120-105855-16-h12-dois-workers/).
+
+| Métrica | Linha de base | Versão entregue |
+| --- | ---: | ---: |
+| Vazão | 2,87 req/s | 26,65 req/s |
+| p50 | 1.299,9 ms | 400,3 ms |
+| p95 | 21.354,1 ms | 2.291,5 ms |
+| p99 | 25.935,8 ms | 6.544,3 ms |
+| Erros HTTP | 0,00% | 0,00% |
+| CPU média do banco (limite) | 98,5% (1 CPU) | 125,0% (1,25 CPU) |
+| CPU média da API (limite) | 5,9% (0,5 CPU) | 3,5% (0,25 CPU) |
+| Memória média do banco (limite) | 405,7 MiB (512 MiB) | 406,4 MiB (512 MiB) |
+| Memória média da API (limite) | 32,8 MiB (256 MiB) | 78,8 MiB (128 MiB) |
+
+Na CPU, 100% equivale a 1 CPU. As 42 respostas do contrato continuaram iguais. O banco segue no teto de CPU: na última coleta por consulta, feita depois da H8, os relatórios e a contagem de pedidos por status concentravam a maior parte do tempo de SQL.
+
+Detalhes no [artigo](artigo/artigo.md), nos [experimentos](experimentos.md), nas [decisões](docs/decisoes.md) e nos [próximos testes](proximos-testes.md).
+
 ## Prazo e entrega
 
 - **Prazo e entregas:** estão no enunciado enviado na largada
