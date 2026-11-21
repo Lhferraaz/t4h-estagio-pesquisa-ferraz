@@ -1,0 +1,21 @@
+Projeto: desafio-indice-itens
+Captura após a carga: 2026-11-17 21:58:30 -0300
+/desafio-indice-itens-api-1 running=true oom_killed=false restarts=0 limite_bytes=268435456
+low 0
+high 0
+max 0
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 0
+/desafio-indice-itens-banco-1 running=true oom_killed=false restarts=0 limite_bytes=536870912
+low 0
+high 0
+max 33064
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 64
+Memória no docker stats após a carga
+desafio-indice-itens-api-1 16.18MiB / 256MiB
+desafio-indice-itens-banco-1 143MiB / 512MiB
